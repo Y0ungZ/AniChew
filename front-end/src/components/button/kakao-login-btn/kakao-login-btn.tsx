@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import Text from 'antd/lib/typography/Text';
+import { CssKeyObject } from '../../../models/css-basic-type';
 
 const KakaoLoginBtn = () => {
   const handleKakaoLogin = () => {
