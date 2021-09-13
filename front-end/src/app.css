@@ -1,0 +1,11 @@
+@import '~antd/dist/antd.css';
+
+body {
+  background-color: rgba(128, 128, 128, 0.08);
+}
+
+/* antd modal style */
+.ant-modal-content {
+  border-radius: 1em;
+  background-color: #fafafa;
+}
