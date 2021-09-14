@@ -1,14 +1,6 @@
 import React from 'react';
-import { CssKeyObject } from '../../models/css-basic-type';
 import { Spin } from 'antd';
-
-const FullLoading = () => {
-  return (
-    <div style={styles.container}>
-      <Spin size="large" />
-    </div>
-  );
-};
+import { CssKeyObject } from '../../models/css-basic-type';
 
 const styles: CssKeyObject = {
   container: {
@@ -20,5 +12,11 @@ const styles: CssKeyObject = {
     background: 'rgba(0, 0, 0, 0.05)',
   },
 };
+
+const FullLoading = () => (
+  <div style={styles.container}>
+    <Spin size="large" />
+  </div>
+);
 
 export default FullLoading;
