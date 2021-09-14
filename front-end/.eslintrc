@@ -1,18 +1,55 @@
 {
-  "extends": "eslint:recommended",
   "env": {
     "browser": true,
-    "commonjs": true,
-    "node": true,
-    "es6": true,
-    "jest": true
+    "es2020": true
   },
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
   },
+  "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "linebreak-style": ["error", "windows"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any":"off",
+    "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
+    "react/jsx-props-no-spreading": "off",
+    "react/destructuring-assignment": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "jsx-quotes": "off",
     "no-console": "off",
-    "strict": ["error", "global"],
-    "curly": "warn"
+    "max-len": ["warn", { "code": 100 }],
+    "object-curly-newline":"off",
+    "operator-linebreak":"off",
+    "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+            "ts": "never",
+            "tsx": "never",
+            "js": "never"
+        }
+    ],
+    "@typescript-eslint/no-var-requires": 0
+},
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }
