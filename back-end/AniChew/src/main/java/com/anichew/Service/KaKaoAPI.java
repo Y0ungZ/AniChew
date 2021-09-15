@@ -31,9 +31,7 @@ public class KaKaoAPI {
 	public String getAccessToken(String authorize_code) {
 		String access_token= "";
 		String refresh_token ="";
-		String reqURL ="https://kauth.kakao.com/oauth/token";
-		System.out.println(KAKAO_REST_API_KEY);
-		
+		String reqURL ="https://kauth.kakao.com/oauth/token";		
 		
 		try {
 			URL url = new URL(reqURL);
@@ -55,7 +53,6 @@ public class KaKaoAPI {
 			bw.flush();
 			
 			int responseCode = conn.getResponseCode();
-			
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			
@@ -97,10 +94,9 @@ public class KaKaoAPI {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			
-			conn.setRequestProperty("Authorization", "Bearer" + access_token);
+			conn.setRequestProperty("Authorization", "Bearer " + access_token);
 			
-			int responseCode = conn.getResponseCode();
-			
+			int responseCode = conn.getResponseCode();			
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));			
 			StringBuilder sb = new StringBuilder();
 			String line ="";
@@ -115,14 +111,16 @@ public class KaKaoAPI {
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 	        JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 	        
-	        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+	        String id = element.getAsJsonObject().get("id").getAsString();
+	        String nickname = properties.getAsJsonObject().get("nickname").getAsString();	        
 	        String email = kakao_account.getAsJsonObject().get("email").getAsString();
 	        
+	        userInfo.put("id", id);
 	        userInfo.put("nickname", nickname);
 	        userInfo.put("email", email);
 			
-			
-		}catch (IOException e) {
+	        
+	}catch (IOException e) {
 			e.printStackTrace();
 		}
 		
