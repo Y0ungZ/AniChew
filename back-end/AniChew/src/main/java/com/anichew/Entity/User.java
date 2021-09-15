@@ -7,96 +7,76 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.anichew.DTO.UserDTO;
+
 @Entity(name ="user")
 public class User {
 	
 	@Id
 	@Column(name="user_id")
-	long id;
+	private long id;
 	
 	@Column(name="user_email")
-	String email;
+	private String email;
 	
 	@Column(name="user_status")
-	UserStatus status;
+	private UserStatus status;
 	
 	@Column(name="user_gender")
-	UserGender gender;
+	private UserGender gender;
 	
 	@Column(name="user_birthday")
-	LocalDate birthday;
+	private LocalDate birthday;
 	
 	@Column(name="user_nickname")
-	String nickname;
+	private String nickname;
 	
 	@Column(name="user_profile_img")
-	String profileImg;
+	private String profileImg;
 	
 	@Column(name="user_created_date")
-	LocalDateTime createdDate;
+	private LocalDateTime createdDate;
 
-	public long getId() {
-		return id;
+	public User() {}
+	
+	private User(UserBuilder builder) {
+		this.id = builder.id;
+		this.email = builder.email;
+		this.status = builder.status;
+		this.gender = builder.gender;
+		this.birthday = builder.birthday;
+		this.nickname = builder.nickname;
+		this.profileImg = builder.profileImg;
+		this.createdDate = builder.createdDate;
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	
+	public static class UserBuilder implements CommonBuilder<User>{
+		private final long id;
+		private final String email;
+		private final UserStatus status;
+		private final UserGender gender;
+		private final LocalDate birthday;
+		private final String nickname;
+		private final String profileImg;
+		private final LocalDateTime createdDate;
+		
+		
+		public UserBuilder(UserDTO userDTO) {
+			this.id = userDTO.getId();
+			this.email = userDTO.getEmail();
+			this.status = userDTO.getStatus();
+			this.gender = userDTO.getGender();
+			this.birthday = userDTO.getBirthday();
+			this.nickname = userDTO.getNickname();
+			this.profileImg = userDTO.getProfileImg();
+			this.createdDate = userDTO.getCreatedDate();			
+		}
+		
+		@Override
+		public User build() {
+			return new User(this);
+		}
+		
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public UserStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(UserStatus status) {
-		this.status = status;
-	}
-
-	public UserGender getGender() {
-		return gender;
-	}
-
-	public void setGender(UserGender gender) {
-		this.gender = gender;
-	}
-
-	public LocalDate getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getProfileImg() {
-		return profileImg;
-	}
-
-	public void setProfileImg(String profileImg) {
-		this.profileImg = profileImg;
-	}
-
-	public LocalDateTime getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
-	}	
 	
 }

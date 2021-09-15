@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.anichew.Service.KaKaoAPI;
+import com.anichew.Service.UserService;
 
 
 @RequestMapping("oauth/")
@@ -22,28 +23,36 @@ public class OAuthController {
 	@Autowired
 	private KaKaoAPI kakao;
 	
-
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping(value="/login")
 	public ResponseEntity<String> login (@RequestParam("code") String code, HttpSession session) {
-		System.out.println(code);
+		System.out.println("Code = "+code);
 		String access_token = kakao.getAccessToken(code);
+		
+		System.out.println(access_token);
+		
 		Map<String,Object> userInfo = kakao.getUserInfo(access_token);
 		
-		if(userInfo.get("email")!=null) {
-			session.setAttribute("access_token","access_token");
+		if(userInfo.containsKey("email")) {
+			session.setAttribute("access_token",access_token);
 		}
 		
-		return new ResponseEntity<String>("hello",HttpStatus.OK);
+		if(userService.isNewUser(Long.parseLong((String)userInfo.get("id")))) {
+			userService.signUp(userInfo);
+		}
+		
+		return new ResponseEntity<String>((String)userInfo.get("id"),HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/logout")
-	public String logout(HttpSession session) {
+	public ResponseEntity<String> logout (HttpSession session) {
 		String access_token = (String)session.getAttribute("access_token");
 		kakao.kakaoLogout(access_token);
 		session.removeAttribute("access_token");
 		
-		return "index";
+		return new ResponseEntity<String>("hello",HttpStatus.OK);
 	}
 
 	
