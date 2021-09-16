@@ -1,6 +1,17 @@
 import React from 'react';
 import './app.css';
+import { BrowserRouter } from 'react-router-dom';
+import { routes } from './routes/config';
+import Router from './routes/router';
 
-const App = () => <h1>hello world</h1>;
+export const user = {
+  authenticated: false,
+};
+
+const App = () => (
+  <BrowserRouter>
+    <Router routes={routes} />
+  </BrowserRouter>
+);
 
 export default App;
