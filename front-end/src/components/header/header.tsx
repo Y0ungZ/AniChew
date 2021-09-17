@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Drawer, Layout, Grid } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import LeftMenu from './menus/left-menu';
@@ -11,7 +11,16 @@ const { useBreakpoint } = Grid;
 const { Header } = Layout;
 
 const styles: CssKeyObject = {
-  position: {
+  staticPosition: {
+    position: 'static',
+    zIndex: 20,
+    width: '100%',
+    paddingLeft: '2em',
+    paddingRight: '2em',
+    backgroundColor: 'white',
+    minWidth: '360px',
+  },
+  fixedPosition: {
     position: 'fixed',
     zIndex: 20,
     width: '100%',
@@ -43,16 +52,31 @@ const styles: CssKeyObject = {
 };
 
 const MainHeader = () => {
+  const [headerPosition, setHeaderPosition] = useState('static');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const screens = useBreakpoint();
+
+  useEffect(() => {
+    const scrollEvent = () => {
+      if (window.scrollY >= 50) {
+        setHeaderPosition('fixed');
+      } else {
+        setHeaderPosition('static');
+      }
+    };
+    window.addEventListener('scroll', scrollEvent);
+    return () => window.removeEventListener('scroll', scrollEvent);
+  });
 
   const toggleDrawer = () => {
     setDrawerOpen((open) => !open);
   };
 
   return (
-    <Header style={styles.position}>
-      <span style={styles.logo}>애니츄</span>
+    <Header style={headerPosition === 'static' ? styles.staticPosition : styles.fixedPosition}>
+      <span style={styles.logo}>
+        애니츄
+      </span>
       {screens.md ? (
         <div style={styles.leftMenu}>
           <LeftMenu mode="horizontal" />
