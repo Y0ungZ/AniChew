@@ -22,9 +22,10 @@ const styles: CssKeyObject = {
     textAlign: 'center',
   },
   desc: {
+    fontSize: '1rem',
     fontWeight: 550,
   },
-  footer: { fontSize: '0.2rem', marginTop: '6em' },
+  footer: { fontSize: '0.8rem', marginTop: '2.5em', color: '#b2b2b2' },
 };
 
 const LoginModal = ({ visible, setVisible }: LoginModalProps) => (
@@ -39,8 +40,8 @@ const LoginModal = ({ visible, setVisible }: LoginModalProps) => (
   >
     <Title style={styles.modalTitle}>시작하기</Title>
     <Paragraph style={styles.desc}>
-      지금 로그인하고 맞춤 애니메이션 추천을 받아보세요! 매일 1,000개 채널의
-      콘텐츠가 새 탭에서 펼쳐집니다.
+      지금 로그인하고 맞춤 애니메이션 추천을 받아보세요! 매일 1,000개
+      애니메이션이 새 탭에서 펼쳐집니다.
     </Paragraph>
     <KakaoLoginBtn />
     <Paragraph style={styles.footer}>
