@@ -1,4 +1,5 @@
-import { ComponentType, LazyExoticComponent, ReactNode } from 'react';
+import React, { ComponentType, LazyExoticComponent, ReactNode, lazy } from 'react';
+import FullLoading from '../components/loading/full-loading';
 
 export type RouteType = {
   path: string;
@@ -10,4 +11,12 @@ export type RouteType = {
   private?: boolean;
 }
 
-export const routes: RouteType[] = [];
+export const routes: RouteType[] = [
+  {
+    path: '/oauth/kakao',
+    exact: false,
+    private: false,
+    component: lazy(() => import('../components/oauth/kakao-oauth-handler/kakao-oauth-handler')),
+    fallback: <FullLoading />,
+  },
+];
