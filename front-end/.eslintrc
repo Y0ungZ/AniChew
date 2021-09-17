@@ -32,7 +32,6 @@
     "react-hooks/exhaustive-deps": "warn",
     "jsx-quotes": "off",
     "no-console": "off",
-    "max-len": ["warn", { "code": 100 }],
     "object-curly-newline":"off",
     "operator-linebreak":"off",
     "import/extensions": [
@@ -45,7 +44,11 @@
         }
     ],
     "@typescript-eslint/no-var-requires": 0,
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "no-useless-constructor":"off",
+    "generator-star-spacing":"off",
+    "import/prefer-default-export": "off"
 },
   "settings": {
     "import/resolver": {
