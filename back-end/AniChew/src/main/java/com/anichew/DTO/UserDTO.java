@@ -14,7 +14,7 @@ public class UserDTO {
 	private UserGender gender;
 	private LocalDate birthday;
 	private String nickname;
-	private String profileImg;
+	private String avatar;
 	private LocalDateTime createdDate;
 	public long getId() {
 		return id;
@@ -52,17 +52,17 @@ public class UserDTO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getProfileImg() {
-		return profileImg;
-	}
-	public void setProfileImg(String profileImg) {
-		this.profileImg = profileImg;
-	}
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 	
