@@ -100,10 +100,9 @@ public class UserServiceImpl implements UserService {
 		final String accessToken = jwtUtil.generateToken(userid);
 		final String refreshToken = jwtUtil.generateRefreshToken(userid);
 		Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, accessToken);
-		Cookie refreshTokenCookie = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME, refreshToken);
 		redisUtil.setDataExpire(userid+"jwt", refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
 		httpServletResponse.addCookie(accessTokenCookie);
-		httpServletResponse.addCookie(refreshTokenCookie);
+
 		
 		Collection<String> headers = httpServletResponse.getHeaders(HttpHeaders.SET_COOKIE);
 		for (String header : headers) {
