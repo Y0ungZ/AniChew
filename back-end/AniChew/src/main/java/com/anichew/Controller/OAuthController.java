@@ -2,6 +2,7 @@ package com.anichew.Controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.anichew.Service.KaKaoAPI;
 import com.anichew.Service.UserService;
 
+import io.swagger.annotations.ApiOperation;
+
 
 @RequestMapping("oauth/")
 @RestController
@@ -26,22 +29,22 @@ public class OAuthController {
 	@Autowired
 	private UserService userService;
 	
+	@ApiOperation("로그인")
 	@GetMapping(value="/login")
-	public ResponseEntity<String> login (@RequestParam("code") String code, HttpSession session) {
+	public ResponseEntity<String> login (@RequestParam("code") String code, HttpServletResponse httpServletRes) {
 		System.out.println("Code = "+code);
 		String access_token = kakao.getAccessToken(code);
 		
 		System.out.println(access_token);
 		
 		Map<String,Object> userInfo = kakao.getUserInfo(access_token);
-		
-		if(userInfo.containsKey("email")) {
-			session.setAttribute("access_token",access_token);
-		}
+				
 		
 		if(userService.isNewUser(Long.parseLong((String)userInfo.get("id")))) {
 			userService.signUp(userInfo);
 		}
+		
+		userService.generateToken(httpServletRes, (String)userInfo.get("id"));
 		
 		return new ResponseEntity<String>((String)userInfo.get("id"),HttpStatus.OK);
 	}
@@ -54,6 +57,12 @@ public class OAuthController {
 		
 		return new ResponseEntity<String>("hello",HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/test")
+	public ResponseEntity<String> test (HttpSession session) {
 
+		return new ResponseEntity<String>("test",HttpStatus.OK);
+	}
+	
 	
 }
