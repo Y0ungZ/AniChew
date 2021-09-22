@@ -46,4 +46,16 @@ public class UserController {
 		return new ResponseEntity<UserPageResponse>(userPageRes,HttpStatus.OK);
 	}
 	
+	@GetMapping("/test/{userid}")
+	public ResponseEntity<String> testLogin (@PathVariable("userid") long userid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		if(!userService.isExistUser(userid)) {
+			return new ResponseEntity<String>("존재하지 않는 ID",HttpStatus.NOT_FOUND);
+		}
+		
+		userService.generateToken(httpServletRes, Long.toString(userid));
+				
+		return new ResponseEntity<String>("test login",HttpStatus.OK);
+	}
+	
 }
