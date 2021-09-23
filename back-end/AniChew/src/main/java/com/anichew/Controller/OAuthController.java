@@ -33,10 +33,7 @@ public class OAuthController {
 	@GetMapping(value="/login")
 	public ResponseEntity<String> login (@RequestParam("code") String code, HttpServletResponse httpServletRes) {
 		System.out.println("Code = "+code);
-		String access_token = kakao.getAccessToken(code);
-		
-		System.out.println(access_token);
-		
+		String access_token = kakao.getAccessToken(code);		
 		Map<String,Object> userInfo = kakao.getUserInfo(access_token);
 				
 		
@@ -44,9 +41,9 @@ public class OAuthController {
 			userService.signUp(userInfo);
 		}
 		
-		userService.generateToken(httpServletRes, (String)userInfo.get("id"));
+		String jwt = userService.generateToken(httpServletRes, (String)userInfo.get("id"));
 		
-		return new ResponseEntity<String>((String)userInfo.get("id"),HttpStatus.OK);
+		return new ResponseEntity<String>(jwt,HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/logout")
