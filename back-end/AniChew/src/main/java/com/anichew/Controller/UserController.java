@@ -53,9 +53,9 @@ public class UserController {
 			return new ResponseEntity<String>("존재하지 않는 ID",HttpStatus.NOT_FOUND);
 		}
 		
-		userService.generateToken(httpServletRes, Long.toString(userid));
+		String jwt = userService.generateToken(httpServletRes, Long.toString(userid));
 				
-		return new ResponseEntity<String>("test login",HttpStatus.OK);
+		return new ResponseEntity<String>(jwt,HttpStatus.OK);
 	}
 	
 }
