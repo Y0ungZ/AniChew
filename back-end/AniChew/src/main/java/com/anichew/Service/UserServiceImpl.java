@@ -131,13 +131,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserPageResponse userPage(HttpServletRequest httpServletReq, long userid) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String accessor = jwtUtil.getUserid(requestTokenHeader);
+		
 								
-		User user = userRepo.findById(userid);
-		
+		User user = userRepo.findById(userid);		
 		UserPageResponse response = new UserPageResponse();
-		
-		if(userid == Long.parseLong(accessor))
+		String accessor = null;
+		if(requestTokenHeader!=null) {
+			accessor = jwtUtil.getUserid(requestTokenHeader);
+		}
+		if(accessor != null && userid == Long.parseLong(accessor))
 			response.setMine(true);
 		
 		response.setEmail(user.getEmail());
