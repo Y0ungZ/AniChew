@@ -2,6 +2,7 @@ package com.anichew.Controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anichew.Response.LoginResponse;
 import com.anichew.Service.KaKaoAPI;
 import com.anichew.Service.UserService;
 
@@ -31,35 +33,41 @@ public class OAuthController {
 	
 	@ApiOperation("로그인")
 	@GetMapping(value="/login")
-	public ResponseEntity<String> login (@RequestParam("code") String code, HttpServletResponse httpServletRes) {
-		System.out.println("Code = "+code);
+	public ResponseEntity<LoginResponse> login (@RequestParam("code") String code, HttpServletResponse httpServletRes) {
+		
 		String access_token = kakao.getAccessToken(code);		
 		Map<String,Object> userInfo = kakao.getUserInfo(access_token);
 				
+		LoginResponse response = new LoginResponse();
 		
-		if(userService.isNewUser(Long.parseLong((String)userInfo.get("id")))) {
+		if(userService.existsUser(Long.parseLong((String)userInfo.get("id")))) {
 			userService.signUp(userInfo);
+			response.setNewUser(true);
 		}
 		
 		String jwt = userService.generateToken(httpServletRes, (String)userInfo.get("id"));
+		response.setToken(jwt);
 		
-		return new ResponseEntity<String>(jwt,HttpStatus.OK);
+		
+		return new ResponseEntity<LoginResponse>(response,HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/logout")
-	public ResponseEntity<String> logout (HttpSession session) {
-		String access_token = (String)session.getAttribute("access_token");
-		kakao.kakaoLogout(access_token);
-		session.removeAttribute("access_token");
+	public ResponseEntity<String> logout (HttpServletRequest httpServletReq) {
+		
+		if(userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+		
 		
 		return new ResponseEntity<String>("hello",HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/test")
 	public ResponseEntity<String> test (HttpSession session) {
-
+		
 		return new ResponseEntity<String>("test",HttpStatus.OK);
 	}
+	
 	
 	
 }
