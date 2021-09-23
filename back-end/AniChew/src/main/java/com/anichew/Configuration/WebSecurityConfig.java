@@ -27,8 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable().authorizeRequests()
-				.antMatchers("*", "**","/api/**","/oauth/login", "/oauth/test", "/user/test/*",
+		httpSecurity
+		.cors().and()
+		.csrf().disable();
+		httpSecurity.authorizeRequests()
+				.antMatchers("*","/oauth/login", "/oauth/test", "/user/test/*",
 						 "/v2/api-docs", 
 				            "/swagger-resources/**",  
 				            "/swagger-ui.html", 
@@ -36,23 +39,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				             /*Probably not needed*/ "/swagger.json")				
 				.permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.anyRequest().authenticated().and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-				;
+				.antMatchers(HttpMethod.OPTIONS).permitAll();
+//				.anyRequest().authenticated();
+//				.and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
 		
 	}
 	
-	@Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//	@Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.addAllowedOrigin("*");
+//        configuration.addAllowedHeader("*");
+//        configuration.addAllowedMethod("*");
+//        configuration.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }
