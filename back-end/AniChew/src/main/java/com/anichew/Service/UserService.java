@@ -11,7 +11,7 @@ import com.anichew.Response.UserPageResponse;
 public interface UserService {
 	void signUp(Map<String, Object> userInfo);
 	boolean isNewUser(long id);
-	boolean generateToken(HttpServletResponse httpServletResponse, String userid);
+	String generateToken(HttpServletResponse httpServletResponse, String userid);
 	MyInfoResponse getMyInfo(HttpServletRequest httpServletReq);
 	boolean isExistUser(long userid);
 	UserPageResponse userPage(HttpServletRequest httpServletReq, long userid);

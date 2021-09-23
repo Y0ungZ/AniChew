@@ -13,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
@@ -60,11 +62,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				jwt = requestTokenHeader;
 				userid = jwtUtil.getUserid(jwt);
 				if (userid != null) {
+					System.out.println("이야");
 					if (!jwtUtil.validateToken(jwt, userid)) {
+						System.out.println(":요기니!!");
 						httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					}
+
+					
 				}
 			} catch (ExpiredJwtException e) {
+				System.out.println("여기니??");
 				String redisData = null;
 				if (refreshToken != null) {
 					refreshJwt = refreshToken.getValue();
@@ -105,7 +112,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			}
 			httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
-
+		
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}
 

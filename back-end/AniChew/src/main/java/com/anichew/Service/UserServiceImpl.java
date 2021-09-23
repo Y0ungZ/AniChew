@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 	
-	public boolean generateToken(HttpServletResponse httpServletResponse, String userid) {
+	public String generateToken(HttpServletResponse httpServletResponse, String userid) {
 		
 		final String accessToken = jwtUtil.generateToken(userid);
 		final String refreshToken = jwtUtil.generateRefreshToken(userid);
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 		
 		System.out.println(accessToken);
 		
-		return true;
+		return accessToken;
 	}
 	
 	public MyInfoResponse getMyInfo(HttpServletRequest httpServletReq) {

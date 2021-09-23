@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
-				.antMatchers("/oauth/login", "/oauth/test", "/user/test/*",
+				.antMatchers("**","/oauth/login", "/oauth/test", "/user/test/*",
 						 "/v2/api-docs", 
 				            "/swagger-resources/**",  
 				            "/swagger-ui.html", 
@@ -36,7 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				             /*Probably not needed*/ "/swagger.json")				
 				.permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.anyRequest().authenticated();
+				.anyRequest().authenticated().and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+				;
 		
 	}
 	
