@@ -37,122 +37,109 @@ import com.anichew.Util.RedisUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private CookieUtil cookieUtil;
-	
+
 	@Autowired
 	private RedisUtil redisUtil;
-	
+
 	@Autowired
 	private JwtUtil jwtUtil;
-	
-	
+
 	public boolean isExistUser(long userid) {
 		return userRepo.existsById(userid);
 	}
-	
-	
-	public void signUp(Map<String,Object> userInfo) {
+
+	public void signUp(Map<String, Object> userInfo) {
 		UserDTO userDTO = new UserDTO();
-		
-		
-		long id = Long.parseLong((String)userInfo.get("id"));
+
+		long id = Long.parseLong((String) userInfo.get("id"));
 		userDTO.setId(id);
-		userDTO.setEmail((String)userInfo.getOrDefault("email", null));		
-		String nickname ="";		
-		String nicknamePrefix[] = {"고독한","즐거운","용감한","활발한", "냉정한", "장난꾸러기", "무시무시한", "화려한", "미스테리한", "사랑스러운"};
-		String nicknameSuffix[] = {"손바닥", "발바닥", "치킨마요", "고추참치", "냥이" ,"댕댕이", "전문가", "아마추어", "오톡이", "고로케" };
-		
-		
-		
+		userDTO.setEmail((String) userInfo.getOrDefault("email", null));
+		String nickname = "";
+		String nicknamePrefix[] = { "고독한", "즐거운", "용감한", "활발한", "냉정한", "장난꾸러기", "무시무시한", "화려한", "미스테리한", "사랑스러운" };
+		String nicknameSuffix[] = { "손바닥", "발바닥", "치킨마요", "고추참치", "냥이", "댕댕이", "전문가", "아마추어", "오톡이", "고로케" };
+
 		int prefixIdx = LocalDateTime.now().getSecond() % 10;
-		int suffixIdx = Math.abs((LocalDateTime.now().getSecond()*(int)(id%10)))%10;
-		nickname = nicknamePrefix[prefixIdx] +nicknameSuffix[suffixIdx];
-		User user = User.builder()
-				.id(id)
-				.email((String)userInfo.getOrDefault("email", null))
-				.status(UserStatus.MEMBER)				
-				.gender(UserGender.NONE)
-				.nickname(nickname)
-				.birthday(LocalDate.now())
-				.createdDate(LocalDateTime.now())
-				.build();
-		
+		int suffixIdx = Math.abs((LocalDateTime.now().getSecond() * (int) (id % 10))) % 10;
+		nickname = nicknamePrefix[prefixIdx] + " " + nicknameSuffix[suffixIdx];
+		User user = User.builder().id(id).email((String) userInfo.getOrDefault("email", null)).status(UserStatus.MEMBER)
+				.gender(UserGender.NONE).nickname(nickname).birthday(null).createdDate(LocalDateTime.now()).build();
+
 		userRepo.save(user);
-		
+
 	}
-	
-	public boolean isNewUser(long id) {		
-		
-		if(userRepo.existsById(id))
+
+	public boolean existsUser(long id) {
+
+		if (userRepo.existsById(id))
 			return false;
-		
+
 		return true;
 	}
-	
+
 	public String generateToken(HttpServletResponse httpServletResponse, String userid) {
-		
+
 		final String accessToken = jwtUtil.generateToken(userid);
 		final String refreshToken = jwtUtil.generateRefreshToken(userid);
 		Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, accessToken);
-		redisUtil.setDataExpire(userid+"jwt", refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+		redisUtil.setDataExpire(userid + "jwt", refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
 		httpServletResponse.addCookie(accessTokenCookie);
 
-		
 		Collection<String> headers = httpServletResponse.getHeaders(HttpHeaders.SET_COOKIE);
 		for (String header : headers) {
-			httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, header+"; " + "SameSite=None; Secure");
+			httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, header + "; " + "SameSite=None; Secure");
 		}
-		
+
 		System.out.println(accessToken);
-		
+
 		return accessToken;
 	}
-	
+
 	public MyInfoResponse getMyInfo(HttpServletRequest httpServletReq) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String accessor = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(accessor));
-		
+
 		MyInfoResponse myInfo = new MyInfoResponse();
+		myInfo.setUserid(user.getId());
 		myInfo.setNickname(user.getNickname());
 		myInfo.setEmail(user.getEmail());
 		myInfo.setAvtar(user.getAvatar());
-		
-		
+		myInfo.setGender(user.getGender());
+		myInfo.setStatus(user.getStatus());
+		myInfo.setBirthday(user.getBirthday());
+
 		return myInfo;
 	}
 
 	@Override
 	public UserPageResponse userPage(HttpServletRequest httpServletReq, long userid) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		
-								
-		User user = userRepo.findById(userid);		
+
+		User user = userRepo.findById(userid);
 		UserPageResponse response = new UserPageResponse();
 		String accessor = null;
-		if(requestTokenHeader!=null) {
+		if (requestTokenHeader != null) {
 			accessor = jwtUtil.getUserid(requestTokenHeader);
 		}
-		if(accessor != null && userid == Long.parseLong(accessor))
+		if (accessor != null && userid == Long.parseLong(accessor))
 			response.setMine(true);
-		
+
 		response.setEmail(user.getEmail());
 		response.setAvatar(user.getAvatar());
 		response.setNickname(user.getNickname());
 		response.setUserid(user.getId());
-		
-		
+
 		List<FavoriteAnimeResponse> fAnimes = new ArrayList();
 		List<FavoriteCharaResponse> fCharas = new ArrayList();
 		List<FavoriteSeiyuResponse> fSeiyus = new ArrayList();
-	
-		for(FavoriteAnime fa : user.getFavoriteAnimes()) {
+
+		for (FavoriteAnime fa : user.getFavoriteAnimes()) {
 			FavoriteAnimeResponse faResponse = new FavoriteAnimeResponse();
 			Anime anime = fa.getAnime();
 			faResponse.setId(anime.getId());
@@ -164,32 +151,104 @@ public class UserServiceImpl implements UserService {
 			faResponse.setType(anime.getType());
 			fAnimes.add(faResponse);
 		}
-		
-		for(FavoriteChara fc : user.getFavoriteCharas()) {
+
+		for (FavoriteChara fc : user.getFavoriteCharas()) {
 			FavoriteCharaResponse fcResponse = new FavoriteCharaResponse();
 			Chara chara = fc.getChara();
 			fcResponse.setId(chara.getId());
 			fcResponse.setFirstName(chara.getFirstName());
 			fcResponse.setLastName(chara.getLastName());
 			fCharas.add(fcResponse);
-			
+
 		}
-		
-		for(FavoriteSeiyu fs : user.getFavoriteSeiyus()) {
+
+		for (FavoriteSeiyu fs : user.getFavoriteSeiyus()) {
 			FavoriteSeiyuResponse fsResponse = new FavoriteSeiyuResponse();
 			Seiyu seiyu = fs.getSeiyu();
 			fsResponse.setId(seiyu.getId());
 			fsResponse.setName(seiyu.getName());
 			fSeiyus.add(fsResponse);
 		}
-		
+
 		response.setFavoriteAnimes(fAnimes);
 		response.setFavoriteCharas(fCharas);
 		response.setFavoriteSeiyus(fSeiyus);
-		
-		
-		
+
 		return response;
 	}
-	
+
+	@Override
+	public void logout(HttpServletRequest httpServletReq) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		String data = userid.concat("jwt");
+		boolean deleted = redisUtil.deleteData(data);
+	}
+
+	@Override
+	public boolean setBirthday(HttpServletRequest httpServletReq, LocalDate birthday) {
+
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+
+		String userid = null;
+		userid = jwtUtil.getUserid(requestTokenHeader);
+
+		User user = userRepo.findById(Long.parseLong(userid));
+
+		User fixedUser = User.builder().id(user.getId()).email(user.getEmail()).status(user.getStatus())
+				.gender(user.getGender()).nickname(user.getNickname()).birthday(birthday)
+				.createdDate(user.getCreatedDate()).build();
+
+		userRepo.save(fixedUser);
+
+		return true;
+
+	}
+
+	@Override
+	public boolean setEmail(HttpServletRequest httpServletReq, String email) {
+
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+
+		User user = userRepo.findById(Long.parseLong(userid));
+
+		User fixedUser = User.builder().id(user.getId()).email(email).status(user.getStatus()).gender(user.getGender())
+				.nickname(user.getNickname()).birthday(user.getBirthday()).createdDate(user.getCreatedDate()).build();
+
+		userRepo.save(fixedUser);
+
+		return true;
+
+	}
+
+	@Override
+	public boolean setGender(HttpServletRequest httpServletReq, UserGender gender) {
+
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+
+		User user = userRepo.findById(Long.parseLong(userid));
+
+		User fixedUser = User.builder().id(user.getId()).email(user.getEmail()).status(user.getStatus()).gender(gender)
+				.nickname(user.getNickname()).birthday(user.getBirthday()).createdDate(user.getCreatedDate()).build();
+
+		userRepo.save(fixedUser);
+
+		return true;
+
+	}
+
+	@Override
+	public boolean checkToken(HttpServletRequest httpServletReq) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+
+		if (requestTokenHeader == null)
+			return false;
+
+		return true;
+	}
+
 }
