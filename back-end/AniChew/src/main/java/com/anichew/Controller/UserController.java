@@ -37,7 +37,7 @@ public class UserController {
 		UserPageResponse userPageRes = null;
 		
 		
-		if(userService.isExistUser(userid)) {
+		if(!userService.isExistUser(userid)) {
 			return new ResponseEntity<UserPageResponse>(userPageRes,HttpStatus.NOT_FOUND);
 		}
 		
