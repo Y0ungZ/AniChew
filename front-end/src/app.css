@@ -1,4 +1,6 @@
 @import '~antd/dist/antd.css';
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
 
 body {
   background-color: rgba(128, 128, 128, 0.08);
@@ -22,4 +24,32 @@ body {
   -o-animation: none !important;
   -ms-animation: none !important;
   animation: none !important;
+}
+
+/* antd carousel dots <-> slick-dots duplicated */
+ul.slick-dots.slick-dots-bottom{
+  margin-left:0;
+}
+
+/* slick image block -> inline */
+.slick-slide img {
+  display: inline;
+}
+
+/* slick arrow custom */
+
+.slick-prev, .slick-next{
+  transform: translate(0, -100%);
+}
+
+.slick-next{
+  right:0;
+}
+
+.slick-prev:before, .slick-next:before{
+  color:#ff9999;
+}
+
+.slick-disabled{
+  opacity: 0;
 }
