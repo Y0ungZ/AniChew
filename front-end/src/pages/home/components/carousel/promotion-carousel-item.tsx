@@ -38,7 +38,7 @@ const PromotionCarouselItem = (props :ContentItemProps) => (
       rgba(20, 20, 20, 1) 100%
       ),
       url(${process.env.REACT_APP_IMAGE_BASE_URL
-      }anime_imgs/${props.data.animeId}.jpg) center/cover`,
+      }/anime_imgs/${props.data.animeId}.jpg) center/cover`,
     backgroundSize: 'cover',
     height: '30em',
     display: 'flex',

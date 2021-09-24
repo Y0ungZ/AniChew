@@ -33,7 +33,7 @@ const ContentSliderItem = (props: ContentItemProps) => {
       <img
         style={screens.lg ? styles.largeImage : styles.smallImage}
         src={`${process.env.REACT_APP_IMAGE_BASE_URL
-        }anime_imgs/${props.data.animeId}.jpg`}
+        }/anime_imgs/${props.data.animeId}.jpg`}
         alt="슬라이드 이미지"
       />
       <p style={styles.title}>
