@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Drawer, Layout, Grid } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import LeftMenu from './menus/left-menu';
 import RightMenu from './menus/right-menu';
 import { CssKeyObject } from '../../models/css-basic-type';
 import '../../assets/css/color.css';
+import SearchHeader from './search-header';
 
 const { useBreakpoint } = Grid;
 
@@ -15,19 +17,18 @@ const styles: CssKeyObject = {
     position: 'static',
     zIndex: 20,
     width: '100%',
-    paddingLeft: '2em',
-    paddingRight: '2em',
-    backgroundColor: 'white',
     minWidth: '360px',
   },
   fixedPosition: {
     position: 'fixed',
     zIndex: 20,
     width: '100%',
+    minWidth: '360px',
+  },
+  header: {
+    backgroundColor: 'white',
     paddingLeft: '2em',
     paddingRight: '2em',
-    backgroundColor: 'white',
-    minWidth: '360px',
   },
   logo: {
     float: 'left',
@@ -54,6 +55,7 @@ const styles: CssKeyObject = {
 const MainHeader = () => {
   const [headerPosition, setHeaderPosition] = useState('static');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const screens = useBreakpoint();
 
   useEffect(() => {
@@ -72,35 +74,44 @@ const MainHeader = () => {
     setDrawerOpen((open) => !open);
   };
 
+  const toggleSearchHeader = () => {
+    setSearchOpen((open) => !open);
+  };
+
   return (
-    <Header style={headerPosition === 'static' ? styles.staticPosition : styles.fixedPosition}>
-      <span style={styles.logo}>
-        애니츄
-      </span>
-      {screens.md ? (
-        <div style={styles.leftMenu}>
-          <LeftMenu mode="horizontal" />
+    <div style={headerPosition === 'static' ? styles.staticPosition : styles.fixedPosition}>
+      <Header style={styles.header}>
+        <Link to="/">
+          <span style={styles.logo}>
+            애니츄
+          </span>
+        </Link>
+        {screens.md ? (
+          <div style={styles.leftMenu}>
+            <LeftMenu mode="horizontal" />
+          </div>
+        ) : (
+          <Button
+            type="primary"
+            onClick={toggleDrawer}
+            style={styles.drawerOpenBtn}
+            icon={<MenuOutlined />}
+          />
+        )}
+        <div style={styles.rightMenu}>
+          <RightMenu toggleSearchHeader={toggleSearchHeader} />
         </div>
-      ) : (
-        <Button
-          type="primary"
-          onClick={toggleDrawer}
-          style={styles.drawerOpenBtn}
-          icon={<MenuOutlined />}
-        />
-      )}
-      <div style={styles.rightMenu}>
-        <RightMenu />
-      </div>
-      <Drawer
-        title="메뉴"
-        placement="right"
-        onClose={toggleDrawer}
-        visible={drawerOpen}
-      >
-        <LeftMenu mode="vertical" />
-      </Drawer>
-    </Header>
+        <Drawer
+          title="메뉴"
+          placement="right"
+          onClose={toggleDrawer}
+          visible={drawerOpen}
+        >
+          <LeftMenu mode="vertical" />
+        </Drawer>
+      </Header>
+      <SearchHeader open={searchOpen} />
+    </div>
   );
 };
 
