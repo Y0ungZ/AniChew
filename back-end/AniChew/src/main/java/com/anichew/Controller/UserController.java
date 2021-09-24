@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import com.anichew.Entity.UserGender;
+import com.anichew.Response.LoginResponse;
 import com.anichew.Response.MyInfoResponse;
 import com.anichew.Response.UserPageResponse;
 import com.anichew.Service.UserService;
@@ -53,16 +54,21 @@ public class UserController {
 	}
 	
 	@GetMapping("/test/{userid}")
-	public ResponseEntity<String> testLogin (@PathVariable("userid") long userid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	public ResponseEntity<LoginResponse> testLogin (@PathVariable("userid") long userid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		LoginResponse response = new LoginResponse();
 		
 		if(!userService.isExistUser(userid)) {
-			return new ResponseEntity<String>("존재하지 않는 ID",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<LoginResponse>(response,HttpStatus.NOT_FOUND);
 		}		
 
 		
 		String jwt = userService.generateToken(httpServletRes, Long.toString(userid));
-				
-		return new ResponseEntity<String>(jwt,HttpStatus.OK);
+		
+		response.setToken(jwt);
+		
+		return new ResponseEntity<LoginResponse>(response,HttpStatus.OK);
 	}
 	
 	
