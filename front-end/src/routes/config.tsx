@@ -12,13 +12,13 @@ export type RouteType = {
 }
 
 export const routes: RouteType[] = [
-  // {
-  //   path: '/',
-  //   exact: true,
-  //   private: false,
-  //   component: lazy(() => import('../pages/home/home')),
-  //   fallback: <FullLoading />,
-  // },
+  {
+    path: '/',
+    exact: true,
+    private: false,
+    component: lazy(() => import('../pages/home/home')),
+    fallback: <FullLoading />,
+  },
   {
     path: '/oauth/kakao',
     exact: false,
