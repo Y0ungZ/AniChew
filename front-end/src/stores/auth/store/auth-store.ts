@@ -1,15 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import authRepository from '../repository/auth-repository';
 
-type ResponseGenerator = {
-  config?: any;
-  data?: any;
-  headers?: any;
-  request?: any;
-  status?: number;
-  statusText?: string;
-};
-
 export default class AuthStore {
   isLoggedIn = false;
 
@@ -17,11 +8,11 @@ export default class AuthStore {
     makeAutoObservable(this);
   }
 
-  *login(authCode: string) {
-    const response: ResponseGenerator = yield authRepository.signin(authCode);
-    console.log(response);
-    if (response.status === 200) {
+  async login(authCode: string) {
+    const res = await authRepository.login(authCode);
+    if (res.status === 200) {
       this.isLoggedIn = true;
     }
+    throw new Error('로그인 실패');
   }
 }
