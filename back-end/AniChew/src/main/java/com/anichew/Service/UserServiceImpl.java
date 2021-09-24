@@ -26,6 +26,7 @@ import com.anichew.Entity.User;
 import com.anichew.Entity.UserGender;
 import com.anichew.Entity.UserStatus;
 import com.anichew.Repository.UserRepository;
+import com.anichew.Request.UserRequest;
 import com.anichew.Response.FavoriteAnimeResponse;
 import com.anichew.Response.FavoriteCharaResponse;
 import com.anichew.Response.FavoriteSeiyuResponse;
@@ -104,12 +105,15 @@ public class UserServiceImpl implements UserService {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String accessor = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(accessor));
-
+		
+		
+		
+		
 		MyInfoResponse myInfo = new MyInfoResponse();
-		myInfo.setUserid(user.getId());
+		myInfo.setUserId(user.getId());
 		myInfo.setNickname(user.getNickname());
 		myInfo.setEmail(user.getEmail());
-		myInfo.setAvtar(user.getAvatar());
+		myInfo.setAvatar(user.getAvatar());
 		myInfo.setGender(user.getGender());
 		myInfo.setStatus(user.getStatus());
 		myInfo.setBirthday(user.getBirthday());
@@ -186,7 +190,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean setBirthday(HttpServletRequest httpServletReq, LocalDate birthday) {
+	public MyInfoResponse setUserInfo(HttpServletRequest httpServletReq, UserRequest req) {
 
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 
@@ -195,49 +199,28 @@ public class UserServiceImpl implements UserService {
 
 		User user = userRepo.findById(Long.parseLong(userid));
 
-		User fixedUser = User.builder().id(user.getId()).email(user.getEmail()).status(user.getStatus())
-				.gender(user.getGender()).nickname(user.getNickname()).birthday(birthday)
-				.createdDate(user.getCreatedDate()).build();
+		User fixedUser = User.builder()
+				.id(user.getId())
+				.email(user.getEmail())
+				.status(user.getStatus())
+				.gender(req.getGender())
+				.nickname(user.getNickname())
+				.birthday(LocalDate.parse(req.getBirthday().substring(0,10)))
+				.createdDate(user.getCreatedDate())
+				.build();
 
 		userRepo.save(fixedUser);
-
-		return true;
-
-	}
-
-	@Override
-	public boolean setEmail(HttpServletRequest httpServletReq, String email) {
-
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-
-		User user = userRepo.findById(Long.parseLong(userid));
-
-		User fixedUser = User.builder().id(user.getId()).email(email).status(user.getStatus()).gender(user.getGender())
-				.nickname(user.getNickname()).birthday(user.getBirthday()).createdDate(user.getCreatedDate()).build();
-
-		userRepo.save(fixedUser);
-
-		return true;
-
-	}
-
-	@Override
-	public boolean setGender(HttpServletRequest httpServletReq, UserGender gender) {
-
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-
-		User user = userRepo.findById(Long.parseLong(userid));
-
-		User fixedUser = User.builder().id(user.getId()).email(user.getEmail()).status(user.getStatus()).gender(gender)
-				.nickname(user.getNickname()).birthday(user.getBirthday()).createdDate(user.getCreatedDate()).build();
-
-		userRepo.save(fixedUser);
-
-		return true;
+		
+		MyInfoResponse response = new MyInfoResponse();
+		response.setAvatar(fixedUser.getAvatar());
+		response.setBirthday(fixedUser.getBirthday());
+		response.setEmail(fixedUser.getEmail());
+		response.setGender(fixedUser.getGender());
+		response.setUserId(fixedUser.getId());
+		response.setStatus(fixedUser.getStatus());
+		
+		
+		return response;
 
 	}
 
