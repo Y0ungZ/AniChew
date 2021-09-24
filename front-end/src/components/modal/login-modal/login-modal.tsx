@@ -1,6 +1,6 @@
 import React, { FormEvent, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Typography, Modal } from 'antd';
-import { observer } from 'mobx-react';
 import KakaoLoginBtn from '../../button/kakao-login-btn/kakao-login-btn';
 import { CssKeyObject } from '../../../models/css-basic-type';
 import { useAuth } from '../../../hooks';
@@ -31,27 +31,24 @@ const styles: CssKeyObject = {
   footer: { fontSize: '0.8rem', marginTop: '2.5em', color: '#b2b2b2' },
 };
 
-const LoginModal = observer(({ visible, setVisible }: LoginModalProps) => {
+const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const history = useHistory();
   const auth = useAuth();
-  const login = (e: FormEvent<HTMLFormElement>) => {
-    // 1913408840
-    e.preventDefault();
-    const id = inputRef.current!.value;
-    mainAxios.get(`/user/test/${id}`).then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem('token', res.data);
-        mainAxios.defaults.headers.Authorization = res.data;
-        setVisible(false);
-        auth.isLoggedIn = true;
-      }
-    });
-  };
 
-  const authme = () => {
-    mainAxios.get('/user/me').then((res) => {
-      console.log(res);
+  const login = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mainAxios.get(`/user/test/${inputRef.current!.value}`).then((res) => {
+      if (res.status === 200) {
+        mainAxios.defaults.headers.common.Authorization = res.data.token;
+        auth.isLoggedIn = true;
+        setVisible(false);
+        if (!res.data.newUser) {
+          history.push('/cold-start');
+        } else {
+          history.push('/');
+        }
+      }
     });
   };
 
@@ -79,9 +76,8 @@ const LoginModal = observer(({ visible, setVisible }: LoginModalProps) => {
         <input type="text" ref={inputRef} />
         <button type="submit">로그인</button>
       </form>
-      <button type="button" onClick={authme}>auth me</button>
     </Modal>
   );
-});
+};
 
 export default LoginModal;
