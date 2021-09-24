@@ -11,10 +11,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MyInfoResponse {
-	private long userid;
+	private long userId;
 	private String nickname;
 	private String email;
-	private String avtar;
+	private String avatar;
 	private UserStatus status;
 	private UserGender gender;
 	private LocalDate birthday;
