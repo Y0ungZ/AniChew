@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.anichew.Request.UserRequest;
 import com.anichew.Response.MyInfoResponse;
 import com.anichew.Response.UserPageResponse;
@@ -19,5 +21,7 @@ public interface UserService {
 	void logout(HttpServletRequest httpServletReq);
 	MyInfoResponse setUserInfo(HttpServletRequest httpServletReq, UserRequest req);
 	boolean checkToken(HttpServletRequest httpServletReq);
+	String uploadAvatar(MultipartFile file, HttpServletRequest httpServletReq);
+	boolean setAvatar(String avatar, HttpServletRequest httpServletReq);
 	
 }

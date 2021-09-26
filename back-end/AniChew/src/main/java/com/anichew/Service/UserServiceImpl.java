@@ -1,11 +1,14 @@
 package com.anichew.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.anichew.DTO.UserDTO;
 import com.anichew.Entity.Anime;
@@ -205,6 +210,7 @@ public class UserServiceImpl implements UserService {
 				.status(user.getStatus())
 				.gender(req.getGender())
 				.nickname(user.getNickname())
+				.avatar(user.getAvatar())
 				.birthday(LocalDate.parse(req.getBirthday().substring(0,10)))
 				.createdDate(user.getCreatedDate())
 				.build();
@@ -233,5 +239,97 @@ public class UserServiceImpl implements UserService {
 
 		return true;
 	}
+
+	@Override
+	public String uploadAvatar(MultipartFile mpf, HttpServletRequest httpServletReq) {
+		
+		
+		UUID uid = UUID.randomUUID();
+		String absolutePath = new File("").getAbsolutePath() + File.separator;
+		
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+
+		String userid = null;
+		userid = jwtUtil.getUserid(requestTokenHeader);
+				
+		User user = userRepo.findById(Long.parseLong(userid));
+		
+		String path = "src" +  File.separator + "main" +  File.separator + "resources" +  File.separator + "anichew-image" + File.separator + "user_imgs" + File.separator + userid;
+		File file = new File(path);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}		
+		
+		System.out.println(mpf);
+		
+		String originalFileExtension;
+		String contentType = mpf.getContentType();		
+		
+		
+		if (ObjectUtils.isEmpty(contentType)) {
+			return null;
+		}
+
+
+		if (contentType.contains("image/jpeg")) {
+			originalFileExtension = ".jpg";
+		} else if (contentType.contains("image/png")) {
+			originalFileExtension = ".png";
+		} else {
+
+			return null;
+		}
+		
+		String filename = uid.toString() + originalFileExtension;
+
+		file = new File(absolutePath + path + File.separator + filename);
+		file.setWritable(true);
+		file.setReadable(true);
+		try {
+			mpf.transferTo(file);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out.println(file.getCanonicalPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return filename;		
+		
+	
+	}
+
+	@Override
+	public boolean setAvatar(String avatar, HttpServletRequest httpServletReq) {
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		User user = userRepo.findById(Long.parseLong(userid));
+		
+		
+		User fixedUser = User.builder()
+				.id(user.getId())
+				.email(user.getEmail())
+				.status(user.getStatus())
+				.gender(user.getGender())
+				.nickname(user.getNickname())
+				.birthday(user.getBirthday())
+				.createdDate(user.getCreatedDate())
+				.avatar(avatar)
+				.build();
+
+		userRepo.save(fixedUser);
+		
+		
+		return true;
+	}
+	
+	
 
 }
