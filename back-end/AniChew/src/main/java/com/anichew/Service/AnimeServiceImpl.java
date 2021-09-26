@@ -11,7 +11,6 @@ import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.AnimerateRepository;
 import com.anichew.Repository.UserRepository;
-import com.anichew.Request.AnimerateRequest;
 import com.anichew.Util.JwtUtil;
 
 @Service
@@ -30,13 +29,13 @@ public class AnimeServiceImpl implements AnimeService {
 	JwtUtil jwtUtil;
 	
 	@Override
-	public boolean rateAnime(HttpServletRequest httpServletReq, AnimerateRequest animerateReq) {
+	public boolean rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
 		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(userid));		
 		
-		Anime anime = animeRepo.findById(animerateReq.getAnimeid());
+		Anime anime = animeRepo.findById(animeid);
 		
 		Animerate animerate;
 		
@@ -46,7 +45,7 @@ public class AnimeServiceImpl implements AnimeService {
 			animerate = new Animerate(user, anime);
 		}
 		
-		animerate.setScore(animerateReq.getScore());
+		animerate.setScore(score);
 		
 		animerateRepo.save(animerate);
 		
