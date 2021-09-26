@@ -11,6 +11,7 @@ import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.AnimerateRepository;
 import com.anichew.Repository.UserRepository;
+import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Util.JwtUtil;
 
 @Service
@@ -93,6 +94,30 @@ public class AnimeServiceImpl implements AnimeService {
 			return true;
 		
 		return false;
+	}
+
+
+	@Override
+	public AnimeDetailResponse animeDetail(HttpServletRequest httpServletReq, long animeid) {
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		
+		String accessor = null;
+		if (requestTokenHeader != null) {
+			accessor = jwtUtil.getUserid(requestTokenHeader);
+		}
+		
+		
+		
+		Anime anime = animeRepo.findById(animeid);
+		AnimeDetailResponse response = new AnimeDetailResponse(anime);
+		
+		
+
+		
+		
+		
+		return null;
 	}
 
 }
