@@ -42,28 +42,28 @@ public class Anime {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="anime_type")
-	AnimeType type;
+	private AnimeType type;
 	
 	@Column(name="anime_episodes")
-	int episodes;
+	private int episodes;
 	
 	@Column(name="anime_aired_start")
-	LocalDate airedStart;
+	private LocalDate airedStart;
 	
 	@Column(name="anime_aired_end")
-	LocalDate airedEnd;
+	private LocalDate airedEnd;
 	
 	@Column(name="anime_season")
-	String season;
+	private String season;
 	
 	@Column(name="anmie_duration")
-	String duration;
+	private String duration;
 	
 	@Column(name="anime_status")
-	AnimeStatus status;
+	private AnimeStatus status;
 	
 	@OneToMany(mappedBy ="anime", fetch = FetchType.LAZY)
-	List<AnimeGenre> genres;
+	private List<AnimeGenre> genres;
 	
 	@Builder
 	public Anime(long id, String name, String englishName, String japanesName, String koreanName, AnimeType type, int episodes, LocalDate airedStart, LocalDate airedEnd, String season, String duration, AnimeStatus status) {
