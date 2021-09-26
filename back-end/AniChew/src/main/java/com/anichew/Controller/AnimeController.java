@@ -30,18 +30,20 @@ public class AnimeController {
 	private UserService userService;
 	
 	
-//	@GetMapping(value="/{animeid}")
-//	public ResponseEntity<AnimeDetailResponse> getAnime (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
-//			
-//		
-//		AnimeDetailResponse response = null;
-//		
-//		if(animeService.exsitsAnime(httpServletReq, animeid)) {
-//			return new ResponseEntity<AnimeDetailResponse>(response,HttpStatus.NOT_FOUND);
-//		}	
-//		
-//		return new ResponseEntity<AnimeDetailResponse>(response,HttpStatus.OK);
-//	}
+	@GetMapping(value="/{animeid}")
+	public ResponseEntity<AnimeDetailResponse> getAnime (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+			
+		
+		AnimeDetailResponse response = null;
+		
+		if(animeService.exsitsAnime(httpServletReq, animeid)) {
+			return new ResponseEntity<AnimeDetailResponse>(response,HttpStatus.NOT_FOUND);
+		}	
+		
+		response = animeService.animeDetail(httpServletReq, animeid);
+		
+		return new ResponseEntity<AnimeDetailResponse>(response,HttpStatus.OK);
+	}
 	
 	
 	@PostMapping(value="/{animeid}/score")
