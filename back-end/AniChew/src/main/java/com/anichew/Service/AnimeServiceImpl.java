@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
-import com.anichew.Entity.Animerate;
+import com.anichew.Entity.Animescore;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeRepository;
-import com.anichew.Repository.AnimerateRepository;
+import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Util.JwtUtil;
@@ -24,7 +24,7 @@ public class AnimeServiceImpl implements AnimeService {
 	AnimeRepository animeRepo;
 	
 	@Autowired
-	AnimerateRepository animerateRepo;
+	AnimescoreRepository animerateRepo;
 	
 	@Autowired
 	JwtUtil jwtUtil;
@@ -38,12 +38,12 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		Anime anime = animeRepo.findById(animeid);
 		
-		Animerate animerate;
+		Animescore animerate;
 		
 		if(animerateRepo.existsByUserAndAnime(user, anime)) {
 			animerate = animerateRepo.findByUserAndAnime(user,anime);			
 		}else {
-			animerate = new Animerate(user, anime);
+			animerate = new Animescore(user, anime);
 		}
 		
 		animerate.setScore(score);

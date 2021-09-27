@@ -11,12 +11,12 @@ import javax.persistence.Table;
 import lombok.Getter;
 
 @Entity
-@Table(name="animerate")
+@Table(name="animescore")
 @Getter
 
-public class Animerate {
+public class Animescore {
 	@Id
-	@Column(name="animerate_id")
+	@Column(name="animescore_id")
 	long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -28,18 +28,18 @@ public class Animerate {
 	Anime anime;
 	
 	
-	@Column(name="animerate_score")
+	@Column(name="animescore_score")
 	float score;
 		
 	
-	public Animerate() {}
+	public Animescore() {}
 	
-	public Animerate(User user, Anime anime) {
+	public Animescore(User user, Anime anime) {
 		this.user = user;
 		this.anime = anime;
 	}
 	
-	public Animerate(User user, Anime anime, float score) {
+	public Animescore(User user, Anime anime, float score) {
 		this.user = user;
 		this.anime = anime;
 		this.score = score;
