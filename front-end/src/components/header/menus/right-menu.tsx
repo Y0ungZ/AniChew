@@ -16,12 +16,17 @@ const RightMenu = (props: toggleSearchProps) => {
     props.toggleSearchHeader();
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    login.logout();
+  };
+
   const menu = (
     <Menu>
       <Menu.Item key="detail">
         회원정보
       </Menu.Item>
-      <Menu.Item key="logout">로그아웃</Menu.Item>
+      <Menu.Item key="logout" onClick={logout}>로그아웃</Menu.Item>
     </Menu>
   );
 

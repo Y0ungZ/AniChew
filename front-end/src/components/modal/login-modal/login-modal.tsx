@@ -42,6 +42,7 @@ const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
     mainAxios.get(`/user/test/${inputRef.current!.value}`).then((res) => {
       if (res.status === 200) {
         mainAxios.defaults.headers.common.Authorization = res.data.token;
+        localStorage.setItem('token', res.data.token);
         auth.isLoggedIn = true;
         setVisible(false);
         if (!res.data.newUser) {
