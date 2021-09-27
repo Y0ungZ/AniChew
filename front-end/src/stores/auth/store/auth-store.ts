@@ -12,15 +12,17 @@ export default class AuthStore {
     const res = await authRepository.login(authCode);
     if (res.status === 200) {
       this.isLoggedIn = true;
+    } else {
+      throw new Error('로그인 실패');
     }
-    throw new Error('로그인 실패');
   }
 
   async logout() {
     const res = await authRepository.logout();
     if (res.status === 200) {
       this.isLoggedIn = false;
+    } else {
+      throw new Error('로그아웃 실패');
     }
-    throw new Error('로그아웃 실패');
   }
 }
