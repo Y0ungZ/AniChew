@@ -7,13 +7,13 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.anichew.Entity.Anime;
-import com.anichew.Entity.Animerate;
+import com.anichew.Entity.Animescore;
 import com.anichew.Entity.User;
 
-public interface AnimerateRepository  extends JpaRepository<Animerate,Long> {
-	List<Animerate> findAllByUser(User user);
+public interface AnimescoreRepository  extends JpaRepository<Animescore,Long> {
+	List<Animescore> findAllByUser(User user);
 	boolean existsByUserAndAnime(User user, Anime anime);
 	@Transactional
 	boolean deleteByUserAndAnime(User user, Anime anime);
-	Animerate findByUserAndAnime(User user, Anime anime);
+	Animescore findByUserAndAnime(User user, Anime anime);
 }

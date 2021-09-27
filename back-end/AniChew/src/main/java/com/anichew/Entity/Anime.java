@@ -56,11 +56,16 @@ public class Anime {
 	@Column(name="anime_season")
 	private String season;
 	
-	@Column(name="anmie_duration")
+	@Column(name="anime_duration")
 	private String duration;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="anime_status")
 	private AnimeStatus status;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="anime_rate")
+	private Agerate rate;
 	
 	@OneToMany(mappedBy ="anime", fetch = FetchType.LAZY)
 	private List<AnimeGenre> genres;

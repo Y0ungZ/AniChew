@@ -1,5 +1,5 @@
 package com.anichew.Entity;
 
 public enum AnimeStatus {
-	ON_AIR, OFF_AIR, UPCOMING
+	ON_AIR, OFF_AIR, UPCOMING, UNKNOWN
 }
