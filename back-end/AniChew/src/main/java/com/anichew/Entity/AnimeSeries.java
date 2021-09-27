@@ -18,7 +18,7 @@ public class AnimeSeries {
 	private long id;	
 	
 	@Column(name="series_id")
-	private long serires_id;
+	private long series_id;
 	
 	@Column(name="anime_id")
 	private long animeId;
