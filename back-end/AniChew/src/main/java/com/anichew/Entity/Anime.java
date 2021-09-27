@@ -71,7 +71,7 @@ public class Anime {
 	private List<AnimeGenre> genres;
 	
 	@Builder
-	public Anime(long id, String name, String englishName, String japanesName, String koreanName, AnimeType type, int episodes, LocalDate airedStart, LocalDate airedEnd, String season, String duration, AnimeStatus status) {
+	public Anime(long id, String name, String englishName, String japanesName, String koreanName, AnimeType type, int episodes, LocalDate airedStart, LocalDate airedEnd, String season, String duration, AnimeStatus status, Agerate rate) {
 		this.id = id;
 		this.name = name;
 		this.englishName = englishName;
@@ -84,6 +84,7 @@ public class Anime {
 		this.season = season;
 		this.duration = duration;
 		this.status = status;
+		this.rate = rate;
 		
 	}
 
