@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Typography, Modal } from 'antd';
 import KakaoLoginBtn from '../../button/kakao-login-btn/kakao-login-btn';
 import { CssKeyObject } from '../../../models/css-basic-type';
-import { useAuth } from '../../../hooks';
+import { useAuth, useUser } from '../../../hooks';
 import { mainAxios } from '../../../libs/axios';
 
 const { Title, Paragraph } = Typography;
@@ -35,6 +35,7 @@ const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
   const auth = useAuth();
+  const user = useUser();
 
   const login = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,6 +45,7 @@ const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
         auth.isLoggedIn = true;
         setVisible(false);
         if (!res.data.newUser) {
+          user.me();
           history.push('/cold-start');
         } else {
           history.push('/');
