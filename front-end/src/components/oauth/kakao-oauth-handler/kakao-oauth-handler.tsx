@@ -10,7 +10,8 @@ const KakaoOauthHandler = () => {
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code == null) {
-      alert('다시 시도해주세용');
+      console.log('다시 시도해주세용');
+      history.push('/');
     } else {
       auth
         .login(code)
@@ -20,7 +21,7 @@ const KakaoOauthHandler = () => {
           alert('다시 시도해주세용');
         });
     }
-  });
+  }, [auth, history]);
   return <FullLoading />;
 };
 
