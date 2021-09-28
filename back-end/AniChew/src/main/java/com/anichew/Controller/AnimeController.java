@@ -78,11 +78,11 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
-		if(animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
 			return new ResponseEntity<String>("WRONG ANIME",HttpStatus.BAD_REQUEST);
 		}
 		
-		if(animeService.existsAnimerate(httpServletReq, animeid)) {
+		if(!animeService.existsAnimerate(httpServletReq, animeid)) {
 			return new ResponseEntity<String>("WRONG ANIME",HttpStatus.NOT_FOUND);
 		}
 		
