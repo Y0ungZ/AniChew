@@ -83,7 +83,7 @@ public class AnimeController {
 		}
 		
 		if(!animeService.existsAnimerate(httpServletReq, animeid)) {
-			return new ResponseEntity<String>("WRONG ANIME",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("WRONG ANIME1",HttpStatus.NOT_FOUND);
 		}
 		
 		animeService.deleteRate(httpServletReq, animeid);
