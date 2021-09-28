@@ -21,6 +21,7 @@ import com.anichew.Repository.FavoriteAnimeRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimeResponse;
+import com.anichew.Response.AnimescoreResponse;
 import com.anichew.Response.GenreResponse;
 import com.anichew.Response.SeriesResponse;
 import com.anichew.Util.JwtUtil;
@@ -53,7 +54,7 @@ public class AnimeServiceImpl implements AnimeService {
 	JwtUtil jwtUtil;
 	
 	@Override
-	public boolean rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
+	public AnimescoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
 		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
@@ -73,10 +74,14 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		animerateRepo.save(animerate);
 		
+		AnimescoreResponse response = new AnimescoreResponse();
+		response.setAnimeId(animeid);
+		response.setUserId(Long.parseLong(userid));
+		response.setScore(score);
 		
 		
 		
-		return false;
+		return response;
 	}
 
 
