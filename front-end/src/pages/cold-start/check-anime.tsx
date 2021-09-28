@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Row, Typography } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import { CssKeyObject } from '../../models/css-basic-type';
 import AnimeCardWithRate from './components/anime-card-with-rate/anime-card-with-rate';
 import '../../assets/css/color.css';
+import { mainAxios } from '../../libs/axios';
 
 const { Text } = Typography;
 
 const styles: CssKeyObject = {
+  container: {
+    maxWidth: '65em',
+    minWidth: '65em',
+    margin: '0 auto',
+    backgroundColor: 'white',
+  },
   header: {
     textAlign: 'center',
     backgroundColor: 'white',
@@ -34,23 +41,36 @@ const styles: CssKeyObject = {
   },
 };
 
+type AniType = {
+  id: number;
+  title: string;
+}
+
 const CheckAnime = () => {
   const history = useHistory();
+  const [recommendAniList, setRecommendAniList] = useState<AniType[]>();
 
   const finishColdStartSetup = () => {
     history.push('/');
   };
 
+  useEffect(() => {
+    mainAxios.get(`${process.env.REACT_APP_API_DOMAIN_URL}/recommend/start`) //
+      .then((res) => {
+        setRecommendAniList(res.data.slice(0, 20));
+      });
+  }, []);
+
   return (
-    <section>
+    <section style={styles.container}>
       <Header style={styles.header}>
         <Text style={styles.title}>시청한 애니메이션을 평가해주실 수 있나요~!?</Text>
       </Header>
       <div style={styles.animeContainer}>
         <Row gutter={[16, 32]}>
-          {[1, 15, 20, 21, 100, 101, 102, 103, 104].map((animeId) => (
-            <Col span={6} key={animeId}>
-              <AnimeCardWithRate animeId={animeId} />
+          {recommendAniList && recommendAniList.map(({ id }) => (
+            <Col span={6} key={id}>
+              <AnimeCardWithRate id={id} />
             </Col>
           ))}
         </Row>

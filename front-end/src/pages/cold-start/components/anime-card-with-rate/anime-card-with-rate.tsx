@@ -6,7 +6,7 @@ import '../../../../assets/css/color.css';
 
 const styles: CssKeyObject = {
   card: {
-    width: '80%',
+    width: '15em',
     borderRadius: '1em',
   },
   cardBody: {
@@ -20,18 +20,18 @@ const styles: CssKeyObject = {
 };
 
 type AnimeCardWithRateProps = {
-  animeId: number
+  id: number
 }
 
-const AnimeCardWithRate = ({ animeId }: AnimeCardWithRateProps) => {
+const AnimeCardWithRate = ({ id }: AnimeCardWithRateProps) => {
   const [rate, setRate] = useState(0);
 
   const checkRate = (value: number) => {
     setRate(value);
     if (value === 0) {
-      mainAxios.delete(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${animeId}/score`);
+      mainAxios.delete(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${id}/score`);
     } else {
-      mainAxios.post(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${animeId}/score`, { score: value });
+      mainAxios.post(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${id}/score`, { score: value });
     }
   };
 
@@ -40,7 +40,7 @@ const AnimeCardWithRate = ({ animeId }: AnimeCardWithRateProps) => {
       bordered={false}
       style={styles.card}
       bodyStyle={styles.cardBody}
-      cover={<img alt="example" src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${animeId}.jpg`} style={styles.thumbnail} />}
+      cover={<img alt="example" src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${id}.jpg`} style={styles.thumbnail} />}
     >
       <Rate onChange={checkRate} value={rate} />
     </Card>
