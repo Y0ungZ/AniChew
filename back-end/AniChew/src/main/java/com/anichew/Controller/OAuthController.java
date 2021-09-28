@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.anichew.Response.LoginResponse;
 import com.anichew.Service.KaKaoAPI;
+import com.anichew.Service.TestService;
 import com.anichew.Service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ public class OAuthController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TestService testService;
 	
 	@ApiOperation("로그인")
 	@GetMapping(value="/login")
@@ -55,17 +59,12 @@ public class OAuthController {
 	@GetMapping(value="/logout")
 	public ResponseEntity<String> logout (HttpServletRequest httpServletReq) {
 		
-		if(userService.checkToken(httpServletReq))
+		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
+		userService.logout(httpServletReq);
 		
-		return new ResponseEntity<String>("hello",HttpStatus.OK);
-	}
-	
-	@GetMapping(value="/test")
-	public ResponseEntity<String> test (HttpSession session) {
-		
-		return new ResponseEntity<String>("test",HttpStatus.OK);
+		return new ResponseEntity<String>("logout",HttpStatus.OK);
 	}
 	
 	
