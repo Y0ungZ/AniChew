@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.anichew.Request.CoverRequest;
 import com.anichew.Request.UserRequest;
 import com.anichew.Response.LoginResponse;
 import com.anichew.Response.MyInfoResponse;
@@ -82,33 +83,59 @@ public class UserController {
 			return new ResponseEntity<MyInfoResponse>(response, HttpStatus.UNAUTHORIZED);
 		
 		
-		userService.setUserInfo(httpServletReq, req);
-		
-		response = userService.getMyInfo(httpServletReq);
+		response = userService.setUserInfo(httpServletReq, req);
+				
 		
 		return new ResponseEntity<MyInfoResponse>(response,HttpStatus.OK);
 		
 	}
 	
 	@PostMapping("/avatar")
-	public ResponseEntity<MyInfoResponse> avatar (HttpServletRequest httpServletReq, @RequestPart MultipartFile file){
+	public ResponseEntity<String> avatar (HttpServletRequest httpServletReq, @RequestPart MultipartFile file){
 				
 		
-		System.out.println(file);
-		System.out.println(file.getContentType());
+		String avatar = null;
+		
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>(avatar, HttpStatus.UNAUTHORIZED);
+		
+		avatar = userService.uploadPhoto(file, httpServletReq);		
+	
+		
+		return new ResponseEntity<String>(avatar,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/cover")
+	public ResponseEntity<String> coverUpload (HttpServletRequest httpServletReq, @RequestPart MultipartFile file){
+				
+		String cover = null;
+		
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>(cover, HttpStatus.UNAUTHORIZED);
+		
+		
+		cover = userService.uploadPhoto(file, httpServletReq);
+		
+	
+		return new ResponseEntity<String>(cover,HttpStatus.OK);
+	}
+	
+	@PutMapping("/cover")
+	public ResponseEntity<MyInfoResponse> cover (HttpServletRequest httpServletReq, @RequestBody CoverRequest req){
+		
 		MyInfoResponse response = null;
+		
 		
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<MyInfoResponse>(response, HttpStatus.UNAUTHORIZED);
 		
-		String avatar = userService.uploadAvatar(file, httpServletReq);
-		System.out.println(avatar);
-		userService.setAvatar(avatar, httpServletReq);
-		response = userService.getMyInfo(httpServletReq);
 		
+		if(userService.setCover(httpServletReq, req))
+			response = userService.getMyInfo(httpServletReq);
+		
+	
 		return new ResponseEntity<MyInfoResponse>(response,HttpStatus.OK);
-		
 	}
-
 	
 }
