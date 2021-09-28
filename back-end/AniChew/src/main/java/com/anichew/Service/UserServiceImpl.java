@@ -31,6 +31,7 @@ import com.anichew.Entity.User;
 import com.anichew.Entity.UserGender;
 import com.anichew.Entity.UserStatus;
 import com.anichew.Repository.UserRepository;
+import com.anichew.Request.CoverRequest;
 import com.anichew.Request.UserRequest;
 import com.anichew.Response.FavoriteAnimeResponse;
 import com.anichew.Response.FavoriteCharaResponse;
@@ -209,10 +210,11 @@ public class UserServiceImpl implements UserService {
 				.email(user.getEmail())
 				.status(user.getStatus())
 				.gender(req.getGender())
-				.nickname(user.getNickname())
-				.avatar(user.getAvatar())
+				.nickname(req.getNickname())
+				.avatar(req.getAvatar())
 				.birthday(LocalDate.parse(req.getBirthday().substring(0,10)))
 				.createdDate(user.getCreatedDate())
+				.cover(user.getCover())
 				.build();
 
 		userRepo.save(fixedUser);
@@ -224,12 +226,17 @@ public class UserServiceImpl implements UserService {
 		response.setGender(fixedUser.getGender());
 		response.setUserId(fixedUser.getId());
 		response.setStatus(fixedUser.getStatus());
+		response.setNickname(fixedUser.getNickname());
+		
 		
 		
 		return response;
 
 	}
 
+	
+	
+	
 	@Override
 	public boolean checkToken(HttpServletRequest httpServletReq) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
@@ -241,7 +248,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String uploadAvatar(MultipartFile mpf, HttpServletRequest httpServletReq) {
+	public String uploadPhoto(MultipartFile mpf, HttpServletRequest httpServletReq) {
 		
 		
 		UUID uid = UUID.randomUUID();
@@ -321,10 +328,48 @@ public class UserServiceImpl implements UserService {
 				.nickname(user.getNickname())
 				.birthday(user.getBirthday())
 				.createdDate(user.getCreatedDate())
+				.cover(user.getCover())
 				.avatar(avatar)
 				.build();
 
 		userRepo.save(fixedUser);
+		
+		
+		return true;
+	}
+
+	@Override
+	public boolean setCover(HttpServletRequest httpServletReq, CoverRequest req) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+
+		String userid = null;
+		userid = jwtUtil.getUserid(requestTokenHeader);
+
+		User user = userRepo.findById(Long.parseLong(userid));
+
+		User fixedUser = User.builder()
+				.id(user.getId())
+				.email(user.getEmail())
+				.status(user.getStatus())
+				.gender(user.getGender())
+				.nickname(user.getNickname())
+				.avatar(user.getAvatar())
+				.birthday(user.getBirthday())
+				.createdDate(user.getCreatedDate())
+				.cover(req.getCover())
+				.build();
+
+		userRepo.save(fixedUser);
+		
+		MyInfoResponse response = new MyInfoResponse();
+		response.setAvatar(fixedUser.getAvatar());
+		response.setBirthday(fixedUser.getBirthday());
+		response.setEmail(fixedUser.getEmail());
+		response.setGender(fixedUser.getGender());
+		response.setUserId(fixedUser.getId());
+		response.setStatus(fixedUser.getStatus());
+		response.setNickname(fixedUser.getNickname());
+		
 		
 		
 		return true;

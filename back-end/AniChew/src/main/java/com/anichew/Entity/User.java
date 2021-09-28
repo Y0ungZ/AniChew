@@ -47,6 +47,9 @@ public class User {
 	@Column(name="user_avatar")
 	private String avatar;
 	
+	@Column(name="user_cover")
+	private String cover;
+	
 	@Column(name="user_created_date")
 	private LocalDateTime createdDate;	
 	
@@ -61,7 +64,7 @@ public class User {
 	
 	
 	@Builder
-	public User(long id, String email, UserStatus status, UserGender gender,  String nickname, String avatar, LocalDate birthday, LocalDateTime createdDate) {
+	public User(long id, String email, UserStatus status, UserGender gender,  String nickname, String avatar,  String cover, LocalDate birthday, LocalDateTime createdDate) {
 		Assert.hasText(nickname, "nickname must not be empty");
 		
 		this.id = id;
@@ -70,6 +73,7 @@ public class User {
 		this.gender = gender;
 		this.nickname = nickname;
 		this.avatar = avatar;
+		this.cover = cover;
 		this.birthday = birthday;
 		this.createdDate = createdDate;
 		

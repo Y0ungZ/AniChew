@@ -10,5 +10,6 @@ import lombok.Setter;
 public class UserRequest {
 	String nickname;
 	String birthday;
+	String avatar;
 	UserGender gender;
 }
