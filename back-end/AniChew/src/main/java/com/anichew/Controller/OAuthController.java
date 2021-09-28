@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.anichew.Response.LoginResponse;
 import com.anichew.Service.KaKaoAPI;
-import com.anichew.Service.TestService;
 import com.anichew.Service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,10 +28,7 @@ public class OAuthController {
 	private KaKaoAPI kakao;
 	
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private TestService testService;
+	private UserService userService;	
 	
 	@ApiOperation("로그인")
 	@GetMapping(value="/login")
