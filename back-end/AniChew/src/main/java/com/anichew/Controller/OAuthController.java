@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class OAuthController {
 	private KaKaoAPI kakao;
 	
 	@Autowired
-	private UserService userService;
+	private UserService userService;	
 	
 	@ApiOperation("로그인")
 	@GetMapping(value="/login")
@@ -55,17 +54,12 @@ public class OAuthController {
 	@GetMapping(value="/logout")
 	public ResponseEntity<String> logout (HttpServletRequest httpServletReq) {
 		
-		if(userService.checkToken(httpServletReq))
+		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
+		userService.logout(httpServletReq);
 		
-		return new ResponseEntity<String>("hello",HttpStatus.OK);
-	}
-	
-	@GetMapping(value="/test")
-	public ResponseEntity<String> test (HttpSession session) {
-		
-		return new ResponseEntity<String>("test",HttpStatus.OK);
+		return new ResponseEntity<String>("logout",HttpStatus.OK);
 	}
 	
 	
