@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class FavoriteChara {
 
 	@Id
-	@Column(name="favoirte_character_id")
+	@Column(name="favoirte_chara_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	

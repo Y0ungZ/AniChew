@@ -36,7 +36,7 @@ public class AnimeController {
 		
 		AnimeDetailResponse response = null;
 		
-		if(animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
 			return new ResponseEntity<AnimeDetailResponse>(response,HttpStatus.NOT_FOUND);
 		}	
 		
