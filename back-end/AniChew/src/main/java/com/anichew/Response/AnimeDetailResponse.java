@@ -3,6 +3,7 @@ package com.anichew.Response;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.anichew.Entity.Agerate;
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeStatus;
 import com.anichew.Entity.AnimeType;
@@ -19,14 +20,18 @@ public class AnimeDetailResponse {
 	private String japaneseName;
 	private String koreanName;
 	private AnimeType type;
+	private float avgScore;
+	private long scores[] = new long[5];
 	private int episodes;
 	private LocalDate airedStart;
 	private LocalDate airedEnd;
 	private String season;
 	private String duration;
 	private AnimeStatus status;
+	private Agerate rate;
 	private List<GenreResponse> genres;
 	private List<AnimeReviewResponse> reviews;
+	private List<AnimeResponse> relatedAnimes;
 	private SeriesResponse series;
 	private boolean isFavorite;
 	
@@ -44,7 +49,8 @@ public class AnimeDetailResponse {
 		this.airedEnd = anime.getAiredEnd();
 		this.season = anime.getSeason();
 		this.duration = anime.getDuration();
-		this.status = anime.getStatus();		
+		this.status = anime.getStatus();	
+		this.rate = anime.getRate();
 	}
 	
 }
