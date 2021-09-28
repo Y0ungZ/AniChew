@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anichew.Request.ScoreRequest;
 import com.anichew.Response.AnimeDetailResponse;
-import com.anichew.Response.MyInfoResponse;
+import com.anichew.Response.AnimescoreResponse;
 import com.anichew.Service.AnimeService;
 import com.anichew.Service.UserService;
 
@@ -47,23 +48,28 @@ public class AnimeController {
 	
 	
 	@PostMapping(value="/{animeid}/score")
-	public ResponseEntity<String> doAnimeRate (@PathVariable("animeid") long animeid, @RequestBody float score, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	public ResponseEntity<AnimescoreResponse> doAnimeRate (@PathVariable("animeid") long animeid, @RequestBody ScoreRequest scoreReq, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		AnimescoreResponse response = new AnimescoreResponse();
+		float score = scoreReq.getScore();
 		
 		if(!userService.checkToken(httpServletReq))
-			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<AnimescoreResponse>(response, HttpStatus.UNAUTHORIZED);
+		
+		System.out.println(animeid);
 		
 		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
-			return new ResponseEntity<String>("WRONG ANIME",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<AnimescoreResponse>(response,HttpStatus.NOT_FOUND);
 		}
 		
 		if(score > 10 || score < 0)
-			return new ResponseEntity<String>("WRONG ANIME",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<AnimescoreResponse>(response,HttpStatus.BAD_REQUEST);
 		
 		
-		animeService.rateAnime(httpServletReq, animeid, score);
+		response = animeService.rateAnime(httpServletReq, animeid, score);
 		
 		
-		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+		return new ResponseEntity<AnimescoreResponse>(response,HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value="/{animeid}/score")
