@@ -14,6 +14,10 @@ export type Series = {
   id: number;
   name: string;
 };
+export type Score = {
+  type: string;
+  value: number;
+};
 export const AniGenreDict = {
   1: '드라마',
   2: 'SF',
@@ -80,7 +84,7 @@ export class Ani {
     readonly japaneseName: string,
     readonly type: AniType,
     readonly avgScore: number,
-    readonly scoreList: number[],
+    readonly scoreList: Score[],
     readonly episodes: number,
     readonly airedStart: Date,
     readonly airedEnd: Date | null,
