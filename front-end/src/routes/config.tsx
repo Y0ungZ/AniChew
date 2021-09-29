@@ -47,4 +47,11 @@ export const routes: RouteType[] = [
       },
     ],
   },
+  {
+    path: '/user/:userId',
+    exact: true,
+    private: false,
+    component: lazy(() => import('./my-page-route')),
+    fallback: <FullLoading />,
+  },
 ];

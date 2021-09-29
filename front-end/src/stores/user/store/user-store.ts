@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import User from '../model/user';
 import userRepository from '../repository/user-repository';
 
@@ -24,8 +24,17 @@ export default class UserStore {
   async me() {
     this.meState = 'Pending';
     const res = await userRepository.me();
-    const { userId, nickname, email, avatar, gender, birthday } = res.data;
-    this.user = new User(userId, nickname, email, avatar, gender, birthday);
+    const { userId, nickname, email, avatar, cover, gender, birthday } =
+      res.data;
+    this.user = new User(
+      userId,
+      nickname,
+      email,
+      avatar,
+      cover,
+      gender,
+      birthday,
+    );
     this.meState = 'Done';
   }
 
@@ -33,8 +42,58 @@ export default class UserStore {
     this.updateState = 'Pending';
     const res = await userRepository.update(user);
     if (res.status === 200) {
-      const { userId, nickname, email, avatar, gender, birthday } = res.data;
-      this.user = new User(userId, nickname, email, avatar, gender, birthday);
+      const { userId, nickname, email, avatar, cover, gender, birthday } =
+        res.data;
+      runInAction(() => {
+        this.user = new User(
+          userId,
+          nickname,
+          email,
+          avatar,
+          cover,
+          gender,
+          birthday,
+        );
+      });
+    } else {
+      this.error = { code: res.status };
+    }
+    this.updateState = 'Done';
+  }
+
+  async updateAvatar(newAvatar: FormData) {
+    const res = await userRepository.updateAvatar(newAvatar);
+    if (res.status === 200) {
+      return res.data;
+    }
+    throw new Error('아바타 수정 실패');
+  }
+
+  async updateCover(newCover: FormData) {
+    const res = await userRepository.updateCover(newCover);
+    if (res.status === 200) {
+      return res.data;
+    }
+    throw new Error('커버 수정 실패');
+  }
+
+  async coverModify(user: User) {
+    this.updateState = 'Pending';
+    const res = await userRepository.coverModify(user);
+    if (res.status === 200) {
+      const { userId, nickname, email, avatar, cover, gender, birthday } =
+        res.data;
+      runInAction(() => {
+        this.user = new User(
+          userId,
+          nickname,
+          email,
+          avatar,
+          cover,
+          gender,
+          birthday,
+        );
+      });
     } else {
       this.error = { code: res.status };
     }
