@@ -54,4 +54,11 @@ export const routes: RouteType[] = [
     component: lazy(() => import('./my-page-route')),
     fallback: <FullLoading />,
   },
+  {
+    path: '/anime/:id',
+    exact: false,
+    private: false,
+    component: lazy(() => import('../pages/ani-detail/ani-detail')),
+    fallback: <FullLoading />,
+  },
 ];
