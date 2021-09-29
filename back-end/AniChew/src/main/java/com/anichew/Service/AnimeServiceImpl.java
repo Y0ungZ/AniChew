@@ -167,7 +167,7 @@ public class AnimeServiceImpl implements AnimeService {
 		SeriesResponse series = new SeriesResponse();
 		
 		if(seriesAnime != null) {
-			animeSeriesRepo.findAllBySeries(seriesAnime.getSeries());
+			seriesAnimes = animeSeriesRepo.findAllBySeries(seriesAnime.getSeries());
 			series.setId(seriesAnime.getSeries().getId());
 			series.setName(seriesAnime.getSeries().getName());
 			for(AnimeSeries aSeries : seriesAnimes) {
