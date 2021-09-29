@@ -44,6 +44,11 @@ export default class AniStore {
         favorite,
       } = res.data;
 
+      const scoreList = scores.map((score: number, i: number) => ({
+        type: `${i}점`,
+        value: score,
+      }));
+
       runInAction(() => {
         this.aniInfo = new Ani(
           id,
@@ -52,7 +57,7 @@ export default class AniStore {
           japaneseName,
           type,
           avgScore,
-          scores,
+          scoreList,
           episodes,
           new Date(airedStart),
           new Date(airedEnd),

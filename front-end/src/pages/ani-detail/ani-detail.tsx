@@ -19,8 +19,8 @@ const AniDetail = observer(() => {
     <section>
       {ani.aniInfo ? (
         <>
-          <HeaderSection />
-          <MainSection />
+          <HeaderSection info={ani.aniInfo} />
+          <MainSection info={ani.aniInfo} />
         </>
       ) : <NotFound />}
     </section>

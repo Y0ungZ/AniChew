@@ -13,48 +13,41 @@ const styles: CssKeyObject = {
   },
 };
 
-const CharacterCard = () => {
-  console.log('char');
-  return (
-    <Card title="캐릭터" bordered={false} style={styles.card}>
-      <Row gutter={[16, 16]}>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-        </Col>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-        </Col>
-      </Row>
-      <Row gutter={[16, 16]}>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-
-        </Col>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-
-        </Col>
-      </Row>
-      <Row gutter={[16, 16]}>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-
-        </Col>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-
-        </Col>
-      </Row>
-      <Row gutter={[16, 16]}>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-        </Col>
-        <Col style={styles.character} span={12}>
-          <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
-        </Col>
-      </Row>
-    </Card>
-  );
-};
+const CharacterCard = () => (
+  <Card title="캐릭터" bordered={false} style={styles.card}>
+    <Row gutter={[16, 16]}>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+    </Row>
+    <Row gutter={[16, 16]}>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+    </Row>
+    <Row gutter={[16, 16]}>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+    </Row>
+    <Row gutter={[16, 16]}>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+      <Col style={styles.character} span={12}>
+        <CharacterInfo name="나까무라 노자키" seiyu="타나카 마유미" heartCnt="6" />
+      </Col>
+    </Row>
+  </Card>
+);
 
 export default CharacterCard;

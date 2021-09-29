@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, message, Rate } from 'antd';
-import { observer } from 'mobx-react';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import { mainAxios } from '../../../../libs/axios';
-import { useAni, useAuth } from '../../../../hooks';
+import { useAuth } from '../../../../hooks';
+import { Ani } from '../../../../stores/ani/model/ani';
 
 const error = () => {
   message.error('로그인 하셔야 평점을 매길 수 있습니다.');
@@ -21,8 +21,7 @@ const styles: CssKeyObject = {
   },
 };
 
-const Rating = observer(() => {
-  const { aniInfo } = useAni();
+const Rating = ({ info } : { info: Ani }) => {
   const { isLoggedIn } = useAuth();
   const [rate, setRate] = useState(2);
 
@@ -41,9 +40,9 @@ const Rating = observer(() => {
     }
     setRate(value);
     if (value === 0) {
-      mainAxios.delete(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${aniInfo!.id}/score`);
+      mainAxios.delete(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${info.id}/score`);
     } else {
-      mainAxios.post(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${aniInfo!.id}/score`, { score: value });
+      mainAxios.post(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${info.id}/score`, { score: value });
     }
   };
 
@@ -64,6 +63,6 @@ const Rating = observer(() => {
       </Button>
     </>
   );
-});
+};
 
 export default Rating;
