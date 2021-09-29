@@ -12,6 +12,7 @@ const AniDetail = observer(() => {
 
   useEffect(() => {
     ani.getAniDetailInfo(param.id);
+    window.scroll(0, 0);
   }, [param.id, ani]);
 
   return (
