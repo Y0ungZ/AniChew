@@ -21,8 +21,8 @@ export default class AniStore {
 
   async getAniDetailInfo(animeId: string) {
     this.aniInfoState = 'Pending';
-    const res = await aniRepository.getAniDetailInfo(animeId);
-    if (res.status === 200) {
+    try {
+      const res = await aniRepository.getAniDetailInfo(animeId);
       const {
         id,
         name,
@@ -66,10 +66,9 @@ export default class AniStore {
           favorite,
         );
       });
-    } else {
+    } catch (error) {
       runInAction(() => {
         this.aniInfo = null;
-        this.error = { code: res.status };
       });
     }
     this.aniInfoState = 'Done';
