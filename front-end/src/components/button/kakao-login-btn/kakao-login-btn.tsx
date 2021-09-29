@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import { CssKeyObject } from '../../../models/css-basic-type';
+import { CssKeyObject } from '../../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   btn: {

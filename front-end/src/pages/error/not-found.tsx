@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssKeyObject } from '../../models/css-basic-type';
+import { CssKeyObject } from '../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   container: {

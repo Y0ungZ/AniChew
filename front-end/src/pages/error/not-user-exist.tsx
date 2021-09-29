@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssKeyObject } from '../../models/css-basic-type';
+import { CssKeyObject } from '../../types/css-basic-type';
 import '../../assets/css/color.css';
 
 const styles: CssKeyObject = {

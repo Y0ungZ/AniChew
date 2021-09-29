@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Rate } from 'antd';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import { mainAxios } from '../../../../libs/axios';
 import '../../../../assets/css/color.css';
 

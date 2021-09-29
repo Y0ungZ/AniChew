@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import AnimeInfoCard from '../cards/anime-info-card';
 import GoodsInfoCard from '../cards/goods-info-card';
 

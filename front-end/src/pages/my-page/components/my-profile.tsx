@@ -4,7 +4,7 @@ import { Avatar, Button, Image } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useMyPage } from '../../../hooks';
 import ProfileModifyModal from './modal/profile-modify-modal';
-import { CssKeyObject } from '../../../models/css-basic-type';
+import { CssKeyObject } from '../../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   container: {

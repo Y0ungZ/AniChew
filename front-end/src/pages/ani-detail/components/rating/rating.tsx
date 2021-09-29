@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, message, Rate } from 'antd';
 import { observer } from 'mobx-react';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import { mainAxios } from '../../../../libs/axios';
 import { useAni, useAuth } from '../../../../hooks';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { Button, Card } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import { useAni } from '../../../../hooks';
 
 const styles: CssKeyObject = {

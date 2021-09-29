@@ -3,7 +3,7 @@ import { Button, Divider } from 'antd';
 import ThumbnailCard from '../thumbnail-card/thumbnail-card';
 import AniMeta from '../ani-meta/ani-meta';
 import Rating from '../rating/rating';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   container: {

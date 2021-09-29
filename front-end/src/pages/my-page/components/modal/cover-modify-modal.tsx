@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import Compressor from 'compressorjs';
 import { Avatar, Button, Image, Modal, Row } from 'antd';
 import { useUser } from '../../../../hooks';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import '../../../../assets/css/color.css';
 import User from '../../../../stores/user/model/user';
 

@@ -2,7 +2,7 @@ import React, { FormEvent, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Typography, Modal } from 'antd';
 import KakaoLoginBtn from '../../button/kakao-login-btn/kakao-login-btn';
-import { CssKeyObject } from '../../../models/css-basic-type';
+import { CssKeyObject } from '../../../types/css-basic-type';
 import { useAuth, useUser } from '../../../hooks';
 import { mainAxios } from '../../../libs/axios';
 

@@ -4,7 +4,7 @@ import Compressor from 'compressorjs';
 import moment from 'moment';
 import { Avatar, Button, DatePicker, Form, Image, Input, message, Modal, Select } from 'antd';
 import { useUser } from '../../../../hooks';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import InputValidator from '../../../../assets/util/input-validator';
 import User from '../../../../stores/user/model/user';
 import '../../../../assets/css/color.css';
