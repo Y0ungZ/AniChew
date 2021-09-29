@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'antd';
 import { Column } from '@ant-design/charts';
 import { CssKeyObject } from '../../../../types/css-basic-type';
+import { Score } from '../../../../stores/ani/model/ani';
 
 const styles: CssKeyObject = {
   card: {
@@ -11,33 +12,11 @@ const styles: CssKeyObject = {
   },
 };
 
-const RateChartCard = () => {
-  const data = [
-    {
-      type: '1점',
-      value: 15,
-    },
-    {
-      type: '2점',
-      value: 30,
-    },
-    {
-      type: '3점',
-      value: 88,
-    },
-    {
-      type: '4점',
-      value: 200,
-    },
-    {
-      type: '5점',
-      value: 300,
-    },
-  ];
+const RateChartCard = ({ scores } : { scores: Score[] }) => {
   const paletteSemanticRed = '#F4664A';
   const brandColor = '#5B8FF9';
   const config = {
-    data,
+    data: scores,
     xField: 'type',
     yField: 'value',
     seriesField: '',

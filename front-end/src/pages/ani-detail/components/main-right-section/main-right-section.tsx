@@ -1,4 +1,5 @@
 import React from 'react';
+import { Ani } from '../../../../stores/ani/model/ani';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import CharacterCard from '../cards/character-card';
 import RateChartCard from '../cards/rate-chart-card';
@@ -15,15 +16,12 @@ const stlyes: CssKeyObject = {
   },
 };
 
-const MainRightSection = () => {
-  console.log('hello');
-  return (
-    <section style={stlyes.container}>
-      <SynopsisCard />
-      <CharacterCard />
-      <RateChartCard />
-    </section>
-  );
-};
+const MainRightSection = ({ info } : { info: Ani }) => (
+  <section style={stlyes.container}>
+    <SynopsisCard />
+    <CharacterCard />
+    <RateChartCard scores={info.scoreList} />
+  </section>
+);
 
 export default MainRightSection;

@@ -21,21 +21,18 @@ const styles: CssKeyObject = {
   },
 };
 
-const CharacterInfo = ({ name, seiyu, heartCnt }: CharacterInfoProps) => {
-  console.log('');
-  return (
-    <section style={styles.container}>
-      <Avatar shape="square" size="large" />
-      <div style={styles.metaData}>
-        <Text strong>{name}</Text>
-        <Text>{seiyu}</Text>
-        <Text>
-          {heartCnt}
-          명
-        </Text>
-      </div>
-    </section>
-  );
-};
+const CharacterInfo = ({ name, seiyu, heartCnt }: CharacterInfoProps) => (
+  <section style={styles.container}>
+    <Avatar shape="square" size="large" />
+    <div style={styles.metaData}>
+      <Text strong>{name}</Text>
+      <Text>{seiyu}</Text>
+      <Text>
+        {heartCnt}
+        명
+      </Text>
+    </div>
+  </section>
+);
 
 export default CharacterInfo;

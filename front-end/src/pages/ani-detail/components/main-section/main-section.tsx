@@ -1,4 +1,5 @@
 import React from 'react';
+import { Ani } from '../../../../stores/ani/model/ani';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import MainLeftSection from '../main-left-section/main-left-section';
 import MainRightSection from '../main-right-section/main-right-section';
@@ -16,11 +17,11 @@ const styles: CssKeyObject = {
   },
 };
 
-const MainSection = () => (
+const MainSection = ({ info } : { info: Ani }) => (
   <section style={styles.container}>
     <section style={styles.content}>
-      <MainLeftSection />
-      <MainRightSection />
+      <MainLeftSection info={info} />
+      <MainRightSection info={info} />
     </section>
   </section>
 );

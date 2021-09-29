@@ -4,6 +4,7 @@ import ThumbnailCard from '../thumbnail-card/thumbnail-card';
 import AniMeta from '../ani-meta/ani-meta';
 import Rating from '../rating/rating';
 import { CssKeyObject } from '../../../../types/css-basic-type';
+import { Ani } from '../../../../stores/ani/model/ani';
 
 const styles: CssKeyObject = {
   container: {
@@ -23,20 +24,20 @@ const styles: CssKeyObject = {
   },
 };
 
-const HeaderSection = () => (
+const HeaderSection = ({ info } : { info: Ani }) => (
   <section style={styles.container}>
     <div style={styles.content}>
       <div style={styles.thumbnailContainer}>
-        <ThumbnailCard />
+        <ThumbnailCard info={info} />
       </div>
       <div style={styles.animeInfoContainer}>
         <div>
-          <AniMeta />
+          <AniMeta info={info} />
         </div>
         <Divider style={styles.divider} />
         <div>
           <Button>+ 보고싶어요</Button>
-          <Rating />
+          <Rating info={info} />
         </div>
       </div>
     </div>

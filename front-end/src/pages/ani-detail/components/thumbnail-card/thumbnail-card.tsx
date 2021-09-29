@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
 import { Button, Card } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { CssKeyObject } from '../../../../types/css-basic-type';
-import { useAni } from '../../../../hooks';
+import { Ani } from '../../../../stores/ani/model/ani';
 
 const styles: CssKeyObject = {
   card: { width: 240, textAlign: 'center', borderRadius: '1em' },
@@ -12,9 +11,8 @@ const styles: CssKeyObject = {
   likeBtn: { backgroundColor: 'inherit', border: 'none', fontSize: '1rem' },
 };
 
-const ThumbnailCard = observer(() => {
+const ThumbnailCard = ({ info } : { info: Ani }) => {
   const [likeState, setLikeState] = useState(false);
-  const { aniInfo } = useAni();
   const handleLike = () => {
     setLikeState(!likeState);
   };
@@ -27,7 +25,7 @@ const ThumbnailCard = observer(() => {
         <img
           style={styles.cardImg}
           alt="example"
-          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${aniInfo!.id}.jpg`}
+          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${info.id}.jpg`}
         />
       )}
     >
@@ -40,6 +38,6 @@ const ThumbnailCard = observer(() => {
       </Button>
     </Card>
   );
-});
+};
 
 export default ThumbnailCard;

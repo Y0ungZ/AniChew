@@ -1,4 +1,5 @@
 import React from 'react';
+import { Ani } from '../../../../stores/ani/model/ani';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import AnimeInfoCard from '../cards/anime-info-card';
 import GoodsInfoCard from '../cards/goods-info-card';
@@ -14,9 +15,9 @@ const styles: CssKeyObject = {
   },
 };
 
-const MainLeftSection = () => (
+const MainLeftSection = ({ info } : { info: Ani }) => (
   <section style={styles.container}>
-    <AnimeInfoCard />
+    <AnimeInfoCard info={info} />
     <GoodsInfoCard />
   </section>
 );
