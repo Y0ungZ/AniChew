@@ -123,6 +123,7 @@ public class UserServiceImpl implements UserService {
 		myInfo.setGender(user.getGender());
 		myInfo.setStatus(user.getStatus());
 		myInfo.setBirthday(user.getBirthday());
+		myInfo.setCover(user.getCover());
 
 		return myInfo;
 	}

@@ -15,7 +15,9 @@ public class MyInfoResponse {
 	private String nickname;
 	private String email;
 	private String avatar;
+	private String cover;
 	private UserStatus status;
 	private UserGender gender;
 	private LocalDate birthday;
+	
 }
