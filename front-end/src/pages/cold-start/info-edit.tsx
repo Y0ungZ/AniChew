@@ -4,7 +4,7 @@ import { Form, Select, Button, DatePicker } from 'antd';
 import moment from 'moment';
 import { useUser } from '../../hooks';
 import User from '../../stores/user/model/user';
-import { CssKeyObject } from '../../models/css-basic-type';
+import { CssKeyObject } from '../../types/css-basic-type';
 
 const { Option } = Select;
 

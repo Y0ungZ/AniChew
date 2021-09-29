@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from 'antd';
 import { observer } from 'mobx-react';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import { useAni } from '../../../../hooks';
 import { AniRateDict, AniStatusDict } from '../../../../stores/ani/model/ani';
 

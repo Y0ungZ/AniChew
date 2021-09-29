@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'antd';
 import { Column } from '@ant-design/charts';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   card: {

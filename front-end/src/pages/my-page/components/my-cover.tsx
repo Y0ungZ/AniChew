@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { Button } from 'antd';
 import { EditFilled } from '@ant-design/icons';
 import { useMyPage } from '../../../hooks';
-import { CssKeyObject } from '../../../models/css-basic-type';
+import { CssKeyObject } from '../../../types/css-basic-type';
 import CoverModifyModal from './modal/cover-modify-modal';
 import '../../../assets/css/color.css';
 

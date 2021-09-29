@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import { AnimeList } from '../../../../types/anime-list-type';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import '../../../../assets/css/color.css';
 
 type ContentItemProps = {

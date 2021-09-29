@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import MainLeftSection from '../main-left-section/main-left-section';
 import MainRightSection from '../main-right-section/main-right-section';
 

@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import Slider, { Settings } from 'react-slick';
 import ContentSliderItem from './content-slider-item';
 import { AnimeList } from '../../../../types/anime-list-type';
-import { CssKeyObject } from '../../../../models/css-basic-type';
+import { CssKeyObject } from '../../../../types/css-basic-type';
 import '../../../../assets/css/color.css';
 
 const { Title } = Typography;
