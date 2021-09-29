@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import { mainAxios } from '../../../libs/axios';
 import authRepository from '../repository/auth-repository';
 
 export default class AuthStore {
@@ -14,6 +15,8 @@ export default class AuthStore {
       runInAction(() => {
         this.isLoggedIn = true;
       });
+      mainAxios.defaults.headers.common.Authorization = res.data.token;
+      localStorage.setItem('token', res.data.token);
     } else {
       throw new Error('로그인 실패');
     }
