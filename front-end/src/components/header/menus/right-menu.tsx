@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Avatar, Button, Dropdown, Menu } from 'antd';
-import { BellFilled, SearchOutlined, UserOutlined } from '@ant-design/icons';
-import { useAuth } from '../../../hooks';
+import { BellFilled, SearchOutlined } from '@ant-design/icons';
+import { useAuth, useUser } from '../../../hooks';
 import LoginModal from '../../modal/login-modal/login-modal';
 
 type toggleSearchProps = {
@@ -10,7 +11,9 @@ type toggleSearchProps = {
 }
 
 const RightMenu = observer((props: toggleSearchProps) => {
+  const history = useHistory();
   const login = useAuth();
+  const user = useUser();
   const [visible, setVisible] = useState(false);
 
   const toggleSearchHeader = () => {
@@ -20,12 +23,15 @@ const RightMenu = observer((props: toggleSearchProps) => {
   const logout = () => {
     localStorage.removeItem('token');
     login.logout();
+    history.push('/');
   };
 
   const menu = (
     <Menu>
       <Menu.Item key="mypage">
-        마이페이지
+        <Link to={`/user/${user.user?.userId}`}>
+          마이페이지
+        </Link>
       </Menu.Item>
       <Menu.Item key="logout" onClick={logout}>로그아웃</Menu.Item>
     </Menu>
@@ -37,7 +43,13 @@ const RightMenu = observer((props: toggleSearchProps) => {
       <Button icon={<BellFilled />} type="link" />
       {login.isLoggedIn ? (
         <Dropdown overlay={menu} trigger={['click']}>
-          <Avatar icon={<UserOutlined />} />
+          <Avatar
+            src={(user.user?.avatar && (
+              `${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${user.user.userId}/${user.user.avatar}`
+            ))}
+          >
+            {user.user?.nickname[0]}
+          </Avatar>
         </Dropdown>
       ) : (
         <Button type="link" onClick={() => setVisible(true)}>로그인</Button>
