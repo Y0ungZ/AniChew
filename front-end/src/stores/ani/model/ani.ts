@@ -1,9 +1,10 @@
 export type AniType = 'TV' | 'MOVIE' | 'OVA' | 'ONA' | 'Special';
 export type AniRate = 'ALL' | 'R12' | 'R15' | 'R18';
-export type genre = {
-  id: number;
+export type Anigenre = {
+  id: string;
   name: string;
 };
+export type AniStatus = 'OFF_AIR' | 'ON_AIR' | 'UPCOMING' | 'UNKNOWN';
 export type RelatedAni = {
   id: number;
   name: string;
@@ -13,7 +14,7 @@ export type Series = {
   id: number;
   name: string;
 };
-export const AniTypeDict = {
+export const AniGenreDict = {
   1: '드라마',
   2: 'SF',
   3: '괴물',
@@ -58,6 +59,18 @@ export const AniTypeDict = {
   42: '로맨스',
   43: '판타지',
 };
+export const AniRateDict = {
+  ALL: '전체 이용가',
+  R12: '12세 이용가',
+  R15: '15세 이용가',
+  R18: '성인 이용가',
+};
+export const AniStatusDict = {
+  OFF_AIR: '완결',
+  ON_AIR: '방영중',
+  UPCOMING: '미방영',
+  UNKNOWN: '미상',
+};
 
 export class Ani {
   constructor(
@@ -71,8 +84,10 @@ export class Ani {
     readonly episodes: number,
     readonly airedStart: Date,
     readonly airedEnd: Date | null,
+    readonly duration: string,
+    readonly status: AniStatus,
     readonly rate: AniRate,
-    readonly genres: genre[],
+    readonly genres: Anigenre[],
     readonly reviews: null,
     readonly relatedAnis: RelatedAni[],
     readonly seriesList: Series[],
