@@ -145,6 +145,8 @@ public class UserServiceImpl implements UserService {
 		response.setAvatar(user.getAvatar());
 		response.setNickname(user.getNickname());
 		response.setUserid(user.getId());
+		response.setCover(user.getCover());
+		
 
 		List<FavoriteAnimeResponse> fAnimes = new ArrayList();
 		List<FavoriteCharaResponse> fCharas = new ArrayList();
