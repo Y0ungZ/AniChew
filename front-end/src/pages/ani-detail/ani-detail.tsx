@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react';
+import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
-import { mainAxios } from '../../libs/axios';
+import { useAni } from '../../hooks';
+import HeaderSection from './components/header-section/header-section';
+import NotFound from '../error/not-found';
 
-const AniDetail = () => {
+const AniDetail = observer(() => {
   const param = useParams<{id: string}>();
+  const ani = useAni();
 
   useEffect(() => {
-    mainAxios.get(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${param.id}`).then(console.log);
-  }, [param.id]);
+    ani.getAniDetailInfo(param.id);
+  }, [param.id, ani]);
 
   return (
-    <section />
+    <section>
+      {ani.aniInfo ? <HeaderSection /> : <NotFound />}
+    </section>
   );
-};
+});
 
 export default AniDetail;
