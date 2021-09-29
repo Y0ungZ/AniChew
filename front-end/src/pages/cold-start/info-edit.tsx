@@ -39,6 +39,7 @@ const InfoEdit = () => {
         user.user!.nickname,
         user.user!.email,
         user.user!.avatar,
+        user.user!.cover,
         gender,
         moment(birthday).format('YYYY-MM-DD'),
       ),

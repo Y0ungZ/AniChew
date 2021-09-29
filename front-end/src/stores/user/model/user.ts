@@ -5,6 +5,7 @@ export default class User {
     readonly nickname: string,
     readonly email: string,
     readonly avatar: string,
+    readonly cover: string,
     readonly gender: Gender,
     readonly birthday: string,
   ) {}
