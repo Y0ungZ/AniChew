@@ -161,22 +161,26 @@ public class AnimeServiceImpl implements AnimeService {
 		}		
 		
 		List<AnimeResponse> relatedAnimes = new ArrayList();
+		
 		AnimeSeries seriesAnime = animeSeriesRepo.findByAnime(anime);
-		List<AnimeSeries> seriesAnimes = animeSeriesRepo.findAllBySeries(seriesAnime.getSeries());
-		
+		List<AnimeSeries> seriesAnimes = null; 
 		SeriesResponse series = new SeriesResponse();
-		series.setId(seriesAnime.getSeries().getId());
-		series.setName(seriesAnime.getSeries().getName());
 		
-		
-		for(AnimeSeries aSeries : seriesAnimes) {
-			AnimeResponse relatedAnime = new AnimeResponse();
-			relatedAnime.setId(aSeries.getAnime().getId());
-			relatedAnime.setKoreanName(aSeries.getAnime().getKoreanName());
-			relatedAnime.setName(aSeries.getAnime().getName());			
-			relatedAnimes.add(relatedAnime);
+		if(seriesAnime != null) {
+			animeSeriesRepo.findAllBySeries(seriesAnime.getSeries());
+			series.setId(seriesAnime.getSeries().getId());
+			series.setName(seriesAnime.getSeries().getName());
+			for(AnimeSeries aSeries : seriesAnimes) {
+				AnimeResponse relatedAnime = new AnimeResponse();
+				relatedAnime.setId(aSeries.getAnime().getId());
+				relatedAnime.setKoreanName(aSeries.getAnime().getKoreanName());
+				relatedAnime.setName(aSeries.getAnime().getName());			
+				relatedAnimes.add(relatedAnime);
+			}
+			
 		}
 		
+	
 				
 		float avgScore=0;
 		
