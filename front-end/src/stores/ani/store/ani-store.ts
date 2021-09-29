@@ -68,6 +68,7 @@ export default class AniStore {
       });
     } else {
       runInAction(() => {
+        this.aniInfo = null;
         this.error = { code: res.status };
       });
     }
