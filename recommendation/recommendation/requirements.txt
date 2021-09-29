@@ -1,4 +1,5 @@
 asgiref
+autopep8
 cycler
 Django
 django-cors-headers
@@ -6,15 +7,18 @@ djangorestframework
 joblib
 kiwisolver
 matplotlib
+mysqlclient
 numpy
 pandas
 Pillow
+pycodestyle
 pyparsing
 python-dateutil
 pytz
 scikit-learn
 scipy
 seaborn
-six
 sqlparse
+six
+toml
 threadpoolctl
