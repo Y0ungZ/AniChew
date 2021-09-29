@@ -50,7 +50,8 @@
     "generator-star-spacing":"off",
     "import/prefer-default-export": "off",
     "class-methods-use-this":"off",
-    "no-alert":"off"
+    "no-alert":"off",
+    "no-new":"off"
 },
   "settings": {
     "import/resolver": {

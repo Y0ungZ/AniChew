@@ -18,6 +18,7 @@
     "@types/react-slick": "^0.23.5",
     "antd": "^4.16.13",
     "axios": "^0.21.4",
+    "compressorjs": "^1.0.7",
     "craco-antd": "^1.19.0",
     "mobx": "^6.3.3",
     "mobx-react": "^7.2.0",
