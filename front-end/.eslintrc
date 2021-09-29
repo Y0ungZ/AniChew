@@ -51,8 +51,9 @@
     "import/prefer-default-export": "off",
     "class-methods-use-this":"off",
     "no-alert":"off",
-    "no-new":"off"
-},
+    "no-new":"off",
+    "jsx-a11y/no-noninteractive-element-interactions":"off"
+  },
   "settings": {
     "import/resolver": {
       "typescript": {}
