@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-n4la$i_a-6jwyp^naw2g$rkrp6-&_+gue(2)u0=s$o21jpd6wj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['52.78.167.29', 'j5b304.p.ssafy.io']
+# ALLOWED_HOSTS = ['3.36.87.193', 'j5b304.p.ssafy.io']
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'anichew',
         'USER': 'root',
         'PASSWORD': 'ssafy',
-        'HOST': '52.78.167.29',
+        'HOST': '3.36.87.193',
         'PORT': '3306',
     }
 }
