@@ -271,6 +271,7 @@ public class AnimeServiceImpl implements AnimeService {
 		ReviewResponse response = new ReviewResponse(review);
 		response.setMine(true);
 		response.setLoveCnt(review.getLoves().size());		
+		response.setId(review.getId());
 		if(reviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		
