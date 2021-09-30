@@ -13,7 +13,8 @@ import com.anichew.Entity.User;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 	List<Review> findAllByUser(User user);
 	List<Review> findAllByAnime(Anime anime);
-	List<Review> findAllByUserAndAnime(User user, Anime anime);
+	boolean existsByUserAndAnime(User user, Anime anime);
+	Review findByUserAndAnime(User user, Anime anime);
 	Review findById(long id);
 	@Transactional
 	void deleteById(long id);

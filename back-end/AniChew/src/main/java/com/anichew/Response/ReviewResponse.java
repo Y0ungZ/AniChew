@@ -18,6 +18,8 @@ public class ReviewResponse {
 	private String content;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
+	private int loveCnt;
+	private boolean isLove;
 	private boolean isMine;
 	
 	public ReviewResponse(){}
