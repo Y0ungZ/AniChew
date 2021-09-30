@@ -18,6 +18,7 @@ public class ReviewResponse {
 	private String content;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
+	private boolean isMine;
 	
 	public ReviewResponse(){}
 	

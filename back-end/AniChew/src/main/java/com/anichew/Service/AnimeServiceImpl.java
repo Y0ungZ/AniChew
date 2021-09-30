@@ -148,8 +148,12 @@ public class AnimeServiceImpl implements AnimeService {
 		Anime anime = animeRepo.findById(animeid);
 		AnimeDetailResponse response = new AnimeDetailResponse(anime);
 		
+		
+		long accessor_id = -1;
+		
 		if(accessor!=null) {
-			User user = userRepo.findById(Long.parseLong(accessor));
+			accessor_id = Long.parseLong(accessor);
+			User user = userRepo.findById(accessor_id);
 			
 			isFavorite = favoriteAnimeRepo.existsByUserAndAnime(user, anime);
 		}
@@ -205,6 +209,11 @@ public class AnimeServiceImpl implements AnimeService {
 		List<ReviewResponse> reviewsRes = new ArrayList();
 		for(Review review : reviews) {
 			ReviewResponse reviewRes = new ReviewResponse(review);
+			reviewRes.setId(review.getId());
+			
+			if(review.getUser().getId() == accessor_id)
+				reviewRes.setMine(true);
+			
 			reviewsRes.add(reviewRes);
 		}
 		
