@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anichew.Request.ReviewRequest;
 import com.anichew.Request.ScoreRequest;
 import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimescoreResponse;
+import com.anichew.Response.ReviewResponse;
 import com.anichew.Service.AnimeService;
 import com.anichew.Service.UserService;
 
@@ -92,4 +95,64 @@ public class AnimeController {
 		
 		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 	}
+	
+	
+	
+	@PostMapping(value="/{animeid}/review")
+	public ResponseEntity<ReviewResponse> writeReview (@PathVariable("animeid") long animeid, @RequestBody ReviewRequest reviewReq, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		ReviewResponse response = null;
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<ReviewResponse>(response, HttpStatus.UNAUTHORIZED);
+		
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);		
+		
+		response = animeService.writeReview(httpServletReq, reviewReq.getContent(), animeid);
+	
+		
+		return new ResponseEntity<ReviewResponse>(response,HttpStatus.OK);
+	}
+	
+	@PutMapping(value="/{animeid}/review")
+	public ResponseEntity<ReviewResponse> modifyReview (@PathVariable("animeid") long animeid, @RequestBody ReviewRequest reviewReq, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		ReviewResponse response = null;
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<ReviewResponse>(response, HttpStatus.UNAUTHORIZED);
+		
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);		
+		
+		response = animeService.modifyReview(httpServletReq, reviewReq, animeid);
+		
+		if(response == null)
+			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);		
+		
+		return new ResponseEntity<ReviewResponse>(response,HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/{animeid}/review/{reviewid}")
+	public ResponseEntity<String> deleteReview (@PathVariable("animeid") long animeid, @PathVariable("reviewid") long reviewid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		ReviewResponse response = null;
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+		
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);
+		
+		
+		if(!animeService.deleteReview(httpServletReq, reviewid, animeid))
+			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);		
+		
+		
+		
+		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+	}
+	
+	
 }
