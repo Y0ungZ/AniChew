@@ -1,5 +1,6 @@
 package com.anichew.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +13,21 @@ import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeGenre;
 import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Animescore;
+import com.anichew.Entity.Review;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeGenreRepository;
 import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.AnimeSeriesRepository;
 import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.FavoriteAnimeRepository;
+import com.anichew.Repository.ReviewRepository;
 import com.anichew.Repository.UserRepository;
+import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimeResponse;
 import com.anichew.Response.AnimescoreResponse;
 import com.anichew.Response.GenreResponse;
+import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.SeriesResponse;
 import com.anichew.Util.JwtUtil;
 
@@ -49,6 +54,9 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	@Autowired
 	AnimescoreRepository animescoreRepo;
+	
+	@Autowired
+	ReviewRepository reviewRepo;
 	
 	@Autowired
 	JwtUtil jwtUtil;
@@ -193,15 +201,128 @@ public class AnimeServiceImpl implements AnimeService {
 		}
 		
 		
+		List<Review> reviews = reviewRepo.findAllByAnime(anime);
+		List<ReviewResponse> reviewsRes = new ArrayList();
+		for(Review review : reviews) {
+			ReviewResponse reviewRes = new ReviewResponse(review);
+			reviewsRes.add(reviewRes);
+		}
+		
+		
+		
 		response.setGenres(genres);
 		response.setSeries(series);
 		response.setAvgScore(avgScore);
 		response.setScores(scores);
 		response.setRelatedAnimes(relatedAnimes);
 		response.setFavorite(isFavorite);
-//		response.setReviews(reviews);
+		response.setReviews(reviewsRes);
 		
 		return response;
+	}
+	
+	public ReviewResponse writeReview(HttpServletRequest httpServletReq, String content, long anime_id) {
+		
+		ReviewResponse response = null;
+		
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		User user = userRepo.findById(Long.parseLong(userid));	
+		
+		Anime anime = animeRepo.findById(anime_id);
+		
+		Review review = Review.builder()
+				.content(content)
+				.user(user)
+				.anime(anime)
+				.createdDate(LocalDateTime.now())
+				.modifiedDate(LocalDateTime.now())
+				.build();
+		
+		reviewRepo.save(review);
+		
+				
+		
+		response = new ReviewResponse(review);
+		
+		
+		return response;
+				
+	}
+	
+	public ReviewResponse modifyReview(HttpServletRequest httpServletReq, ReviewRequest req, long anime_id) {
+		
+		ReviewResponse response = null;
+		
+		Review review = null;
+		
+		if(!reviewRepo.existsById(req.getId())) 
+			return null;
+		
+		review = reviewRepo.findById(req.getId());
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		
+		User user = userRepo.findById(Long.parseLong(userid));			
+		Anime anime = animeRepo.findById(anime_id);
+		
+		
+		if(review.getUser() != user) 
+			return null;
+		
+		
+		
+		review = Review.builder()
+				.id(review.getId())
+				.content(req.getContent())
+				.user(user)
+				.anime(anime)
+				.createdDate(review.getCreatedDate())
+				.modifiedDate(LocalDateTime.now())
+				.build();
+		
+		reviewRepo.save(review);
+		
+				
+		
+		response = new ReviewResponse(review);
+		
+		
+		return response;
+				
+	}
+	
+public boolean deleteReview(HttpServletRequest httpServletReq, long reviewid, long anime_id) {
+		
+		ReviewResponse response = null;
+		
+		Review review = null;
+		
+		if(!reviewRepo.existsById(reviewid)) 
+			return false;
+		
+		review = reviewRepo.findById(reviewid);
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		
+		User user = userRepo.findById(Long.parseLong(userid));			
+		Anime anime = animeRepo.findById(anime_id);
+		
+		
+		if(review.getUser() != user) 
+			return false;
+		
+		
+		reviewRepo.delete(review);
+		
+				
+		
+		
+		return true;
+				
 	}
 
 }
