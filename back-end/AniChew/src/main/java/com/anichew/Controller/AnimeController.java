@@ -102,7 +102,7 @@ public class AnimeController {
 	
 	
 	@GetMapping(value="/{animeid}/review")
-	public ResponseEntity<ReviewResponse> getReview (@PathVariable("animeid") long animeid, @RequestBody ReviewRequest reviewReq, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	public ResponseEntity<ReviewResponse> getReview (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
 		ReviewResponse response = null;
