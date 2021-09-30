@@ -18,6 +18,17 @@ export type Score = {
   type: string;
   value: number;
 };
+export type Review = {
+  id: string;
+  animeId: string;
+  userId: string;
+  content: string;
+  createdDate: Date;
+  modifiedDate: Date;
+  mine: boolean;
+  name: string;
+  nickname: string;
+};
 export const AniGenreDict = {
   1: '드라마',
   2: 'SF',
@@ -78,7 +89,7 @@ export const AniStatusDict = {
 
 export class Ani {
   constructor(
-    readonly id: number,
+    readonly id: string,
     readonly name: string,
     readonly koreanName: string,
     readonly japaneseName: string,
@@ -92,7 +103,7 @@ export class Ani {
     readonly status: AniStatus,
     readonly rate: AniRate,
     readonly genres: Anigenre[],
-    readonly reviews: null,
+    readonly reviews: Review[],
     readonly relatedAnis: RelatedAni[],
     readonly seriesList: Series[],
     readonly favorite: boolean,
