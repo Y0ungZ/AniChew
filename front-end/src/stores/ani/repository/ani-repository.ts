@@ -29,14 +29,14 @@ class AniRepository {
   }
 
   setAniScore(animeId: string, score: number) {
-    mainAxios.post(
+    return mainAxios.post(
       `${process.env.REACT_APP_API_DOMAIN_URL}/anime/${animeId}/score`,
       { score: score * 2 },
     );
   }
 
   deleteAniScore(animeId: string) {
-    mainAxios.delete(
+    return mainAxios.delete(
       `${process.env.REACT_APP_API_DOMAIN_URL}/anime/${animeId}/score`,
     );
   }
