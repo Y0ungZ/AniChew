@@ -229,6 +229,13 @@ public class AnimeServiceImpl implements AnimeService {
 		}
 		
 		
+		float myScore = 0;
+		
+		if(user!=null && animescoreRepo.existsByUserAndAnime(user, anime)) {
+			myScore = animescoreRepo.findByUserAndAnime(user, anime).getScore();
+		}
+		
+		
 		
 		response.setGenres(genres);
 		response.setSeries(series);
@@ -237,6 +244,7 @@ public class AnimeServiceImpl implements AnimeService {
 		response.setRelatedAnimes(relatedAnimes);
 		response.setFavorite(isFavorite);
 		response.setReviews(reviewsRes);
+		response.setMyScore(myScore);
 		
 		return response;
 	}
