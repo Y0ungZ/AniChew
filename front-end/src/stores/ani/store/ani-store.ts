@@ -24,6 +24,8 @@ export default class AniStore {
 
   private _myReview: Review | null = null;
 
+  private _favorite = false;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -82,6 +84,7 @@ export default class AniStore {
           favorite,
         );
         if (this.aniInfo.myScore > 0) this._reviewFormDisplayState = true;
+        this._favorite = favorite;
       });
     } catch (error) {
       runInAction(() => {
@@ -189,6 +192,31 @@ export default class AniStore {
     }
   }
 
+  async setFavoriteAnime(animeId: string) {
+    try {
+      const res = await aniRepository.setFavoriteAni(animeId);
+      console.log(res);
+      runInAction(() => {
+        this._favorite = true;
+      });
+    } catch (error) {
+      console.log('error', error);
+      throw new Error('애니메이션 좋아요에 실패하셨습니다.');
+    }
+  }
+
+  async deleteFavoriteAnime(animeId: string) {
+    try {
+      const res = await aniRepository.deleteFavoriteAni(animeId);
+      console.log(res);
+      runInAction(() => {
+        this._favorite = false;
+      });
+    } catch (error) {
+      throw new Error('애니메이션 좋아요 취소에 실패하셨습니다.');
+    }
+  }
+
   get reviewFormMode() {
     return this._reviewFormMode;
   }
@@ -216,6 +244,16 @@ export default class AniStore {
   set myReview(value: Review | null) {
     runInAction(() => {
       this._myReview = value;
+    });
+  }
+
+  get favorite(): boolean {
+    return this._favorite;
+  }
+
+  set favorite(value: boolean) {
+    runInAction(() => {
+      this._favorite = value;
     });
   }
 }
