@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider } from 'antd';
+import { Divider } from 'antd';
 import ThumbnailCard from '../thumbnail-card/thumbnail-card';
 import AniMeta from '../ani-meta/ani-meta';
 import Rating from '../rating/rating';
@@ -36,7 +36,6 @@ const HeaderSection = ({ info } : { info: Ani }) => (
         </div>
         <Divider style={styles.divider} />
         <div>
-          <Button>+ 보고싶어요</Button>
           <Rating id={info.id} myScore={info.myScore} />
         </div>
       </div>
