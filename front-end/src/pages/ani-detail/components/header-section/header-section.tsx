@@ -37,7 +37,7 @@ const HeaderSection = ({ info } : { info: Ani }) => (
         <Divider style={styles.divider} />
         <div>
           <Button>+ 보고싶어요</Button>
-          <Rating info={info} />
+          <Rating id={info.id} myScore={info.myScore} />
         </div>
       </div>
     </div>
