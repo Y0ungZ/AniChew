@@ -208,7 +208,7 @@ public class AnimeController {
 	}
 	
 	
-	@GetMapping(value="/{animeid}/favorite")
+	@PostMapping(value="/{animeid}/favorite")
 	public ResponseEntity<FavoriteResponse> setFavoriteAnime (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
