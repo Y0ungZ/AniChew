@@ -34,6 +34,7 @@ public class AnimeDetailResponse {
 	private List<AnimeResponse> relatedAnimes;
 	private SeriesResponse series;
 	private boolean isFavorite;
+	private float myScore;
 	
 	
 	public AnimeDetailResponse() {}
