@@ -52,7 +52,8 @@
     "class-methods-use-this":"off",
     "no-alert":"off",
     "no-new":"off",
-    "jsx-a11y/no-noninteractive-element-interactions":"off"
+    "jsx-a11y/no-noninteractive-element-interactions":"off",
+    "no-underscore-dangle": "off"
   },
   "settings": {
     "import/resolver": {
