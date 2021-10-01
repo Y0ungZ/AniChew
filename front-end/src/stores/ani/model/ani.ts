@@ -1,22 +1,22 @@
 export type AniType = 'TV' | 'MOVIE' | 'OVA' | 'ONA' | 'Special';
 export type AniRate = 'ALL' | 'R12' | 'R15' | 'R18';
 export type Anigenre = {
-  id: string;
-  name: string;
+  readonly id: string;
+  readonly name: string;
 };
 export type AniStatus = 'OFF_AIR' | 'ON_AIR' | 'UPCOMING' | 'UNKNOWN';
 export type RelatedAni = {
-  id: number;
-  name: string;
-  koreanName: string;
+  readonly id: number;
+  readonly name: string;
+  readonly koreanName: string;
 };
 export type Series = {
-  id: number;
-  name: string;
+  readonly id: number;
+  readonly name: string;
 };
 export type Score = {
-  type: string;
-  value: number;
+  readonly type: string;
+  readonly value: number;
 };
 export type Review = {
   id: string;
@@ -95,6 +95,7 @@ export class Ani {
     readonly japaneseName: string,
     readonly type: AniType,
     readonly avgScore: number,
+    readonly myScore: number,
     readonly scoreList: Score[],
     readonly episodes: number,
     readonly airedStart: Date,
