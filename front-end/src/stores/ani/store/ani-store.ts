@@ -172,7 +172,7 @@ export default class AniStore {
 
   async setAniScore(animeId: string, score: number) {
     try {
-      aniRepository.setAniScore(animeId, score);
+      await aniRepository.setAniScore(animeId, score);
       runInAction(() => {
         this.reviewFormDisplayState = true;
       });
@@ -183,7 +183,7 @@ export default class AniStore {
 
   async deleteAniScore(animeId: string) {
     try {
-      aniRepository.deleteAniScore(animeId);
+      await aniRepository.deleteAniScore(animeId);
     } catch (error) {
       throw new Error('You failed to delete a score.');
     }
