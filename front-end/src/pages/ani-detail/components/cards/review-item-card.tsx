@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import { CssKeyObject } from '../../../../types/css-basic-type';
-import { Review } from '../../../../stores/ani/model/ani';
+import { Review } from '../../../../stores/ani/model/review';
 
 const styles: CssKeyObject = {
   card: {
