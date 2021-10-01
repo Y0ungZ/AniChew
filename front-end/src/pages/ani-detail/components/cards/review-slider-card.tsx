@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import Slider, { Settings } from 'react-slick';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import ReviewItemCard from './review-item-card';
-import { Review } from '../../../../stores/ani/model/ani';
+import { Review } from '../../../../stores/ani/model/review';
 
 const styles: CssKeyObject = {
   card: {
