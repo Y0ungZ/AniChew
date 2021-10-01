@@ -8,7 +8,6 @@ const errorMsg = () => {
 };
 
 const styles: CssKeyObject = {
-  rate: { paddingLeft: '1em' },
   resetBtn: {
     color: 'whitesmoke',
     backgroundColor: 'inherit',
@@ -61,7 +60,6 @@ const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
         allowClear
         value={rate}
         onChange={checkRate}
-        style={styles.rate}
       />
       <Button
         onClick={resetRate}
