@@ -19,6 +19,7 @@ import com.anichew.Request.ReviewRequest;
 import com.anichew.Request.ScoreRequest;
 import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimescoreResponse;
+import com.anichew.Response.FavoriteResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Service.AnimeService;
 import com.anichew.Service.UserService;
@@ -204,6 +205,55 @@ public class AnimeController {
 					
 		
 		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value="/{animeid}/favorite")
+	public ResponseEntity<FavoriteResponse> setFavoriteAnime (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		FavoriteResponse response = new FavoriteResponse();
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<FavoriteResponse>(response, HttpStatus.UNAUTHORIZED);
+		
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+			response.setId(-1);
+			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_FOUND);
+		}
+
+
+		
+		response.setId(animeid);
+		
+		if(!animeService.setFavoriteAnime(httpServletReq, animeid))			
+			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_ACCEPTABLE);
+		
+		response.setSuccess(true);
+		return new ResponseEntity<FavoriteResponse>(response,HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping(value="/{animeid}/favorite")
+	public ResponseEntity<FavoriteResponse> deleteFavoriteAnime (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		FavoriteResponse response = new FavoriteResponse();
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<FavoriteResponse>(response, HttpStatus.UNAUTHORIZED);
+
+
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+			response.setId(-1);
+			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_FOUND);
+		}
+
+		response.setId(animeid);
+		
+		if(!animeService.deleteFavoriteAnime(httpServletReq, animeid))
+			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_ACCEPTABLE);		
+		
+		response.setSuccess(true);
+		return new ResponseEntity<FavoriteResponse>(response,HttpStatus.OK);
 	}
 	
 }
