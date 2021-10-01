@@ -28,7 +28,7 @@ const HeaderSection = ({ info } : { info: Ani }) => (
   <section style={styles.container}>
     <div style={styles.content}>
       <div style={styles.thumbnailContainer}>
-        <ThumbnailCard info={info} />
+        <ThumbnailCard id={info.id} />
       </div>
       <div style={styles.animeInfoContainer}>
         <div>
