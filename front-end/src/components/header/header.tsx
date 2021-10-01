@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Drawer, Layout, Grid } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
@@ -13,13 +13,7 @@ const { useBreakpoint } = Grid;
 const { Header } = Layout;
 
 const styles: CssKeyObject = {
-  staticPosition: {
-    position: 'static',
-    zIndex: 20,
-    width: '100%',
-    minWidth: '360px',
-  },
-  fixedPosition: {
+  position: {
     position: 'fixed',
     zIndex: 20,
     width: '100%',
@@ -53,22 +47,9 @@ const styles: CssKeyObject = {
 };
 
 const MainHeader = () => {
-  const [headerPosition, setHeaderPosition] = useState('static');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const screens = useBreakpoint();
-
-  useEffect(() => {
-    const scrollEvent = () => {
-      if (window.scrollY >= 50) {
-        setHeaderPosition('fixed');
-      } else {
-        setHeaderPosition('static');
-      }
-    };
-    window.addEventListener('scroll', scrollEvent);
-    return () => window.removeEventListener('scroll', scrollEvent);
-  });
 
   const toggleDrawer = () => {
     setDrawerOpen((open) => !open);
@@ -79,7 +60,7 @@ const MainHeader = () => {
   };
 
   return (
-    <div style={headerPosition === 'static' ? styles.staticPosition : styles.fixedPosition}>
+    <div style={styles.position}>
       <Header style={styles.header}>
         <Link to="/">
           <span style={styles.logo}>
