@@ -13,16 +13,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="favorite_anime")
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class FavoriteAnime {
 	
@@ -39,10 +35,12 @@ public class FavoriteAnime {
 	@JoinColumn(name="anime_id")
 	private Anime anime;
 	
-	@Builder
-	public FavoriteAnime(long id, User user, Anime anime) {
-		this.id = id;
+	
+	public FavoriteAnime() {}
+	
+	public FavoriteAnime(User user, Anime anime) {
 		this.user = user;
 		this.anime = anime;
 	}
+	
 }

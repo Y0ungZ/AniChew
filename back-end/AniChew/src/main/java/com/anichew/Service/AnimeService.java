@@ -23,5 +23,7 @@ public interface AnimeService {
 	boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid);
 	ReviewResponse getMyReview(HttpServletRequest httpServletReq, long animeid);
 	void reviewLove(HttpServletRequest httpServletReq, long reviewid);
+	boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
+	boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
 	
 }

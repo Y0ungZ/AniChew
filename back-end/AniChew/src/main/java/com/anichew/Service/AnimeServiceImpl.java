@@ -13,6 +13,7 @@ import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeGenre;
 import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Animescore;
+import com.anichew.Entity.FavoriteAnime;
 import com.anichew.Entity.Review;
 import com.anichew.Entity.ReviewLove;
 import com.anichew.Entity.User;
@@ -61,7 +62,7 @@ public class AnimeServiceImpl implements AnimeService {
 	ReviewRepository reviewRepo;
 	
 	@Autowired
-	ReviewLoveRepository reviewLoveRepo;
+	ReviewLoveRepository reviewLoveRepo;	
 	
 	@Autowired
 	JwtUtil jwtUtil;
@@ -421,5 +422,45 @@ public class AnimeServiceImpl implements AnimeService {
 		
 	}
 
+
+	public boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);		
+		User user = userRepo.findById(Long.parseLong(userid));	
+		
+		Anime anime = animeRepo.findById(animeid);
+		
+		if(favoriteAnimeRepo.existsByUserAndAnime(user, anime))
+			return false;
+		
+		
+		FavoriteAnime favoriteAnime = new FavoriteAnime(user,anime);
+		favoriteAnimeRepo.save(favoriteAnime);
+		
+		
+		
+		return true;
+	}
+	
+	public boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);		
+		User user = userRepo.findById(Long.parseLong(userid));	
+		
+		Anime anime = animeRepo.findById(animeid);
+		
+		if(!favoriteAnimeRepo.existsByUserAndAnime(user, anime))
+			return false;
+		
+		
+		
+		favoriteAnimeRepo.deleteByUserAndAnime(user,anime);
+		
+		
+		
+		return true;
+	}
+	
+	
 
 }
