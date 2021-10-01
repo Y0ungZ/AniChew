@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Rate } from 'antd';
 import { CssKeyObject } from '../../../../types/css-basic-type';
-import { mainAxios } from '../../../../libs/axios';
 import '../../../../assets/css/color.css';
+import { useAni } from '../../../../hooks';
 
 const styles: CssKeyObject = {
   card: {
@@ -19,19 +19,20 @@ const styles: CssKeyObject = {
   },
 };
 
-type AnimeCardWithRateProps = {
-  id: number
-}
-
-const AnimeCardWithRate = ({ id }: AnimeCardWithRateProps) => {
+const AnimeCardWithRate = ({ id }: {id: string}) => {
+  const ani = useAni();
   const [rate, setRate] = useState(0);
 
   const checkRate = (value: number) => {
     setRate(value);
     if (value === 0) {
-      mainAxios.delete(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${id}/score`);
+      ani.deleteAniScore(id)
+        .then()
+        .catch((error) => alert(error));
     } else {
-      mainAxios.post(`${process.env.REACT_APP_API_DOMAIN_URL}/anime/${id}/score`, { score: value });
+      ani.setAniScore(id, value)
+        .then()
+        .catch((error) => alert(error));
     }
   };
 

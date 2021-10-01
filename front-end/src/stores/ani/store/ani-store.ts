@@ -170,6 +170,25 @@ export default class AniStore {
     }
   }
 
+  async setAniScore(animeId: string, score: number) {
+    try {
+      aniRepository.setAniScore(animeId, score);
+      runInAction(() => {
+        this.reviewFormDisplayState = true;
+      });
+    } catch (error) {
+      throw new Error('You failed to give a score.');
+    }
+  }
+
+  async deleteAniScore(animeId: string) {
+    try {
+      aniRepository.deleteAniScore(animeId);
+    } catch (error) {
+      throw new Error('You failed to delete a score.');
+    }
+  }
+
   get reviewFormMode() {
     return this._reviewFormMode;
   }

@@ -27,6 +27,19 @@ class AniRepository {
   getMyReview(animeId: string) {
     return mainAxios.get(`${this.url}/anime/${animeId}/review`);
   }
+
+  setAniScore(animeId: string, score: number) {
+    mainAxios.post(
+      `${process.env.REACT_APP_API_DOMAIN_URL}/anime/${animeId}/score`,
+      { score: score * 2 },
+    );
+  }
+
+  deleteAniScore(animeId: string) {
+    mainAxios.delete(
+      `${process.env.REACT_APP_API_DOMAIN_URL}/anime/${animeId}/score`,
+    );
+  }
 }
 
 export default new AniRepository(process.env.REACT_APP_API_DOMAIN_URL!);

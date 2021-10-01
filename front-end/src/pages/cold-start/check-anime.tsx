@@ -42,7 +42,7 @@ const styles: CssKeyObject = {
 };
 
 type AniType = {
-  id: number;
+  id: string;
   title: string;
 }
 
