@@ -1,8 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+import { useAni } from '../../../../hooks';
 import { Ani } from '../../../../stores/ani/model/ani';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import CharacterCard from '../cards/character-card';
 import RateChartCard from '../cards/rate-chart-card';
+import ReviewWriteFormCard from '../cards/review-form-card';
 import SynopsisCard from '../cards/synopsis-card';
 import ReviewSliderCard from '../cards/review-slider-card';
 
@@ -17,13 +20,17 @@ const stlyes: CssKeyObject = {
   },
 };
 
-const MainRightSection = ({ info } : { info: Ani }) => (
-  <section style={stlyes.container}>
-    <SynopsisCard />
-    <CharacterCard />
-    <ReviewSliderCard reviews={info.reviews} />
-    <RateChartCard scores={info.scoreList} />
-  </section>
-);
+const MainRightSection = observer(({ info } : { info: Ani }) => {
+  const { reviewFormDisplayState } = useAni();
+  return (
+    <section style={stlyes.container}>
+      {reviewFormDisplayState && <ReviewWriteFormCard id={info.id} />}
+      <SynopsisCard />
+      <CharacterCard />
+      <ReviewSliderCard reviews={info.reviews} />
+      <RateChartCard scores={info.scoreList} />
+    </section>
+  );
+});
 
 export default MainRightSection;
