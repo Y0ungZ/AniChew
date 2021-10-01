@@ -1,3 +1,5 @@
+import { Review } from './review';
+
 export type AniType = 'TV' | 'MOVIE' | 'OVA' | 'ONA' | 'Special';
 export type AniRate = 'ALL' | 'R12' | 'R15' | 'R18';
 export type Anigenre = {
@@ -17,17 +19,6 @@ export type Series = {
 export type Score = {
   readonly type: string;
   readonly value: number;
-};
-export type Review = {
-  id: string;
-  animeId: string;
-  userId: string;
-  content: string;
-  createdDate: Date;
-  modifiedDate: Date;
-  mine: boolean;
-  name: string;
-  nickname: string;
 };
 export const AniGenreDict = {
   1: '드라마',
