@@ -3,6 +3,7 @@ import { Card, Rate } from 'antd';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import '../../../../assets/css/color.css';
 import { useAni } from '../../../../hooks';
+import { msg } from '../../../../util/message';
 
 const styles: CssKeyObject = {
   card: {
@@ -28,11 +29,11 @@ const AnimeCardWithRate = ({ id }: {id: string}) => {
     if (value === 0) {
       ani.deleteAniScore(id)
         .then()
-        .catch((error) => alert(error));
+        .catch((error) => msg('Error', error));
     } else {
       ani.setAniScore(id, value)
         .then()
-        .catch((error) => alert(error));
+        .catch((error) => msg('Error', error));
     }
   };
 
