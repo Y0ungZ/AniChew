@@ -102,22 +102,22 @@ public class AnimeController {
 	
 	
 	
-//	@GetMapping(value="/{animeid}/reviews")
-//	public ResponseEntity<List<ReviewResponse>> getReviews (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
-//		
-//		
-//		List<ReviewResponse> response = null;
-//		if(!userService.checkToken(httpServletReq))
-//			return new ResponseEntity<List<ReviewResponse>>(response, HttpStatus.UNAUTHORIZED);
-//		
-//		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
-//			return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.NOT_ACCEPTABLE);		
-//		
-//		response = animeService.getReviews(httpServletReq, animeid);
-//	
-//		
-//		return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.OK);
-//	}
+	@GetMapping(value="/{animeid}/reviews")
+	public ResponseEntity<List<ReviewResponse>> getReviews (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		List<ReviewResponse> response = null;
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<List<ReviewResponse>>(response, HttpStatus.UNAUTHORIZED);
+		
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+			return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.NOT_ACCEPTABLE);		
+		
+		response = animeService.getReviews(httpServletReq, animeid);
+	
+		
+		return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.OK);
+	}
 	
 	
 	@GetMapping(value="/{animeid}/review")

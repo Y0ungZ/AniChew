@@ -212,22 +212,6 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		List<Review> reviews = reviewRepo.findAllByAnime(anime);
-		List<ReviewResponse> reviewsRes = new ArrayList();
-		for(Review review : reviews) {
-			ReviewResponse reviewRes = new ReviewResponse(review);
-			reviewRes.setId(review.getId());
-			
-			if(review.getUser().getId() == accessor_id)
-				reviewRes.setMine(true);
-			
-			
-			reviewRes.setLoveCnt(review.getLoves().size());
-			if(user !=null && reviewLoveRepo.existsByUserAndReview(user, review))
-				reviewRes.setLove(true);
-			
-			reviewRes.setLoveCnt(review.getLoves().size());
-			reviewsRes.add(reviewRes);
-		}
 		
 		
 		float myScore = 0;
@@ -244,7 +228,6 @@ public class AnimeServiceImpl implements AnimeService {
 		response.setScores(scores);
 		response.setRelatedAnimes(relatedAnimes);
 		response.setFavorite(isFavorite);
-		response.setReviews(reviewsRes);
 		response.setMyScore(myScore);
 		
 		return response;
@@ -475,9 +458,54 @@ public class AnimeServiceImpl implements AnimeService {
 
 
 	@Override
-	public List<ReviewResponse> getReview(HttpServletRequest httpServletReq, long animeid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long animeid) {
+		
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		boolean isFavorite = false;
+		String accessor = null;
+		if (requestTokenHeader != null) {
+			accessor = jwtUtil.getUserid(requestTokenHeader);
+		}		
+	
+		
+
+		Anime anime = animeRepo.findById(animeid);
+		AnimeDetailResponse response = new AnimeDetailResponse(anime);
+		
+		
+		long accessor_id = -1;
+		User user = null;
+		if(accessor!=null) {
+			accessor_id = Long.parseLong(accessor);
+			 user = userRepo.findById(accessor_id);
+		}
+				
+		
+		List<Review> reviews = reviewRepo.findAllByAnime(anime);
+		
+		List<ReviewResponse> reviewsRes = new ArrayList();
+		for(Review review : reviews) {
+			ReviewResponse reviewRes = new ReviewResponse(review);
+			reviewRes.setId(review.getId());
+			
+			if(review.getUser().getId() == accessor_id)
+				reviewRes.setMine(true);
+			
+			
+			reviewRes.setLoveCnt(review.getLoves().size());
+			if(user !=null && reviewLoveRepo.existsByUserAndReview(user, review))
+				reviewRes.setLove(true);
+			
+			reviewRes.setLoveCnt(review.getLoves().size());
+			reviewsRes.add(reviewRes);
+		}
+		
+		
+		
+		
+		
+		return reviewsRes;
 	}
 
 
