@@ -38,34 +38,34 @@ import com.anichew.Util.JwtUtil;
 public class AnimeServiceImpl implements AnimeService {
 
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
 	
 	@Autowired
-	AnimeRepository animeRepo;
+	private AnimeRepository animeRepo;
 	
 	@Autowired
-	AnimescoreRepository animerateRepo;
+	private AnimescoreRepository animerateRepo;
 	
 	@Autowired
-	AnimeGenreRepository animeGenreRepo;
+	private AnimeGenreRepository animeGenreRepo;
 	
 	@Autowired
-	AnimeSeriesRepository animeSeriesRepo;
+	private AnimeSeriesRepository animeSeriesRepo;
 	
 	@Autowired
-	FavoriteAnimeRepository favoriteAnimeRepo;
+	private FavoriteAnimeRepository favoriteAnimeRepo;
 	
 	@Autowired
-	AnimescoreRepository animescoreRepo;
+	private AnimescoreRepository animescoreRepo;
 	
 	@Autowired
-	ReviewRepository reviewRepo;
+	private ReviewRepository reviewRepo;
 	
 	@Autowired
-	ReviewLoveRepository reviewLoveRepo;	
+	private ReviewLoveRepository reviewLoveRepo;	
 	
 	@Autowired
-	JwtUtil jwtUtil;
+	private JwtUtil jwtUtil;
 	
 	@Override
 	public AnimescoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
@@ -421,6 +421,18 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 	}
+	
+
+	public boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);		
+		User user = userRepo.findById(Long.parseLong(userid));	
+		Review review = reviewRepo.findById(reviewid);		
+		
+		reviewLoveRepo.deleteByUserAndReview(user,review);
+		
+		return true;
+	}
 
 
 	public boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
@@ -460,6 +472,9 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		return true;
 	}
+
+
+
 	
 	
 

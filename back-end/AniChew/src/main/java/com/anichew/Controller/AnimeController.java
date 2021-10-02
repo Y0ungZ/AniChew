@@ -1,5 +1,7 @@
 package com.anichew.Controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -100,10 +102,26 @@ public class AnimeController {
 	
 	
 	
+//	@GetMapping(value="/{animeid}/reviews")
+//	public ResponseEntity<List<ReviewResponse>> getReviews (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+//		
+//		
+//		List<ReviewResponse> response = null;
+//		if(!userService.checkToken(httpServletReq))
+//			return new ResponseEntity<List<ReviewResponse>>(response, HttpStatus.UNAUTHORIZED);
+//		
+//		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+//			return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.NOT_ACCEPTABLE);		
+//		
+//		response = animeService.getReviews(httpServletReq, animeid);
+//	
+//		
+//		return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.OK);
+//	}
 	
 	
 	@GetMapping(value="/{animeid}/review")
-	public ResponseEntity<ReviewResponse> getReview (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	public ResponseEntity<ReviewResponse> getMyReview (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
 		ReviewResponse response = null;
@@ -185,7 +203,29 @@ public class AnimeController {
 	
 	
 	@PostMapping(value="/{animeid}/review/{reviewid}/love")
-	public ResponseEntity<String> writeReviewLove (@PathVariable("animeid") long animeid, @PathVariable("reviewid") long reviewid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	public ResponseEntity<String> setReviewLove (@PathVariable("animeid") long animeid, @PathVariable("reviewid") long reviewid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+				
+		ReviewResponse response = null;
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+		
+		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+			return new ResponseEntity<String>("NOT FOUND ANIME",HttpStatus.NOT_ACCEPTABLE);	
+		
+		if(!animeService.existsReview(reviewid))
+			return new ResponseEntity<String>("NOT FOUND REVIEW",HttpStatus.NOT_ACCEPTABLE);
+		
+		if(animeService.exsitsReviewLove(httpServletReq, reviewid))
+			return new ResponseEntity<String>("NOT FOUND REVIEW",HttpStatus.NOT_ACCEPTABLE);
+		
+		animeService.reviewLove(httpServletReq, reviewid);
+					
+		
+		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/{animeid}/review/{reviewid}/love")
+	public ResponseEntity<String> deleteReviewLove (@PathVariable("animeid") long animeid, @PathVariable("reviewid") long reviewid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
 		ReviewResponse response = null;
@@ -201,7 +241,7 @@ public class AnimeController {
 		if(animeService.exsitsReviewLove(httpServletReq, reviewid))
 			return new ResponseEntity<String>("NOT FOUND REVIEW",HttpStatus.NOT_ACCEPTABLE);
 		
-		animeService.reviewLove(httpServletReq, reviewid);
+		animeService.deleteReviewLove(httpServletReq, reviewid);
 					
 		
 		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
