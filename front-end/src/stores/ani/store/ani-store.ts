@@ -81,7 +81,7 @@ export default class AniStore {
           japaneseName,
           type,
           avgScore,
-          myScore,
+          myScore / 2,
           scoreList,
           episodes,
           new Date(airedStart),
