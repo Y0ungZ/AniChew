@@ -3,7 +3,8 @@ import { observer } from 'mobx-react';
 import { Button, Card } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { CssKeyObject } from '../../../../types/css-basic-type';
-import { useAni } from '../../../../hooks';
+import { useAni, useAuth } from '../../../../hooks';
+import { msg } from '../../../../util/message';
 
 const styles: CssKeyObject = {
   card: { width: 240, textAlign: 'center', borderRadius: '1em' },
@@ -14,12 +15,17 @@ const styles: CssKeyObject = {
 
 const ThumbnailCard = observer(({ id } : { id: string }) => {
   const ani = useAni();
+  const { isLoggedIn } = useAuth();
 
   const handleLike = () => {
-    if (ani.favorite) {
-      ani.deleteFavoriteAnime(id);
+    if (isLoggedIn) {
+      if (ani.favorite) {
+        ani.deleteFavoriteAnime(id);
+      } else {
+        ani.setFavoriteAnime(id);
+      }
     } else {
-      ani.setFavoriteAnime(id);
+      msg('Error', '로그인을 하셔야 이용하실 수 있습니다.');
     }
   };
 
