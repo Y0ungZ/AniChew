@@ -1,11 +1,13 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_CANCEL_LIKE_ANI,
+  FAIL_CANCEL_LIKE_REVIEW,
   FAIL_DELETE_ANI_SCORE,
   FAIL_DELETE_REVIEW,
   FAIL_GET_MY_REVIEW,
   FAIL_GIVE_ANI_SCORE,
   FAIL_LIKE_ANI,
+  FAIL_LIKE_REVIEW,
   FAIL_UPDATE_REVIEW,
   FAIL_WRITE_REVIEW,
 } from '../../../common/string-template/string-template';
@@ -161,6 +163,8 @@ export default class AniStore {
             mine,
             name,
             nickname,
+            love,
+            lovecnt,
           } = res.data;
 
           this.myReview = new Review(
@@ -173,6 +177,8 @@ export default class AniStore {
             mine,
             name,
             nickname,
+            love,
+            lovecnt,
           );
           this.reviewFormMode = 'Read';
           this.reviewFormDisplayState = true;
@@ -225,6 +231,24 @@ export default class AniStore {
       });
     } catch (error) {
       throw new Error(FAIL_CANCEL_LIKE_ANI);
+    }
+  }
+
+  async likeReview(reviewId: string, animeId: string) {
+    try {
+      await aniRepository.likeReview(reviewId, animeId);
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_LIKE_REVIEW);
+    }
+  }
+
+  async cancelLikeReview(reviewId: string, animeId: string) {
+    try {
+      await aniRepository.cancelLikeReview(reviewId, animeId);
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_CANCEL_LIKE_REVIEW);
     }
   }
 }

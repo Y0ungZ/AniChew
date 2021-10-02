@@ -48,6 +48,18 @@ class AniRepository {
   deleteFavoriteAni(animeId: string) {
     return mainAxios.delete(`${this.url}/anime/${animeId}/favorite`);
   }
+
+  likeReview(reviewId: string, animeId: string) {
+    return mainAxios.post(
+      `${this.url}/anime/${animeId}/review/${reviewId}/love`,
+    );
+  }
+
+  cancelLikeReview(reviewId: string, animeId: string) {
+    return mainAxios.delete(
+      `${this.url}/anime/${animeId}/review/${reviewId}/love`,
+    );
+  }
 }
 
 export default new AniRepository(process.env.REACT_APP_API_DOMAIN_URL!);
