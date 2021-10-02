@@ -3,10 +3,6 @@ import { message } from 'antd';
 type MessageType = 'Info' | 'Error' | 'Success' | 'Warning' | 'Loading';
 
 export function msg(type: MessageType, text: string) {
-  message.config({
-    top: 500,
-  });
-
   if (type === 'Info') {
     return message.info(text);
   }
