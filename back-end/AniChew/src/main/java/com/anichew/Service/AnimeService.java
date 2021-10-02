@@ -1,5 +1,7 @@
 package com.anichew.Service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
@@ -23,7 +25,9 @@ public interface AnimeService {
 	boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid);
 	ReviewResponse getMyReview(HttpServletRequest httpServletReq, long animeid);
 	void reviewLove(HttpServletRequest httpServletReq, long reviewid);
+	boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid);
 	boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
 	boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
+	List<ReviewResponse> getReview(HttpServletRequest httpServletReq, long animeid);
 	
 }
