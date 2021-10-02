@@ -30,7 +30,6 @@ public class AnimeDetailResponse {
 	private AnimeStatus status;
 	private Agerate rate;
 	private List<GenreResponse> genres;
-	private List<ReviewResponse> reviews;
 	private List<AnimeResponse> relatedAnimes;
 	private SeriesResponse series;
 	private boolean isFavorite;
