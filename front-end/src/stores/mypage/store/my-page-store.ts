@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { FAIL_GET_USER_INFO } from '../../../common/string-template/string-template';
 import MyPageType from '../model/mypage';
 import userRepository from '../repository/my-page-repository';
 
@@ -38,6 +39,6 @@ export default class MyPageStore {
 
       return this.user;
     }
-    throw new Error('회원정보 조회 실패!');
+    throw new Error(FAIL_GET_USER_INFO);
   }
 }

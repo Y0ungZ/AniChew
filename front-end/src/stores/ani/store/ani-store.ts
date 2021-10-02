@@ -1,4 +1,16 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import {
+  FAIL_CANCEL_LIKE_ANI,
+  FAIL_CANCEL_LIKE_REVIEW,
+  FAIL_DELETE_ANI_SCORE,
+  FAIL_DELETE_REVIEW,
+  FAIL_GET_MY_REVIEW,
+  FAIL_GIVE_ANI_SCORE,
+  FAIL_LIKE_ANI,
+  FAIL_LIKE_REVIEW,
+  FAIL_UPDATE_REVIEW,
+  FAIL_WRITE_REVIEW,
+} from '../../../common/string-template/string-template';
 import { Ani } from '../model/ani';
 import { Review } from '../model/review';
 import aniRepository from '../repository/ani-repository';
@@ -107,7 +119,7 @@ export default class AniStore {
       await aniRepository.writeReview(animeId, content);
       this.getMyReview(animeId);
     } catch (error) {
-      throw new Error('You failed to write a review.');
+      throw new Error(FAIL_WRITE_REVIEW);
     }
   }
 
@@ -116,7 +128,7 @@ export default class AniStore {
       await aniRepository.updateReview(animeId, content, reviewId);
       this.getMyReview(animeId);
     } catch (error) {
-      throw new Error('You failed to revise the review.');
+      throw new Error(FAIL_UPDATE_REVIEW);
     }
   }
 
@@ -128,7 +140,7 @@ export default class AniStore {
         this.myReview = null;
       });
     } catch (error) {
-      throw new Error('You failed to delete the review.');
+      throw new Error(FAIL_DELETE_REVIEW);
     }
   }
 
@@ -169,7 +181,7 @@ export default class AniStore {
         });
       }
     } catch (error) {
-      throw new Error('There is no my review');
+      throw new Error(FAIL_GET_MY_REVIEW);
     }
   }
 
@@ -180,7 +192,7 @@ export default class AniStore {
         this.reviewFormDisplayState = true;
       });
     } catch (error) {
-      throw new Error('You failed to give a score.');
+      throw new Error(FAIL_GIVE_ANI_SCORE);
     }
   }
 
@@ -188,7 +200,8 @@ export default class AniStore {
     try {
       await aniRepository.deleteAniScore(animeId);
     } catch (error) {
-      throw new Error('You failed to delete a score.');
+      console.log(error);
+      throw new Error(FAIL_DELETE_ANI_SCORE);
     }
   }
 
@@ -201,7 +214,7 @@ export default class AniStore {
       });
     } catch (error) {
       console.log('error', error);
-      throw new Error('애니메이션 좋아요에 실패하셨습니다.');
+      throw new Error(FAIL_LIKE_ANI);
     }
   }
 
@@ -213,7 +226,7 @@ export default class AniStore {
         this._favorite = false;
       });
     } catch (error) {
-      throw new Error('애니메이션 좋아요 취소에 실패하셨습니다.');
+      throw new Error(FAIL_CANCEL_LIKE_ANI);
     }
   }
 
