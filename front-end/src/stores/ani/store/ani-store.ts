@@ -57,7 +57,7 @@ export default class AniStore {
       } = res.data;
 
       const scoreList = scores.map((score: number, i: number) => ({
-        type: `${i}점`,
+        type: `${i + 1}점`,
         value: score,
       }));
 
