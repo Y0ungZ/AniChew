@@ -474,6 +474,13 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 
 
+	@Override
+	public List<ReviewResponse> getReview(HttpServletRequest httpServletReq, long animeid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	
 	
