@@ -13,6 +13,8 @@ import com.anichew.Entity.User;
 public interface CharascoreRepository extends JpaRepository<Charascore,Long> {
 	Charascore findByCharaAndUser(Chara chara, User user);
 	List<Charascore> findAllByChara(Chara chara);
+	boolean existsByCharaAndUser(Chara chara,User user);
+	
 	@Transactional
 	void deleteByCharaAndUser(Chara chara, User user);
 }

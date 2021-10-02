@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AnimescoreResponse {
+public class ScoreResponse {
 	private long userId;
-	private long animeId;
+	private long id;
+	private String type;
 	private float score;
 }

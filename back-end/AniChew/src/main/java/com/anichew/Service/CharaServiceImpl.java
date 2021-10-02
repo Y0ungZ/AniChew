@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
@@ -24,6 +26,7 @@ import com.anichew.Repository.SeriesRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Response.AnimeResponse;
 import com.anichew.Response.CharaDetailResponse;
+import com.anichew.Response.ScoreResponse;
 import com.anichew.Util.JwtUtil;
 
 @Service
@@ -196,10 +199,21 @@ public class CharaServiceImpl implements CharaService {
 	}
 	
 	
-	
-	public boolean setScore(HttpServletRequest httpServletReq, long charaid, float score) {
+	@Override
+	public boolean exsitsCharascore(HttpServletRequest httpServletReq, long charaid) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		boolean isFavorite = false;		
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		User user = userRepo.findById(Long.parseLong(userid));
+		
+		Chara chara = charaRepo.findById(charaid);
+		
+		return charascoreRepo.existsByCharaAndUser(chara, user);
+		
+	}
+	
+	
+	public ScoreResponse setScore(HttpServletRequest httpServletReq, long charaid, float score) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(userid));
 		
@@ -222,12 +236,17 @@ public class CharaServiceImpl implements CharaService {
 		
 		charascoreRepo.save(charascore);
 		
-		return true;
+		ScoreResponse response = new ScoreResponse();
+		response.setId(charaid);
+		response.setScore(score);
+		response.setType("CHARA");
+		response.setUserId(Long.parseLong(userid));
+		
+		return response;
 	}
 	
-	public boolean deleteScore(HttpServletRequest httpServletReq, long charaid, float score) {
+	public boolean deleteScore(HttpServletRequest httpServletReq, long charaid) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		boolean isFavorite = false;		
 		String userid = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(userid));
 		
@@ -245,6 +264,8 @@ public class CharaServiceImpl implements CharaService {
 		
 		return true;
 	}
+
+
 	
 	
 	
