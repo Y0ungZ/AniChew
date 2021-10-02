@@ -2,6 +2,8 @@ package com.anichew.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -29,6 +31,7 @@ public class Chara {
 	@Column(name="chara_last_name")
 	private String lastName;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="chara_role")
 	private CharaRole role;
 	
