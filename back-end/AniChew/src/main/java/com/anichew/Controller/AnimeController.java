@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Request.ScoreRequest;
 import com.anichew.Response.AnimeDetailResponse;
-import com.anichew.Response.AnimescoreResponse;
 import com.anichew.Response.FavoriteResponse;
 import com.anichew.Response.ReviewResponse;
+import com.anichew.Response.ScoreResponse;
 import com.anichew.Service.AnimeService;
 import com.anichew.Service.UserService;
 
@@ -54,28 +54,28 @@ public class AnimeController {
 	
 	
 	@PostMapping(value="/{animeid}/score")
-	public ResponseEntity<AnimescoreResponse> doAnimeRate (@PathVariable("animeid") long animeid, @RequestBody ScoreRequest scoreReq, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	public ResponseEntity<ScoreResponse> doAnimeRate (@PathVariable("animeid") long animeid, @RequestBody ScoreRequest scoreReq, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
-		AnimescoreResponse response = new AnimescoreResponse();
+		ScoreResponse response = new ScoreResponse();
 		float score = scoreReq.getScore();
 		
 		if(!userService.checkToken(httpServletReq))
-			return new ResponseEntity<AnimescoreResponse>(response, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<ScoreResponse>(response, HttpStatus.UNAUTHORIZED);
 		
 		System.out.println(animeid);
 		
 		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
-			return new ResponseEntity<AnimescoreResponse>(response,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ScoreResponse>(response,HttpStatus.NOT_FOUND);
 		}
 		
 		if(score > 10 || score < 0)
-			return new ResponseEntity<AnimescoreResponse>(response,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ScoreResponse>(response,HttpStatus.BAD_REQUEST);
 		
 		
 		response = animeService.rateAnime(httpServletReq, animeid, score);
 		
 		
-		return new ResponseEntity<AnimescoreResponse>(response,HttpStatus.OK);
+		return new ResponseEntity<ScoreResponse>(response,HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value="/{animeid}/score")
@@ -253,6 +253,7 @@ public class AnimeController {
 		
 		
 		FavoriteResponse response = new FavoriteResponse();
+		response.setType("ANIME");
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<FavoriteResponse>(response, HttpStatus.UNAUTHORIZED);
 		
@@ -269,6 +270,7 @@ public class AnimeController {
 			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_ACCEPTABLE);
 		
 		response.setSuccess(true);
+		
 		return new ResponseEntity<FavoriteResponse>(response,HttpStatus.OK);
 	}
 	
@@ -278,6 +280,7 @@ public class AnimeController {
 		
 		
 		FavoriteResponse response = new FavoriteResponse();
+		response.setType("ANIME");
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<FavoriteResponse>(response, HttpStatus.UNAUTHORIZED);
 

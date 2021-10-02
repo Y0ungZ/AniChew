@@ -3,15 +3,14 @@ package com.anichew.Service;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
-import com.anichew.Response.AnimescoreResponse;
 import com.anichew.Response.ReviewResponse;
+import com.anichew.Response.ScoreResponse;
 
 public interface AnimeService {
-	AnimescoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score);
+	ScoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score);
 	
 	boolean deleteRate(HttpServletRequest httpServletReq, long animeid);
 	boolean existsAnimerate(HttpServletRequest httpServletReq, long animeid);

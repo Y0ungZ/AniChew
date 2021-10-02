@@ -8,4 +8,5 @@ import lombok.Setter;
 public class FavoriteResponse {	
 	private long id;
 	private boolean success;
+	private String type;
 }
