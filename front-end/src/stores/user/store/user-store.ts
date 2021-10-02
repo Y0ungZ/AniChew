@@ -1,4 +1,8 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import {
+  FAIL_PROFILE_AVATAR_UPDATE,
+  FAIL_PROFILE_COVER_UPDATE,
+} from '../../../common/string-template/string-template';
 import User from '../model/user';
 import userRepository from '../repository/user-repository';
 
@@ -66,7 +70,7 @@ export default class UserStore {
     if (res.status === 200) {
       return res.data;
     }
-    throw new Error('아바타 수정 실패');
+    throw new Error(FAIL_PROFILE_AVATAR_UPDATE);
   }
 
   async updateCover(newCover: FormData) {
@@ -74,7 +78,7 @@ export default class UserStore {
     if (res.status === 200) {
       return res.data;
     }
-    throw new Error('커버 수정 실패');
+    throw new Error(FAIL_PROFILE_COVER_UPDATE);
   }
 
   async coverModify(user: User) {

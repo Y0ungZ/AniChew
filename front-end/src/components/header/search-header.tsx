@@ -2,6 +2,7 @@ import React from 'react';
 import { Input } from 'antd';
 import { CssKeyObject } from '../../types/css-basic-type';
 import '../../assets/css/color.css';
+import { SEARCH_INPUT } from '../../common/string-template/string-template';
 
 const { Search } = Input;
 
@@ -37,7 +38,7 @@ const SearchHeader = ({ open }: searchOpen) => {
       {open && (
         <div style={styles.header}>
           <Search
-            placeholder="작품, 캐릭터를 검색해보세요."
+            placeholder={SEARCH_INPUT}
             style={styles.searchInput}
             enterButton
             onSearch={onSearch}

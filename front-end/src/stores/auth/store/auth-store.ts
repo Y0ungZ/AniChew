@@ -1,4 +1,8 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import {
+  FAIL_LOGIN,
+  FAIL_LOGOUT,
+} from '../../../common/string-template/string-template';
 import { mainAxios } from '../../../libs/axios';
 import authRepository from '../repository/auth-repository';
 
@@ -18,7 +22,7 @@ export default class AuthStore {
       mainAxios.defaults.headers.common.Authorization = res.data.token;
       localStorage.setItem('token', res.data.token);
     } else {
-      throw new Error('로그인 실패');
+      throw new Error(FAIL_LOGIN);
     }
   }
 
@@ -29,7 +33,7 @@ export default class AuthStore {
         this.isLoggedIn = false;
       });
     } else {
-      throw new Error('로그아웃 실패');
+      throw new Error(FAIL_LOGOUT);
     }
   }
 }
