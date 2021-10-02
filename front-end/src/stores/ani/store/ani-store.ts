@@ -1,13 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_CANCEL_LIKE_ANI,
-  FAIL_CANCEL_LIKE_REVIEW,
   FAIL_DELETE_ANI_SCORE,
   FAIL_DELETE_REVIEW,
   FAIL_GET_MY_REVIEW,
   FAIL_GIVE_ANI_SCORE,
   FAIL_LIKE_ANI,
-  FAIL_LIKE_REVIEW,
   FAIL_UPDATE_REVIEW,
   FAIL_WRITE_REVIEW,
 } from '../../../common/string-template/string-template';
@@ -30,13 +28,13 @@ export default class AniStore {
 
   aniInfoState: State = 'Done';
 
-  private _reviewFormMode: ReviewFormMode = 'Write';
+  reviewFormMode: ReviewFormMode = 'Write';
 
-  private _reviewFormDisplayState = false;
+  reviewFormDisplayState = false;
 
-  private _myReview: Review | null = null;
+  myReview: Review | null = null;
 
-  private _favorite = false;
+  favorite = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -95,8 +93,8 @@ export default class AniStore {
           series,
           favorite,
         );
-        if (this.aniInfo.myScore > 0) this._reviewFormDisplayState = true;
-        this._favorite = favorite;
+        if (this.aniInfo.myScore > 0) this.reviewFormDisplayState = true;
+        this.favorite = favorite;
       });
     } catch (error) {
       runInAction(() => {
@@ -107,10 +105,10 @@ export default class AniStore {
   }
 
   async submitReview(animeId: string, content: string) {
-    if (this._reviewFormMode === 'Write') {
+    if (this.reviewFormMode === 'Write') {
       this.writeReview(animeId, content);
-    } else if (this._reviewFormMode === 'Update') {
-      this.updateReview(animeId, content, this._myReview!.id);
+    } else if (this.reviewFormMode === 'Update') {
+      this.updateReview(animeId, content, this.myReview!.id);
     }
   }
 
@@ -149,8 +147,8 @@ export default class AniStore {
       const res = await aniRepository.getMyReview(animeId);
       if (res.data === '') {
         runInAction(() => {
-          this._myReview = null;
-          this._reviewFormMode = 'Write';
+          this.myReview = null;
+          this.reviewFormMode = 'Write';
         });
       } else {
         runInAction(() => {
@@ -165,7 +163,7 @@ export default class AniStore {
             nickname,
           } = res.data;
 
-          this._myReview = new Review(
+          this.myReview = new Review(
             id,
             animeId,
             userId,
@@ -176,8 +174,8 @@ export default class AniStore {
             name,
             nickname,
           );
-          this._reviewFormMode = 'Read';
-          this._reviewFormDisplayState = true;
+          this.reviewFormMode = 'Read';
+          this.reviewFormDisplayState = true;
         });
       }
     } catch (error) {
@@ -210,7 +208,7 @@ export default class AniStore {
       const res = await aniRepository.setFavoriteAni(animeId);
       console.log(res);
       runInAction(() => {
-        this._favorite = true;
+        this.favorite = true;
       });
     } catch (error) {
       console.log('error', error);
@@ -223,50 +221,10 @@ export default class AniStore {
       const res = await aniRepository.deleteFavoriteAni(animeId);
       console.log(res);
       runInAction(() => {
-        this._favorite = false;
+        this.favorite = false;
       });
     } catch (error) {
       throw new Error(FAIL_CANCEL_LIKE_ANI);
     }
-  }
-
-  get reviewFormMode() {
-    return this._reviewFormMode;
-  }
-
-  set reviewFormMode(value: ReviewFormMode) {
-    runInAction(() => {
-      this._reviewFormMode = value;
-    });
-  }
-
-  get reviewFormDisplayState() {
-    return this._reviewFormDisplayState;
-  }
-
-  set reviewFormDisplayState(state: boolean) {
-    runInAction(() => {
-      this._reviewFormDisplayState = state;
-    });
-  }
-
-  get myReview(): Review | null {
-    return this._myReview;
-  }
-
-  set myReview(value: Review | null) {
-    runInAction(() => {
-      this._myReview = value;
-    });
-  }
-
-  get favorite(): boolean {
-    return this._favorite;
-  }
-
-  set favorite(value: boolean) {
-    runInAction(() => {
-      this._favorite = value;
-    });
   }
 }
