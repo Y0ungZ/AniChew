@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, message, Rate } from 'antd';
+import { Button, Rate } from 'antd';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import { useAni, useAuth } from '../../../../hooks';
-
-const errorMsg = () => {
-  message.error('로그인 하셔야 평점을 매길 수 있습니다.');
-};
+import { msg } from '../../../../util/message';
 
 const styles: CssKeyObject = {
   resetBtn: {
@@ -29,7 +26,7 @@ const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
 
   const resetRate = () => {
     if (!isLoggedIn) {
-      errorMsg();
+      msg('Error', '로그인을 하셔야 이용할 수 있습니다.');
       return;
     }
     setRate(0);
@@ -38,18 +35,18 @@ const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
 
   const checkRate = (value: number) => {
     if (!isLoggedIn) {
-      errorMsg();
+      msg('Error', '로그인을 하셔야 이용할 수 있습니다.');
       return;
     }
     setRate(value);
     if (value === 0) {
       ani.deleteAniScore(id)
         .then()
-        .catch((error) => alert(error));
+        .catch((error) => msg('Error', error));
     } else {
       ani.setAniScore(id, value)
         .then()
-        .catch((error) => alert(error));
+        .catch((error) => msg('Error', error));
     }
   };
 

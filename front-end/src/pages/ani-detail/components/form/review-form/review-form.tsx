@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Form, Input, Button } from 'antd';
 import { CssKeyObject } from '../../../../../types/css-basic-type';
 import { useAni } from '../../../../../hooks';
+import { msg } from '../../../../../util/message';
 
 const styles: CssKeyObject = {
   submitBtn: {
@@ -20,7 +21,7 @@ const ReviewForm = observer(({ id }: {id: string}) => {
     console.log(review);
     ani.submitReview(id, review)
       .then()
-      .catch(() => alert('리뷰 남기기 실패!'));
+      .catch((error) => msg('Error', error));
   };
 
   const cancelUpdate = () => {
