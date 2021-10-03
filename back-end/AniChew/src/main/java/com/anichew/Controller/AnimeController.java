@@ -107,8 +107,6 @@ public class AnimeController {
 		
 		
 		List<ReviewResponse> response = null;
-		if(!userService.checkToken(httpServletReq))
-			return new ResponseEntity<List<ReviewResponse>>(response, HttpStatus.UNAUTHORIZED);
 		
 		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
 			return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.NOT_ACCEPTABLE);		
@@ -238,7 +236,7 @@ public class AnimeController {
 		if(!animeService.existsReview(reviewid))
 			return new ResponseEntity<String>("NOT FOUND REVIEW",HttpStatus.NOT_ACCEPTABLE);
 		
-		if(animeService.exsitsReviewLove(httpServletReq, reviewid))
+		if(!animeService.exsitsReviewLove(httpServletReq, reviewid))
 			return new ResponseEntity<String>("NOT FOUND REVIEW",HttpStatus.NOT_ACCEPTABLE);
 		
 		animeService.deleteReviewLove(httpServletReq, reviewid);
