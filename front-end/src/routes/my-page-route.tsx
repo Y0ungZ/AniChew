@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useMyPage } from '../hooks';
-import NotUserExist from '../pages/error/not-user-exist';
+import NotFound from '../pages/error/not-found';
 import MyPage from '../pages/my-page/my-page';
 import MyPageType from '../stores/mypage/model/mypage';
 
@@ -25,7 +25,7 @@ const MyPageRoute = observer((route:RouteComponentProps) => {
     <Route
       render={() => (userInfo ? (
         <MyPage />
-      ) : (<NotUserExist />))}
+      ) : (<NotFound type="유저 정보" />))}
     />
   );
 });
