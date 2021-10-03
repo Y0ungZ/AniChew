@@ -35,5 +35,20 @@ public class SearchController {
 		return new ResponseEntity<List<SearchResponse>>(response,HttpStatus.OK);
 	}
 		
+	@GetMapping("/chara/{keyword}")
+	public ResponseEntity<List<SearchResponse>> charaSearch (@PathVariable("keyword") String keyword) {
+		
+		
+		List<SearchResponse> response = null;
+		
+		System.out.println(keyword);
+		
+		response = searchService.getCharaList(keyword);
+		
+		
+		return new ResponseEntity<List<SearchResponse>>(response,HttpStatus.OK);
+	}
+	
+	
 	
 }
