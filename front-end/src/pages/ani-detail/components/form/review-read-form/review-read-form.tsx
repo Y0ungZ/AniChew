@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
-import { useAni } from '../../../../../hooks';
+import { useReview } from '../../../../../hooks';
 import { CssKeyObject } from '../../../../../types/css-basic-type';
+import { msg } from '../../../../../util/message';
 
 const styles: CssKeyObject = {
   container: {
@@ -15,20 +16,21 @@ const styles: CssKeyObject = {
 };
 
 const ReviewReadForm = observer(({ id }: {id: string}) => {
-  const ani = useAni();
-  console.log('');
+  const review = useReview();
   const changeUpdateMode = () => {
-    ani.reviewFormMode = 'Update';
+    review.reviewFormMode = 'Update';
   };
 
   const deleteReview = () => {
-    ani.deleteReview(id, ani.myReview!.id);
+    review.deleteReview(id, review.myReview!.id)
+      .then()
+      .catch((error) => msg('Error', error.message));
   };
 
   return (
     <div style={styles.container}>
       <p>
-        {ani.myReview?.content}
+        {review.myReview?.content}
       </p>
       <div>
         <Button onClick={changeUpdateMode}>수정</Button>

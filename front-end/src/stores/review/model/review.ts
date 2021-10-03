@@ -9,5 +9,7 @@ export class Review {
     readonly mine: boolean,
     readonly name: string,
     readonly nickname: string,
+    readonly love: boolean,
+    readonly loveCnt: number,
   ) {}
 }

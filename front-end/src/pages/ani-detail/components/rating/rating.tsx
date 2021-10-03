@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Rate } from 'antd';
 import { CssKeyObject } from '../../../../types/css-basic-type';
-import { useAni, useAuth } from '../../../../hooks';
+import { useAni, useAuth, useReview } from '../../../../hooks';
 import { msg } from '../../../../util/message';
+import { REQUIRE_LOGIN } from '../../../../common/string-template/string-template';
 
 const styles: CssKeyObject = {
   resetBtn: {
@@ -19,6 +20,7 @@ const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
   const [rate, setRate] = useState(myScore);
   const { isLoggedIn } = useAuth();
   const ani = useAni();
+  const review = useReview();
 
   useEffect(() => {
     setRate(myScore);
@@ -26,27 +28,27 @@ const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
 
   const resetRate = () => {
     if (!isLoggedIn) {
-      msg('Error', '로그인을 하셔야 이용할 수 있습니다.');
+      msg('Error', REQUIRE_LOGIN);
       return;
     }
     setRate(0);
-    ani.reviewFormDisplayState = true;
+    review.reviewFormDisplayState = true;
   };
 
   const checkRate = (value: number) => {
     if (!isLoggedIn) {
-      msg('Error', '로그인을 하셔야 이용할 수 있습니다.');
+      msg('Error', REQUIRE_LOGIN);
       return;
     }
     setRate(value);
     if (value === 0) {
       ani.deleteAniScore(id)
         .then()
-        .catch((error) => msg('Error', error));
+        .catch((error) => msg('Error', error.message));
     } else {
       ani.setAniScore(id, value)
-        .then()
-        .catch((error) => msg('Error', error));
+        .then(() => { review.reviewFormDisplayState = true; })
+        .catch((error) => msg('Error', error.message));
     }
   };
 
