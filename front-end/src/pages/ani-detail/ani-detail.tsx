@@ -2,30 +2,68 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
 import { useAni, useReview } from '../../hooks';
-import HeaderSection from './components/header-section/header-section';
+import AniDetailTemplate from './template';
+import AniMetaSection from '../../components/organisms/ani-meta-section/ani-meta-section';
+import {
+  AnimeSeriesCard,
+  AnimeInfoCard,
+  SynopsisCard,
+  CharacterListCard,
+  ReviewSliderCard,
+  RateChartCard,
+  ReviewFormCard,
+} from '../../components';
 import NotFound from '../error/not-found';
-import MainSection from './components/main-section/main-section';
+import { msg } from '../../util/message';
 
 const AniDetail = observer(() => {
-  const param = useParams<{id: string}>();
+  const param = useParams<{ id: string }>();
+
   const ani = useAni();
   const review = useReview();
 
   useEffect(() => {
-    ani.getAniDetailInfo(param.id);
-    review.getAllReviews(param.id);
-    review.getMyReview(param.id);
-    window.scroll(0, 0);
-  }, [param.id, ani, review]);
+    ani
+      .getInfo(param.id)
+      .then(() => window.scroll(0, 0))
+      .catch((error) => msg('Error', error.message));
+  }, [ani, param.id]);
+
+  useEffect(() => {
+    review
+      .getAllReviews(param.id)
+      .then()
+      .catch((error) => msg('Error', error.message));
+  }, [review, param.id]);
+
+  useEffect(() => {
+    review
+      .getMyReview(param.id)
+      .then()
+      .catch((error) => msg('Error', error.message));
+  }, [review, param.id]);
 
   return (
     <section>
-      {ani.aniInfo ? (
+      {ani.info ? (
         <>
-          <HeaderSection info={ani.aniInfo} />
-          <MainSection info={ani.aniInfo} />
+          <AniDetailTemplate
+            meta={<AniMetaSection info={ani.info} store={ani} />}
+            info={<AnimeInfoCard info={ani.info} />}
+            series={<AnimeSeriesCard series={ani.info.relatedAnis} />}
+            reviewForm={
+              review.reviewFormDisplayState && (
+                <ReviewFormCard id={ani.info.id} />
+              )
+            }
+            syno={<SynopsisCard />}
+            char={<CharacterListCard />}
+            reviewList={<ReviewSliderCard />}
+            rateChart={<RateChartCard scores={ani.info.scoreList} />}
+          />
         </>
       ) : <NotFound type="애니메이션 정보" />}
+
     </section>
   );
 });

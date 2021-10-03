@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth, useUser } from '../../../hooks';
 import { msg } from '../../../util/message';
-import FullLoading from '../../loading/full-loading';
+import FullLoading from '../../atoms/loading/full-loading';
 
 const KakaoOauthHandler = () => {
   const user = useUser();
