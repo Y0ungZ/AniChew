@@ -11,11 +11,11 @@ import aniRepository from '../repository/ani-repository';
 export interface AniStore {
   info: Ani | null;
   favorite: boolean;
-  getInfo: (id: string) => void;
-  setScore: (id: string, score: number) => void;
-  removeScore: (id: string) => void;
-  like: (id: string) => void;
-  cancelLike: (id: string) => void;
+  getInfo: (id: string) => Promise<void>;
+  setScore: (id: string, score: number) => Promise<void>;
+  removeScore: (id: string) => Promise<void>;
+  like: (id: string) => Promise<void>;
+  cancelLike: (id: string) => Promise<void>;
   ani: () => void;
 }
 
