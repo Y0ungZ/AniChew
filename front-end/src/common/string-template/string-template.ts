@@ -13,8 +13,8 @@ export const FAIL_UPDATE_REVIEW = '리뷰 수정에 실패하셨습니다.';
 export const FAIL_DELETE_REVIEW = '리뷰 삭제에 실패하셨습니다.';
 export const FAIL_GET_MY_REVIEW = '나의 리뷰 가져오기에 실패하셨습니다.';
 
-export const FAIL_LIKE_REVIEW = '나의 리뷰 가져오기에 실패하셨습니다.';
-export const FAIL_CANCEL_LIKE_REVIEW = '나의 리뷰 가져오기에 실패하셨습니다.';
+export const FAIL_LIKE_REVIEW = '리뷰 좋아요에 실패하셨습니다.';
+export const FAIL_CANCEL_LIKE_REVIEW = '리뷰 좋아요 취소에 실패하셨습니다.';
 
 export const FAIL_GIVE_ANI_SCORE = '애니메이션 평점 주기에 실패하셨습니다.';
 export const FAIL_DELETE_ANI_SCORE = '애니메이션 평점 삭제에 실패하셨습니다.';
