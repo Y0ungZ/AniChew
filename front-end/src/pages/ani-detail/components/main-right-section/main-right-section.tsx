@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { useAni } from '../../../../hooks';
+import { useReview } from '../../../../hooks';
 import { Ani } from '../../../../stores/ani/model/ani';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import CharacterCard from '../cards/character-card';
@@ -21,13 +21,13 @@ const stlyes: CssKeyObject = {
 };
 
 const MainRightSection = observer(({ info } : { info: Ani }) => {
-  const { reviewFormDisplayState } = useAni();
+  const { reviewFormDisplayState } = useReview();
   return (
     <section style={stlyes.container}>
       {reviewFormDisplayState && <ReviewWriteFormCard id={info.id} />}
       <SynopsisCard />
       <CharacterCard />
-      <ReviewSliderCard reviews={info.reviews} />
+      <ReviewSliderCard />
       <RateChartCard scores={info.scoreList} />
     </section>
   );

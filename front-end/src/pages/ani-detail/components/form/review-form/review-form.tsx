@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Form, Input, Button } from 'antd';
 import { CssKeyObject } from '../../../../../types/css-basic-type';
-import { useAni } from '../../../../../hooks';
+import { useReview } from '../../../../../hooks';
 import { msg } from '../../../../../util/message';
 
 const styles: CssKeyObject = {
@@ -15,17 +15,15 @@ const styles: CssKeyObject = {
 };
 
 const ReviewForm = observer(({ id }: {id: string}) => {
-  const ani = useAni();
-
+  const reviewStore = useReview();
   const submitReview = ({ review }: {review: string}) => {
-    console.log(review);
-    ani.submitReview(id, review)
+    reviewStore.submitReview(id, review)
       .then()
-      .catch((error) => msg('Error', error));
+      .catch((error) => msg('Error', error.message));
   };
 
   const cancelUpdate = () => {
-    ani.reviewFormMode = 'Read';
+    reviewStore.reviewFormMode = 'Read';
   };
 
   return (
@@ -41,17 +39,17 @@ const ReviewForm = observer(({ id }: {id: string}) => {
       >
         <Input.TextArea
           name="content"
-          placeholder={ani.myReview ? '' : '100자 이내'}
+          placeholder={reviewStore.myReview ? '' : '100자 이내'}
           showCount
           maxLength={100}
-          defaultValue={ani.myReview ? ani.myReview.content : ''}
+          defaultValue={reviewStore.myReview ? reviewStore.myReview.content : ''}
         />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" style={styles.submitBtn}>
           작성
         </Button>
-        {ani.reviewFormMode === 'Update' && (
+        {reviewStore.reviewFormMode === 'Update' && (
         <Button onClick={cancelUpdate} style={styles.cancelBtn}>
           취소
         </Button>
