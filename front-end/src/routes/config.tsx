@@ -1,5 +1,5 @@
 import React, { ComponentType, LazyExoticComponent, ReactNode, lazy } from 'react';
-import FullLoading from '../components/loading/full-loading';
+import { FullLoading } from '../components';
 
 export type RouteType = {
   path: string;
