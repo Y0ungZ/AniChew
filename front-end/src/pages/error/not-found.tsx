@@ -1,20 +1,28 @@
 import React from 'react';
 import { CssKeyObject } from '../../types/css-basic-type';
+import { NotFoundType } from '../../types/not-found-type';
 
 const styles: CssKeyObject = {
   container: {
-    width: '100%',
     height: '90vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    lineHeight: '90vh',
+    textAlign: 'center',
+    backgroundColor: 'white',
+  },
+  text: {
+    fontFamily: 'titleFont',
+    fontSize: '2em',
+    color: 'var(--main-color)',
   },
 };
 
-const NotFound = () => (
-  <section style={styles.container}>
-    <h1>애니메이션이 존재하지 않습니다!</h1>
-  </section>
+const NotFound = ({ type }: NotFoundType) => (
+  <div style={styles.container}>
+    <span style={styles.text}>
+      {type}
+      가 존재하지 않습니다!
+    </span>
+  </div>
 );
 
 export default NotFound;

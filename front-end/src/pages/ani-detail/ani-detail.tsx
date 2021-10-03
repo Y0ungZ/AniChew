@@ -25,7 +25,7 @@ const AniDetail = observer(() => {
           <HeaderSection info={ani.aniInfo} />
           <MainSection info={ani.aniInfo} />
         </>
-      ) : <NotFound />}
+      ) : <NotFound type="애니메이션 정보" />}
     </section>
   );
 });
