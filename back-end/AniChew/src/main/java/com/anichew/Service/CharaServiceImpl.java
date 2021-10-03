@@ -72,8 +72,6 @@ public class CharaServiceImpl implements CharaService {
 		
 		Chara chara = charaRepo.findById(charaid);
 		
-		System.out.println(chara.getId());
-		System.out.println(chara.getSeiyu().getId());
 		
 		CharaDetailResponse response = new CharaDetailResponse(chara);
 		
@@ -84,7 +82,6 @@ public class CharaServiceImpl implements CharaService {
 		String series = null;
 		
 		for(AnimeChara charaAnime : charaAnimes) {
-			System.out.println("하이");
 			AnimeResponse animeResponse = new AnimeResponse();
 			Anime anime = charaAnime.getAnime();
 			animeResponse.setId(anime.getId());
@@ -162,7 +159,6 @@ public class CharaServiceImpl implements CharaService {
 		boolean isFavorite = false;		
 		String userid = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(userid));
-		System.out.println(user.getId());
 		Chara chara = charaRepo.findById(charaid);
 		
 		if(favoriteCharaRepo.existsByCharaAndUser(chara, user))		
