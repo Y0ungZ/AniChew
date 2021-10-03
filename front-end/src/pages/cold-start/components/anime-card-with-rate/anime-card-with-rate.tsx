@@ -27,11 +27,11 @@ const AnimeCardWithRate = ({ id }: {id: string}) => {
   const checkRate = (value: number) => {
     setRate(value);
     if (value === 0) {
-      ani.deleteAniScore(id)
+      ani.removeScore(id)
         .then()
         .catch((error) => msg('Error', error));
     } else {
-      ani.setAniScore(id, value)
+      ani.setScore(id, value)
         .then()
         .catch((error) => msg('Error', error));
     }
