@@ -12,12 +12,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="charascore")
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
 public class Charascore {
 
