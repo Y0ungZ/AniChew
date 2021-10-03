@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
-import { useReview } from '../../../../../hooks';
-import { CssKeyObject } from '../../../../../types/css-basic-type';
-import { msg } from '../../../../../util/message';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import { useReview } from '../../../hooks';
+import { msg } from '../../../util/message';
 
 const styles: CssKeyObject = {
   container: {

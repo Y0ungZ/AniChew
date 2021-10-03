@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Rate } from 'antd';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import { useAni, useAuth, useReview } from '../../../../hooks';
-import { msg } from '../../../../util/message';
-import { REQUIRE_LOGIN } from '../../../../common/string-template/string-template';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import { useAuth, useReview } from '../../../hooks';
+import { msg } from '../../../util/message';
+import { REQUIRE_LOGIN } from '../../../common/string-template/string-template';
+import { Info, Store } from '../../../types/common';
 
 const styles: CssKeyObject = {
   resetBtn: {
@@ -16,23 +17,28 @@ const styles: CssKeyObject = {
   },
 };
 
-const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
-  const [rate, setRate] = useState(myScore);
+const checkisLoggedIn = (isLoggedIn: boolean, callback: any) => {
+  if (!isLoggedIn) {
+    msg('Error', REQUIRE_LOGIN);
+    return;
+  }
+  callback();
+};
+
+const Rating = ({ store, info } : {store: Store, info: Info}) => {
+  const [rate, setRate] = useState(info.myScore);
   const { isLoggedIn } = useAuth();
-  const ani = useAni();
   const review = useReview();
 
   useEffect(() => {
-    setRate(myScore);
-  }, [myScore]);
+    setRate(info.myScore);
+  }, [info.myScore]);
 
   const resetRate = () => {
-    if (!isLoggedIn) {
-      msg('Error', REQUIRE_LOGIN);
-      return;
-    }
-    setRate(0);
-    review.reviewFormDisplayState = true;
+    checkisLoggedIn(isLoggedIn, () => {
+      setRate(0);
+      review.reviewFormDisplayState = true;
+    });
   };
 
   const checkRate = (value: number) => {
@@ -42,11 +48,11 @@ const Rating = ({ id, myScore } : {id: string, myScore: number}) => {
     }
     setRate(value);
     if (value === 0) {
-      ani.deleteAniScore(id)
+      store.removeScore(info.id)
         .then()
         .catch((error) => msg('Error', error.message));
     } else {
-      ani.setAniScore(id, value)
+      store.setScore(info.id, value)
         .then(() => { review.reviewFormDisplayState = true; })
         .catch((error) => msg('Error', error.message));
     }

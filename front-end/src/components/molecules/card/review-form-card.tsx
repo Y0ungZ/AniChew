@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { Card } from 'antd';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import { useReview } from '../../../../hooks';
-import { ReviewForm, ReviewReadForm } from '../form';
-import { msg } from '../../../../util/message';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import { useReview } from '../../../hooks';
+import { ReviewForm, ReviewReadForm } from '../..';
 
 const styles: CssKeyObject = {
   card: {
@@ -23,14 +22,8 @@ const styles: CssKeyObject = {
   },
 };
 
-const ReviewWriteFormCard = observer(({ id }: {id: string}) => {
+const ReviewFormCard = observer(({ id }: {id: string}) => {
   const review = useReview();
-
-  useEffect(() => {
-    review.getMyReview(id)
-      .then()
-      .catch((error) => msg('Error', error.message));
-  }, [id, review]);
 
   return (
     <Card title="리뷰" style={styles.card} bodyStyle={styles.cardBody}>
@@ -43,4 +36,4 @@ const ReviewWriteFormCard = observer(({ id }: {id: string}) => {
   );
 });
 
-export default ReviewWriteFormCard;
+export default ReviewFormCard;

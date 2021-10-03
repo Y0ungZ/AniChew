@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import { CssKeyObject } from '../../../../types/css-basic-type';
+import { CssKeyObject } from '../../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   card: {

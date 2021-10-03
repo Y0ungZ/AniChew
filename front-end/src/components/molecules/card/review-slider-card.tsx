@@ -2,9 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Card } from 'antd';
 import Slider, { Settings } from 'react-slick';
-import { CssKeyObject } from '../../../../types/css-basic-type';
 import ReviewItemCard from './review-item-card';
-import { useReview } from '../../../../hooks';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import { useReview } from '../../../hooks';
 
 const styles: CssKeyObject = {
   card: {

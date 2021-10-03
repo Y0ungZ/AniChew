@@ -1,7 +1,7 @@
-import React, { FormEvent, useRef } from 'react';
+import React, { FormEvent, useRef, memo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Typography, Modal } from 'antd';
-import KakaoLoginBtn from '../../button/kakao-login-btn/kakao-login-btn';
+import KakaoLoginBtn from '../../atoms/btn/kakao-login-btn';
 import { CssKeyObject } from '../../../types/css-basic-type';
 import { useAuth, useUser } from '../../../hooks';
 import { mainAxios } from '../../../libs/axios';
@@ -31,9 +31,10 @@ const styles: CssKeyObject = {
   footer: { fontSize: '0.8rem', marginTop: '2.5em', color: '#b2b2b2' },
 };
 
-const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
+const LoginModal = memo(({ visible, setVisible }: LoginModalProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+
   const auth = useAuth();
   const user = useUser();
 
@@ -49,7 +50,7 @@ const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
           user.me();
           history.push('/cold-start');
         } else {
-          history.push('/');
+          history.push(history.location.pathname);
         }
       }
     });
@@ -81,6 +82,6 @@ const LoginModal = ({ visible, setVisible }: LoginModalProps) => {
       </form>
     </Modal>
   );
-};
+});
 
 export default LoginModal;

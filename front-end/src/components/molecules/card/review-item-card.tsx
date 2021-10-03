@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card } from 'antd';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import ReviewLikeBtn from '../button/review-like-btn';
-import { Review } from '../../../../stores/review/model/review';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import { Review } from '../../../stores/review/model/review';
+import { ReviewLikeBtn } from '../..';
 
 const styles: CssKeyObject = {
   card: {

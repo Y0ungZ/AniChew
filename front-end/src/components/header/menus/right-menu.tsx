@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { Avatar, Button, Dropdown, Menu } from 'antd';
 import { BellFilled, SearchOutlined } from '@ant-design/icons';
 import { useAuth, useUser } from '../../../hooks';
-import LoginModal from '../../modal/login-modal/login-modal';
+import LoginModal from '../../molecules/modal/login-modal';
 
 type toggleSearchProps = {
   toggleSearchHeader: ()=>void;
