@@ -184,7 +184,7 @@ public class CharaServiceImpl implements CharaService {
 		
 		Chara chara = charaRepo.findById(charaid);
 		
-		if(favoriteCharaRepo.existsByCharaAndUser(chara, user))		
+		if(!favoriteCharaRepo.existsByCharaAndUser(chara, user))		
 			return false;
 		
 		favoriteCharaRepo.deleteByCharaAndUser(chara,user);
