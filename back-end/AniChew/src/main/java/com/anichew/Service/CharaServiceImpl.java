@@ -162,7 +162,7 @@ public class CharaServiceImpl implements CharaService {
 		boolean isFavorite = false;		
 		String userid = jwtUtil.getUserid(requestTokenHeader);
 		User user = userRepo.findById(Long.parseLong(userid));
-		
+		System.out.println(user.getId());
 		Chara chara = charaRepo.findById(charaid);
 		
 		if(favoriteCharaRepo.existsByCharaAndUser(chara, user))		
@@ -219,19 +219,21 @@ public class CharaServiceImpl implements CharaService {
 		
 		Chara chara = charaRepo.findById(charaid);
 		
-		Charascore charascore = charascoreRepo.findByCharaAndUser(chara, user);
+		Charascore charascore = charascoreRepo.findByCharaAndUser(chara, user);		
 		
 		if(charascore != null) {
 			charascore = Charascore.builder()		
 					.id(charascore.getId())
 					.chara(chara)
 					.user(user)
+					.score(score)
 					.build();
 		}
 		else
 			charascore = Charascore.builder()			
 			.chara(chara)
 			.user(user)
+			.score(score)
 			.build();		
 		
 		charascoreRepo.save(charascore);
