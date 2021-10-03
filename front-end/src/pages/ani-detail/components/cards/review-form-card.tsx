@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Card } from 'antd';
 import { CssKeyObject } from '../../../../types/css-basic-type';
-import { useAni } from '../../../../hooks';
+import { useReview } from '../../../../hooks';
 import { ReviewForm, ReviewReadForm } from '../form';
+import { msg } from '../../../../util/message';
 
 const styles: CssKeyObject = {
   card: {
@@ -23,17 +24,17 @@ const styles: CssKeyObject = {
 };
 
 const ReviewWriteFormCard = observer(({ id }: {id: string}) => {
-  const ani = useAni();
-  console.log(ani.aniInfo);
+  const review = useReview();
+
   useEffect(() => {
-    ani.getMyReview(id)
+    review.getMyReview(id)
       .then()
-      .catch(() => alert('나의 리뷰 읽기 실패'));
-  }, [ani, id]);
+      .catch((error) => msg('Error', error.message));
+  }, [id, review]);
 
   return (
     <Card title="리뷰" style={styles.card} bodyStyle={styles.cardBody}>
-      {ani.reviewFormMode === 'Write' || ani.reviewFormMode === 'Update' ? (
+      {review.reviewFormMode === 'Write' || review.reviewFormMode === 'Update' ? (
         <ReviewForm id={id} />
       ) : (
         <ReviewReadForm id={id} />

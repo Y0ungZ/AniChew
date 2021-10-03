@@ -1,9 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import { Card } from 'antd';
 import Slider, { Settings } from 'react-slick';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import ReviewItemCard from './review-item-card';
-import { Review } from '../../../../stores/ani/model/review';
+import { useReview } from '../../../../hooks';
 
 const styles: CssKeyObject = {
   card: {
@@ -25,17 +26,20 @@ const settings: Settings = {
   speed: 500,
 };
 
-const ReviewSliderCard = ({ reviews }: { reviews: Review[] }) => (
-  <Card
-    title="리뷰 목록"
-    bordered={false}
-    style={styles.card}
-    bodyStyle={styles.cardBody}
-  >
-    <Slider {...settings}>
-      { reviews.map((review) => <ReviewItemCard key={review.id} review={review} />) }
-    </Slider>
-  </Card>
-);
+const ReviewSliderCard = observer(() => {
+  const { reviews } = useReview();
+  return (
+    <Card
+      title="리뷰 목록"
+      bordered={false}
+      style={styles.card}
+      bodyStyle={styles.cardBody}
+    >
+      <Slider {...settings}>
+        { Object.keys(reviews).map((key) => <ReviewItemCard key={key} review={reviews[key]} />)}
+      </Slider>
+    </Card>
+  );
+});
 
 export default ReviewSliderCard;

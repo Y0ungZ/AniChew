@@ -1,5 +1,3 @@
-import { Review } from './review';
-
 export type AniType = 'TV' | 'MOVIE' | 'OVA' | 'ONA' | 'Special';
 export type AniRate = 'ALL' | 'R12' | 'R15' | 'R18';
 export type Anigenre = {
@@ -95,7 +93,6 @@ export class Ani {
     readonly status: AniStatus,
     readonly rate: AniRate,
     readonly genres: Anigenre[],
-    readonly reviews: Review[],
     readonly relatedAnis: RelatedAni[],
     readonly seriesList: Series[],
     readonly favorite: boolean,
