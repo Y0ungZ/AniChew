@@ -8,14 +8,19 @@ import {
 import { Ani } from '../model/ani';
 import aniRepository from '../repository/ani-repository';
 
-type State = 'Pending' | 'Done';
+export interface AniStore {
+  info: Ani | null;
+  favorite: boolean;
+  getInfo: (id: string) => void;
+  setScore: (id: string, score: number) => void;
+  removeScore: (id: string) => void;
+  like: (id: string) => void;
+  cancelLike: (id: string) => void;
+  ani: () => void;
+}
 
-export default class AniStore {
-  aniInfo: Ani | null = null;
-
-  error?: Error;
-
-  aniInfoState: State = 'Done';
+export default class AniStoreImpl implements AniStore {
+  info: Ani | null = null;
 
   favorite = false;
 
@@ -23,12 +28,10 @@ export default class AniStore {
     makeAutoObservable(this);
   }
 
-  async getAniDetailInfo(animeId: string) {
-    this.aniInfoState = 'Pending';
+  async getInfo(id: string) {
     try {
-      const res = await aniRepository.getAniDetailInfo(animeId);
+      const res = await aniRepository.getInfo(id);
       const {
-        id,
         name,
         koreanName,
         japaneseName,
@@ -54,7 +57,7 @@ export default class AniStore {
       }));
 
       runInAction(() => {
-        this.aniInfo = new Ani(
+        this.info = new Ani(
           id,
           name,
           koreanName,
@@ -79,33 +82,32 @@ export default class AniStore {
     } catch (error) {
       console.log(error);
       runInAction(() => {
-        this.aniInfo = null;
+        this.info = null;
       });
     }
-    this.aniInfoState = 'Done';
   }
 
-  async setAniScore(animeId: string, score: number) {
+  async setScore(id: string, score: number) {
     try {
-      await aniRepository.setAniScore(animeId, score);
+      await aniRepository.setScore(id, score);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_GIVE_ANI_SCORE);
     }
   }
 
-  async deleteAniScore(animeId: string) {
+  async removeScore(id: string) {
     try {
-      await aniRepository.deleteAniScore(animeId);
+      await aniRepository.removeScore(id);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_DELETE_ANI_SCORE);
     }
   }
 
-  async setFavoriteAnime(animeId: string) {
+  async like(id: string) {
     try {
-      await aniRepository.setFavoriteAni(animeId);
+      await aniRepository.like(id);
       runInAction(() => {
         this.favorite = true;
       });
@@ -115,9 +117,9 @@ export default class AniStore {
     }
   }
 
-  async deleteFavoriteAnime(animeId: string) {
+  async cancelLike(id: string) {
     try {
-      await aniRepository.deleteFavoriteAni(animeId);
+      await aniRepository.cancelLike(id);
       runInAction(() => {
         this.favorite = false;
       });
@@ -125,5 +127,10 @@ export default class AniStore {
       console.log(error);
       throw new Error(FAIL_CANCEL_LIKE_ANI);
     }
+  }
+
+  // for runtime type check
+  ani() {
+    return 'ani';
   }
 }
