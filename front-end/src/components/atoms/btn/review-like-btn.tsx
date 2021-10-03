@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { Button } from 'antd';
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { useAuth, useReview } from '../../../../hooks';
-import { msg } from '../../../../util/message';
-import { REQUIRE_LOGIN } from '../../../../common/string-template/string-template';
-import { Review } from '../../../../stores/review/model/review';
+import { msg } from '../../../util/message';
+import { REQUIRE_LOGIN } from '../../../common/string-template/string-template';
+import { Review } from '../../../stores/review/model/review';
+import { useAuth, useReview } from '../../../hooks';
 
 const ReviewLikeBtn = observer(({ review }: {review: Review}) => {
   const [isLove, setIsLove] = useState<boolean>(review.love);
