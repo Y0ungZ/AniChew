@@ -301,6 +301,9 @@ public class AnimeServiceImpl implements AnimeService {
 		response = new ReviewResponse(review);
 		response.setMine(true);
 		
+		review = animeReviewRepo.findByUserAndAnime(user, anime);
+		response.setId(review.getId());
+		
 		return response;
 				
 	}
