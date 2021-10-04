@@ -25,5 +25,6 @@ export const FAIL_CANCEL_LIKE_ANI = '애니메이션 좋아요 취소에 실패�
 
 export const SEARCH_INPUT = '작품, 캐릭터를 검색해보세요.';
 export const REQUIRE_LOGIN = '로그인이 필요합니다.';
+export const FAIL_GET_CHARACTER_INFO = '캐릭터 조회에 실패하셨습니다.';
 
 export const UNKNOWN_REVIEW_TARGET = '알 수 없는 리뷰 타겟입니다.';

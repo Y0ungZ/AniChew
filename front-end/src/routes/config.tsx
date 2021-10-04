@@ -61,4 +61,11 @@ export const routes: RouteType[] = [
     component: lazy(() => import('../pages/ani-detail/ani-detail')),
     fallback: <FullLoading />,
   },
+  {
+    path: '/character/:id',
+    exact: false,
+    private: false,
+    component: lazy(() => import('../pages/character-detail/character-detail')),
+    fallback: <FullLoading />,
+  },
 ];
