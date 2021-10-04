@@ -3,7 +3,7 @@ import { Typography, Divider } from 'antd';
 import { CssKeyObject } from '../../../types/css-basic-type';
 import { Rating, ThumbnailCard } from '../..';
 import { Store } from '../../../types/common';
-import { Ani, AniRateDict, AniStatusDict } from '../../../stores/ani/model/ani';
+import { Ani, AniGenreDict, AniRateDict, AniStatusDict } from '../../../stores/ani/model/ani';
 
 const { Title, Text } = Typography;
 
@@ -73,7 +73,14 @@ const AniMetaSection = ({ info, store }: { info: Ani; store: Store }) => (
             {AniStatusDict[info.status]}
           </Text>
           <Title style={styles.title}>{info.koreanName}</Title>
-          <Text style={styles.jenre}>액션 / 소년</Text>
+          <Text style={styles.jenre}>
+            {info.genres.map((genre) => (
+              <span key={genre.id}>
+                {AniGenreDict[genre.id]}
+                {' / '}
+              </span>
+            ))}
+          </Text>
           <section>
             <Text style={styles.estimatedRating}>예상 ☆ 4.2</Text>
             <Text style={styles.realRating}>평점 ☆ 4.1</Text>
