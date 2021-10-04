@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { observer } from 'mobx-react';
 import Compressor from 'compressorjs';
 import { Avatar, Button, Image, Modal, Row } from 'antd';
-import { useUser } from '../../../../hooks';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import '../../../../assets/css/color.css';
-import User from '../../../../stores/user/model/user';
+import { useUser } from '../../../hooks';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import User from '../../../stores/user/model/user';
+import { msg } from '../../../util/message';
 
 type CoverModifyProps = {
     visible: boolean;
@@ -66,8 +66,8 @@ const CoverModifyModal = observer(({ visible, setVisible }:CoverModifyProps) => 
           setCover(res);
         });
       },
-      error(err) {
-        console.log(err.message);
+      error(error) {
+        msg('Error', error.message);
       },
     });
   };

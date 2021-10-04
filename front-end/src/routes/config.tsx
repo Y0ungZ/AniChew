@@ -48,10 +48,10 @@ export const routes: RouteType[] = [
     ],
   },
   {
-    path: '/user/:userId',
+    path: '/user/:id',
     exact: true,
     private: false,
-    component: lazy(() => import('./my-page-route')),
+    component: lazy(() => import('../pages/my-page/my-page')),
     fallback: <FullLoading />,
   },
   {

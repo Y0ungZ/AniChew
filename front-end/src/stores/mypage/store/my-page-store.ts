@@ -1,18 +1,18 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { FAIL_GET_USER_INFO } from '../../../common/string-template/string-template';
 import MyPageType from '../model/mypage';
 import userRepository from '../repository/my-page-repository';
 
 export default class MyPageStore {
-  user: MyPageType | null = null;
+  user: MyPageType | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
   }
 
   async getUser(id: string) {
-    const res = await userRepository.getUser(id);
-    if (res.status === 200) {
+    try {
+      const res = await userRepository.getUser(id);
       const {
         userid,
         nickname,
@@ -25,20 +25,22 @@ export default class MyPageStore {
         FavoriteSeiyus,
       } = res.data;
 
-      this.user = new MyPageType(
-        userid,
-        nickname,
-        email,
-        avatar,
-        cover,
-        mine,
-        favoriteAnimes,
-        favoriteCharas,
-        FavoriteSeiyus,
-      );
-
-      return this.user;
+      runInAction(() => {
+        this.user = new MyPageType(
+          userid,
+          nickname,
+          email,
+          avatar,
+          cover,
+          mine,
+          favoriteAnimes,
+          favoriteCharas,
+          FavoriteSeiyus,
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_GET_USER_INFO);
     }
-    throw new Error(FAIL_GET_USER_INFO);
   }
 }

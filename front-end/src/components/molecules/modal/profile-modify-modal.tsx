@@ -3,11 +3,11 @@ import { observer } from 'mobx-react';
 import Compressor from 'compressorjs';
 import moment from 'moment';
 import { Avatar, Button, DatePicker, Form, Image, Input, message, Modal, Select } from 'antd';
-import { useUser } from '../../../../hooks';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import InputValidator from '../../../../util/input-validator';
-import User from '../../../../stores/user/model/user';
-import '../../../../assets/css/color.css';
+import { useUser } from '../../../hooks';
+import { CssKeyObject } from '../../../types/css-basic-type';
+import InputValidator from '../../../util/input-validator';
+import User from '../../../stores/user/model/user';
+import { msg } from '../../../util/message';
 
 const { Option } = Select;
 
@@ -73,8 +73,8 @@ const ProfileModifyModal = observer(({ visible, setVisible }:ProfileModifyProps)
           setAvatar(res);
         });
       },
-      error(err) {
-        console.log(err.message);
+      error(error) {
+        msg('Error', error.message);
       },
     });
   };

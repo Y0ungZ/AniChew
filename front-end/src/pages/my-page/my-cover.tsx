@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
 import { Button } from 'antd';
 import { EditFilled } from '@ant-design/icons';
-import { useMyPage } from '../../../hooks';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import CoverModifyModal from './modal/cover-modify-modal';
-import '../../../assets/css/color.css';
+import { CssKeyObject } from '../../types/css-basic-type';
+import { CoverModifyModal } from '../../components';
+import MyPageType from '../../stores/mypage/model/mypage';
 
 const styles: CssKeyObject = {
   container: {
@@ -27,17 +25,16 @@ const styles: CssKeyObject = {
   },
 };
 
-const MyCover = observer(() => {
-  const user = useMyPage();
+const MyCover = ({ info }: { info: MyPageType }) => {
   const [visible, setVisible] = useState(false);
   return (
     <div style={styles.container}>
       <div style={{
-        background: `url(${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${user.user?.userid}/${user.user?.cover}) center/cover`,
+        background: `url(${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${info.userid}/${info.cover}) center/cover`,
         height: '20em',
       }}
       >
-        {user.user?.mine && (
+        {info.mine && (
           <Button style={styles.editHeaderBtn} icon={<EditFilled />} shape="round" onClick={() => setVisible(true)} />
         )}
       </div>
@@ -45,6 +42,6 @@ const MyCover = observer(() => {
       <CoverModifyModal visible={visible} setVisible={setVisible} />
     </div>
   );
-});
+};
 
 export default MyCover;
