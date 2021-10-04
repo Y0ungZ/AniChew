@@ -1,31 +1,39 @@
 package com.anichew.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeChara;
+import com.anichew.Entity.AnimeReview;
 import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Chara;
+import com.anichew.Entity.CharaReview;
+import com.anichew.Entity.CharaReviewLove;
 import com.anichew.Entity.Charascore;
+import com.anichew.Entity.FavoriteAnime;
 import com.anichew.Entity.FavoriteChara;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeCharaRepository;
 import com.anichew.Repository.AnimeSeriesRepository;
 import com.anichew.Repository.CharaRepository;
+import com.anichew.Repository.CharaReviewLoveRepository;
+import com.anichew.Repository.CharaReviewRepository;
 import com.anichew.Repository.CharascoreRepository;
 import com.anichew.Repository.FavoriteCharaRepository;
 import com.anichew.Repository.SeriesRepository;
 import com.anichew.Repository.UserRepository;
+import com.anichew.Request.ReviewRequest;
+import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimeResponse;
 import com.anichew.Response.CharaDetailResponse;
+import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
 import com.anichew.Util.JwtUtil;
 
@@ -52,10 +60,17 @@ public class CharaServiceImpl implements CharaService {
 	private UserRepository userRepo;
 	
 	@Autowired
-	private FavoriteCharaRepository favoriteCharaRepo;
+	private FavoriteCharaRepository favoriteCharaRepo;	
+	
+	@Autowired
+	private CharaReviewRepository charaReviewRepo;
+	
+	@Autowired
+	private CharaReviewLoveRepository charaReviewLoveRepo;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
+	
 	
 	public CharaDetailResponse charaDetail(HttpServletRequest httpServletReq, long charaid) {		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
@@ -264,6 +279,240 @@ public class CharaServiceImpl implements CharaService {
 	}
 
 
+	
+	public boolean existsReview(HttpServletRequest httpServletReq, long charaid) {
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		User user = userRepo.findById(Long.parseLong(userid));			
+		Chara chara = charaRepo.findById(charaid);
+		
+		return charaReviewRepo.existsByUserAndChara(user, chara);
+	}
+	
+	public boolean existsReview(long reviewid) {
+		
+		return charaReviewRepo.existsById(reviewid);		
+		
+	}
+	
+	
+	public ReviewResponse getMyReview(HttpServletRequest httpServletReq, long charaid) {
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		User user = userRepo.findById(Long.parseLong(userid));	
+		Chara chara = charaRepo.findById(charaid);
+		
+		CharaReview review = charaReviewRepo.findByUserAndChara(user, chara);
+		
+		ReviewResponse response = new ReviewResponse(review);
+		response.setMine(true);
+		response.setLoveCnt(review.getLoves().size());		
+		response.setId(review.getId());
+		if(charaReviewLoveRepo.existsByUserAndReview(user, review))
+			response.setLove(true);
+		
+		return response;
+	}
+	
+	
+	public ReviewResponse writeReview(HttpServletRequest httpServletReq, String content, long charaid) {
+		
+		ReviewResponse response = null;
+		
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		User user = userRepo.findById(Long.parseLong(userid));	
+		
+		Chara chara = charaRepo.findById(charaid);
+		
+		CharaReview review = CharaReview.builder()
+				.content(content)
+				.user(user)
+				.chara(chara)
+				.createdDate(LocalDateTime.now())
+				.modifiedDate(LocalDateTime.now())
+				.build();
+		
+		charaReviewRepo.save(review);
+		
+				
+
+		response = new ReviewResponse(review);
+		response.setMine(true);
+		
+		return response;
+				
+	}
+	
+	public ReviewResponse modifyReview(HttpServletRequest httpServletReq, ReviewRequest req, long charaid) {
+		
+		ReviewResponse response = null;
+		
+		CharaReview review = null;
+		
+		if(!charaReviewRepo.existsById(req.getId())) 
+			return null;
+		
+		review = charaReviewRepo.findById(req.getId());
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		
+		User user = userRepo.findById(Long.parseLong(userid));			
+		Chara chara = charaRepo.findById(charaid);
+		
+		
+		if(review.getUser() != user) 
+			return null;
+		
+		
+		
+		review = CharaReview.builder()
+				.id(review.getId())
+				.content(req.getContent())
+				.user(user)
+				.chara(chara)
+				.createdDate(review.getCreatedDate())
+				.modifiedDate(LocalDateTime.now())
+				.build();
+		
+		
+		
+		charaReviewRepo.save(review);
+		
+				
+		
+		response = new ReviewResponse(review);
+		if(charaReviewLoveRepo.existsByUserAndReview(user, review))
+			response.setLove(true);
+		response.setMine(true);
+		
+		
+		return response;
+				
+	}
+	
+	public boolean deleteReview(HttpServletRequest httpServletReq, long reviewid, long charaid) {
+		
+		ReviewResponse response = null;
+		
+		CharaReview review = null;
+		
+		if(!charaReviewRepo.existsById(reviewid)) 
+			return false;
+		
+		review = charaReviewRepo.findById(reviewid);
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);
+		
+		User user = userRepo.findById(Long.parseLong(userid));			
+		Chara chara = charaRepo.findById(charaid);
+		
+		
+		if(review.getUser() != user) 
+			return false;
+		
+		
+		charaReviewRepo.delete(review);
+		
+				
+		
+		
+		return true;
+				
+	}
+	
+	public boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);		
+		User user = userRepo.findById(Long.parseLong(userid));	
+		CharaReview review = charaReviewRepo.findById(reviewid);
+		
+		
+		
+		
+		return charaReviewLoveRepo.existsByUserAndReview(user, review);
+	}
+	
+	public void reviewLove(HttpServletRequest httpServletReq, long reviewid) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);		
+		User user = userRepo.findById(Long.parseLong(userid));	
+		CharaReview review = charaReviewRepo.findById(reviewid);
+		
+		CharaReviewLove reviewLove = CharaReviewLove.builder().user(user).review(review).build();
+		
+		charaReviewLoveRepo.save(reviewLove);
+		
+		
+	}
+	
+
+	public boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid) {
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		String userid = jwtUtil.getUserid(requestTokenHeader);		
+		User user = userRepo.findById(Long.parseLong(userid));	
+		CharaReview review = charaReviewRepo.findById(reviewid);		
+		
+		charaReviewLoveRepo.deleteByUserAndReview(user,review);
+		
+		return true;
+	}
+
+	@Override
+	public List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long charaid) {
+		
+		
+		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		boolean isFavorite = false;
+		String accessor = null;
+		if (requestTokenHeader != null) {
+			accessor = jwtUtil.getUserid(requestTokenHeader);
+		}		
+	
+		
+
+		Chara chara = charaRepo.findById(charaid);		
+		
+		long accessor_id = -1;
+		User user = null;
+		if(accessor!=null) {
+			accessor_id = Long.parseLong(accessor);
+			 user = userRepo.findById(accessor_id);
+		}
+				
+		
+		List<CharaReview> reviews = charaReviewRepo.findAllByChara(chara);
+		
+		List<ReviewResponse> reviewsRes = new ArrayList();
+		for(CharaReview review : reviews) {
+			ReviewResponse reviewRes = new ReviewResponse(review);
+			reviewRes.setId(review.getId());
+			
+			if(review.getUser().getId() == accessor_id)
+				reviewRes.setMine(true);
+			
+			
+			reviewRes.setLoveCnt(review.getLoves().size());
+			if(user !=null && charaReviewLoveRepo.existsByUserAndReview(user, review))
+				reviewRes.setLove(true);
+			
+			reviewRes.setLoveCnt(review.getLoves().size());
+			reviewsRes.add(reviewRes);
+		}		
+		
+		return reviewsRes;
+	}
+
+
+
+	
+	
+	
 	
 	
 	

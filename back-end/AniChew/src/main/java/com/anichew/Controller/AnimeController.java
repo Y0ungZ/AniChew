@@ -43,7 +43,7 @@ public class AnimeController {
 		
 		AnimeDetailResponse response = null;
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.existsAnime(animeid)) {
 			return new ResponseEntity<AnimeDetailResponse>(response,HttpStatus.NOT_FOUND);
 		}	
 		
@@ -64,7 +64,7 @@ public class AnimeController {
 		
 		System.out.println(animeid);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.existsAnime(animeid)) {
 			return new ResponseEntity<ScoreResponse>(response,HttpStatus.NOT_FOUND);
 		}
 		
@@ -84,7 +84,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.existsAnime(animeid)) {
 			return new ResponseEntity<String>("WRONG ANIME",HttpStatus.BAD_REQUEST);
 		}
 		
@@ -108,7 +108,7 @@ public class AnimeController {
 		
 		List<ReviewResponse> response = null;
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<List<ReviewResponse>>(response,HttpStatus.NOT_ACCEPTABLE);		
 		
 		response = animeService.getReviews(httpServletReq, animeid);
@@ -126,7 +126,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<ReviewResponse>(response, HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);		
 		
 		
@@ -148,7 +148,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<ReviewResponse>(response, HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);	
 		
 		if(animeService.existsReview(httpServletReq, animeid))
@@ -168,7 +168,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<ReviewResponse>(response, HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);		
 		
 		response = animeService.modifyReview(httpServletReq, reviewReq, animeid);
@@ -187,7 +187,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);
 		
 		
@@ -207,7 +207,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<String>("NOT FOUND ANIME",HttpStatus.NOT_ACCEPTABLE);	
 		
 		if(!animeService.existsReview(reviewid))
@@ -230,7 +230,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) 
+		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<String>("NOT FOUND ANIME",HttpStatus.NOT_ACCEPTABLE);	
 		
 		if(!animeService.existsReview(reviewid))
@@ -255,7 +255,7 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<FavoriteResponse>(response, HttpStatus.UNAUTHORIZED);
 		
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.existsAnime(animeid)) {
 			response.setId(-1);
 			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_FOUND);
 		}
@@ -283,7 +283,7 @@ public class AnimeController {
 			return new ResponseEntity<FavoriteResponse>(response, HttpStatus.UNAUTHORIZED);
 
 
-		if(!animeService.exsitsAnime(httpServletReq, animeid)) {
+		if(!animeService.existsAnime(animeid)) {
 			response.setId(-1);
 			return new ResponseEntity<FavoriteResponse>(response,HttpStatus.NOT_FOUND);
 		}

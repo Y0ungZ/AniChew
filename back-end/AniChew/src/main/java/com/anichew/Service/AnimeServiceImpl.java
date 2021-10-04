@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeGenre;
+import com.anichew.Entity.AnimeReview;
+import com.anichew.Entity.AnimeReviewLove;
 import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Animescore;
 import com.anichew.Entity.FavoriteAnime;
-import com.anichew.Entity.Review;
-import com.anichew.Entity.ReviewLove;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeGenreRepository;
 import com.anichew.Repository.AnimeRepository;
+import com.anichew.Repository.AnimeReviewLoveRepository;
+import com.anichew.Repository.AnimeReviewRepository;
 import com.anichew.Repository.AnimeSeriesRepository;
 import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.FavoriteAnimeRepository;
-import com.anichew.Repository.ReviewLoveRepository;
-import com.anichew.Repository.ReviewRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
@@ -59,10 +59,10 @@ public class AnimeServiceImpl implements AnimeService {
 	private AnimescoreRepository animescoreRepo;
 	
 	@Autowired
-	private ReviewRepository reviewRepo;
+	private AnimeReviewRepository animeReviewRepo;
 	
 	@Autowired
-	private ReviewLoveRepository reviewLoveRepo;	
+	private AnimeReviewLoveRepository animeReviewLoveRepo;	
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -131,7 +131,7 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 
 	@Override
-	public boolean exsitsAnime(HttpServletRequest httpServletReq, long animeid) {
+	public boolean existsAnime(long animeid) {
 		
 		if(animeRepo.existsById(animeid))
 			return true;
@@ -209,11 +209,7 @@ public class AnimeServiceImpl implements AnimeService {
 		for(int i=1;i<=10;i++) {
 			long cnt = animescoreRepo.countByAnimeAndScore(anime, i);
 			scores[(i-1)/2] += cnt;
-		}
-		
-		
-		List<Review> reviews = reviewRepo.findAllByAnime(anime);
-		
+		}			
 		
 		float myScore = 0;
 		
@@ -242,12 +238,12 @@ public class AnimeServiceImpl implements AnimeService {
 		User user = userRepo.findById(Long.parseLong(userid));			
 		Anime anime = animeRepo.findById(animeid);
 		
-		return reviewRepo.existsByUserAndAnime(user, anime);
+		return animeReviewRepo.existsByUserAndAnime(user, anime);
 	}
 	
 	public boolean existsReview(long reviewid) {
 		
-		return reviewRepo.existsById(reviewid);		
+		return animeReviewRepo.existsById(reviewid);		
 		
 	}
 	
@@ -259,13 +255,13 @@ public class AnimeServiceImpl implements AnimeService {
 		User user = userRepo.findById(Long.parseLong(userid));	
 		Anime anime = animeRepo.findById(animeid);
 		
-		Review review = reviewRepo.findByUserAndAnime(user, anime);
+		AnimeReview review = animeReviewRepo.findByUserAndAnime(user, anime);
 		
 		ReviewResponse response = new ReviewResponse(review);
 		response.setMine(true);
 		response.setLoveCnt(review.getLoves().size());		
 		response.setId(review.getId());
-		if(reviewLoveRepo.existsByUserAndReview(user, review))
+		if(animeReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		
 		return response;
@@ -283,7 +279,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		Anime anime = animeRepo.findById(animeid);
 		
-		Review review = Review.builder()
+		AnimeReview review = AnimeReview.builder()
 				.content(content)
 				.user(user)
 				.anime(anime)
@@ -291,7 +287,7 @@ public class AnimeServiceImpl implements AnimeService {
 				.modifiedDate(LocalDateTime.now())
 				.build();
 		
-		reviewRepo.save(review);
+		animeReviewRepo.save(review);
 		
 				
 
@@ -306,12 +302,12 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		ReviewResponse response = null;
 		
-		Review review = null;
+		AnimeReview review = null;
 		
-		if(!reviewRepo.existsById(req.getId())) 
+		if(!animeReviewRepo.existsById(req.getId())) 
 			return null;
 		
-		review = reviewRepo.findById(req.getId());
+		review = animeReviewRepo.findById(req.getId());
 		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
@@ -325,7 +321,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		
-		review = Review.builder()
+		review = AnimeReview.builder()
 				.id(review.getId())
 				.content(req.getContent())
 				.user(user)
@@ -336,12 +332,12 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		
-		reviewRepo.save(review);
+		animeReviewRepo.save(review);
 		
 				
 		
 		response = new ReviewResponse(review);
-		if(reviewLoveRepo.existsByUserAndReview(user, review))
+		if(animeReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		response.setMine(true);
 		
@@ -354,12 +350,12 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		ReviewResponse response = null;
 		
-		Review review = null;
+		AnimeReview review = null;
 		
-		if(!reviewRepo.existsById(reviewid)) 
+		if(!animeReviewRepo.existsById(reviewid)) 
 			return false;
 		
-		review = reviewRepo.findById(reviewid);
+		review = animeReviewRepo.findById(reviewid);
 		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
@@ -372,7 +368,7 @@ public class AnimeServiceImpl implements AnimeService {
 			return false;
 		
 		
-		reviewRepo.delete(review);
+		animeReviewRepo.delete(review);
 		
 				
 		
@@ -385,23 +381,23 @@ public class AnimeServiceImpl implements AnimeService {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);		
 		User user = userRepo.findById(Long.parseLong(userid));	
-		Review review = reviewRepo.findById(reviewid);
+		AnimeReview review = animeReviewRepo.findById(reviewid);
 		
 		
 		
 		
-		return reviewLoveRepo.existsByUserAndReview(user, review);
+		return animeReviewLoveRepo.existsByUserAndReview(user, review);
 	}
 	
 	public void reviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);		
 		User user = userRepo.findById(Long.parseLong(userid));	
-		Review review = reviewRepo.findById(reviewid);
+		AnimeReview review = animeReviewRepo.findById(reviewid);
 		
-		ReviewLove reviewLove = new ReviewLove(user, review);
+		AnimeReviewLove reviewLove = AnimeReviewLove.builder().user(user).review(review).build();
 		
-		reviewLoveRepo.save(reviewLove);
+		animeReviewLoveRepo.save(reviewLove);
 		
 		
 	}
@@ -411,9 +407,9 @@ public class AnimeServiceImpl implements AnimeService {
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);		
 		User user = userRepo.findById(Long.parseLong(userid));	
-		Review review = reviewRepo.findById(reviewid);		
+		AnimeReview review = animeReviewRepo.findById(reviewid);		
 		
-		reviewLoveRepo.deleteByUserAndReview(user,review);
+		animeReviewLoveRepo.deleteByUserAndReview(user,review);
 		
 		return true;
 	}
@@ -483,10 +479,10 @@ public class AnimeServiceImpl implements AnimeService {
 		}
 				
 		
-		List<Review> reviews = reviewRepo.findAllByAnime(anime);
+		List<AnimeReview> reviews = animeReviewRepo.findAllByAnime(anime);
 		
 		List<ReviewResponse> reviewsRes = new ArrayList();
-		for(Review review : reviews) {
+		for(AnimeReview review : reviews) {
 			ReviewResponse reviewRes = new ReviewResponse(review);
 			reviewRes.setId(review.getId());
 			
@@ -495,7 +491,7 @@ public class AnimeServiceImpl implements AnimeService {
 			
 			
 			reviewRes.setLoveCnt(review.getLoves().size());
-			if(user !=null && reviewLoveRepo.existsByUserAndReview(user, review))
+			if(user !=null && animeReviewLoveRepo.existsByUserAndReview(user, review))
 				reviewRes.setLove(true);
 			
 			reviewRes.setLoveCnt(review.getLoves().size());

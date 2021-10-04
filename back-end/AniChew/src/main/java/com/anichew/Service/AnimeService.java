@@ -14,7 +14,7 @@ public interface AnimeService {
 	
 	boolean deleteRate(HttpServletRequest httpServletReq, long animeid);
 	boolean existsAnimerate(HttpServletRequest httpServletReq, long animeid);
-	boolean exsitsAnime(HttpServletRequest httpServletReq, long animeid);
+	boolean existsAnime(long animeid);
 	AnimeDetailResponse animeDetail(HttpServletRequest httpServletReq, long animeid);
 	ReviewResponse writeReview(HttpServletRequest httpServletReq, String content, long anime_id);
 	ReviewResponse modifyReview(HttpServletRequest httpServletReq, ReviewRequest req, long anime_id);
