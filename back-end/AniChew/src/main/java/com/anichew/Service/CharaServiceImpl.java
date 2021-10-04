@@ -342,6 +342,9 @@ public class CharaServiceImpl implements CharaService {
 
 		response = new ReviewResponse(review);
 		response.setMine(true);
+		review = charaReviewRepo.findByUserAndChara(user, chara);
+		response.setId(review.getId());
+		
 		
 		return response;
 				
