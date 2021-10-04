@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
-import { useAni, useReview } from '../../hooks';
+import { useAni, useAuth, useReview } from '../../hooks';
 import AniDetailTemplate from './template';
 import AniMetaSection from '../../components/organisms/ani-meta-section/ani-meta-section';
 import {
@@ -18,7 +18,7 @@ import { msg } from '../../util/message';
 
 const AniDetail = observer(() => {
   const param = useParams<{ id: string }>();
-
+  const auth = useAuth();
   const ani = useAni();
   const review = useReview();
 
@@ -37,11 +37,13 @@ const AniDetail = observer(() => {
   }, [review, param.id]);
 
   useEffect(() => {
-    review
-      .getMyReview(param.id)
-      .then()
-      .catch((error) => msg('Error', error.message));
-  }, [review, param.id]);
+    if (auth.isLoggedIn) {
+      review
+        .getMyReview(param.id)
+        .then()
+        .catch((error) => msg('Error', error.message));
+    }
+  }, [auth, review, param.id]);
 
   return (
     <section>
