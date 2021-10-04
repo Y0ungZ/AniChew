@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
+import com.anichew.Entity.AnimeChara;
 import com.anichew.Entity.AnimeGenre;
 import com.anichew.Entity.AnimeReview;
 import com.anichew.Entity.AnimeReviewLove;
 import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Animescore;
+import com.anichew.Entity.Chara;
 import com.anichew.Entity.FavoriteAnime;
 import com.anichew.Entity.User;
+import com.anichew.Repository.AnimeCharaRepository;
 import com.anichew.Repository.AnimeGenreRepository;
 import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.AnimeReviewLoveRepository;
@@ -28,6 +31,7 @@ import com.anichew.Repository.UserRepository;
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimeResponse;
+import com.anichew.Response.CharaResponse;
 import com.anichew.Response.GenreResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
@@ -51,6 +55,9 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	@Autowired
 	private AnimeSeriesRepository animeSeriesRepo;
+	
+	@Autowired
+	private AnimeCharaRepository animeCharaRepo;
 	
 	@Autowired
 	private FavoriteAnimeRepository favoriteAnimeRepo;
@@ -506,6 +513,31 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 
 
+	public List<CharaResponse> getCharas(long animeid){
+		
+		
+		Anime anime = animeRepo.findById(animeid);
+		
+		List<AnimeChara> animeCharas = animeCharaRepo.findAllByAnime(anime);
+		List<CharaResponse> response = new ArrayList();
+		
+		for(AnimeChara animeChara : animeCharas) {
+			Chara chara = animeChara.getChara();
+			CharaResponse charaRes = new CharaResponse();
+			charaRes.setId(chara.getId());
+			charaRes.setFirstName(chara.getFirstName());
+			charaRes.setLastName(chara.getLastName());
+			
+			
+			
+			response.add(charaRes);			
+			
+		}
+		
+		
+		return response;
+	}
+	
 
 	
 	
