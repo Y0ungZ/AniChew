@@ -27,7 +27,7 @@ const ReviewFormCard = observer(({ id }: {id: string}) => {
 
   return (
     <Card title="리뷰" style={styles.card} bodyStyle={styles.cardBody}>
-      {review.reviewFormMode === 'Write' || review.reviewFormMode === 'Update' ? (
+      {review.formMode === 'Write' || review.formMode === 'Update' ? (
         <ReviewForm id={id} />
       ) : (
         <ReviewReadForm id={id} />

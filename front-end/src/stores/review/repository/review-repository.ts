@@ -1,43 +1,93 @@
+import { UNKNOWN_REVIEW_TARGET } from '../../../common/string-template/string-template';
 import { mainAxios } from '../../../libs/axios';
+import { ReviewTarget } from '../model/review';
 
 class ReviewRepository {
   constructor(private readonly url: string) {}
 
-  writeReview(animeId: string, content: string) {
-    return mainAxios.post(`${this.url}/anime/${animeId}/review`, {
-      content,
-    });
+  write(target: ReviewTarget, id: string, content: string) {
+    if (target === 'Animation') {
+      return mainAxios.post(`${this.url}/anime/${id}/review`, {
+        content,
+      });
+    }
+    if (target === 'Character') {
+      return mainAxios.post(`${this.url}/chara/${id}/review`, {
+        content,
+      });
+    }
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  updateReview(animeId: string, content: string, id: string) {
-    return mainAxios.put(`${this.url}/anime/${animeId}/review`, {
-      id,
-      content,
-    });
+  update(target: ReviewTarget, targetId: string, content: string, id: string) {
+    if (target === 'Animation') {
+      return mainAxios.put(`${this.url}/anime/${targetId}/review`, {
+        id,
+        content,
+      });
+    }
+    if (target === 'Character') {
+      return mainAxios.put(`${this.url}/chara/${targetId}/review`, {
+        id,
+        content,
+      });
+    }
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  deleteReview(animeId: string, id: string) {
-    return mainAxios.delete(`${this.url}/anime/${animeId}/review/${id}`);
+  delete(target: ReviewTarget, targetId: string, id: string) {
+    if (target === 'Animation') {
+      return mainAxios.delete(`${this.url}/anime/${targetId}/review/${id}`);
+    }
+    if (target === 'Character') {
+      return mainAxios.delete(`${this.url}/chara/${targetId}/review/${id}`);
+    }
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  getAllReviews(animeId: string) {
-    return mainAxios.get(`${this.url}/anime/${animeId}/reviews`);
+  getAll(target: ReviewTarget, id: string) {
+    if (target === 'Animation') {
+      return mainAxios.get(`${this.url}/anime/${id}/reviews`);
+    }
+    if (target === 'Character') {
+      return mainAxios.get(`${this.url}/chara/${id}/reviews`);
+    }
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  getMyReview(animeId: string) {
-    return mainAxios.get(`${this.url}/anime/${animeId}/review`);
+  getMy(target: ReviewTarget, id: string) {
+    if (target === 'Animation') {
+      return mainAxios.get(`${this.url}/anime/${id}/review`);
+    }
+    if (target === 'Character') {
+      return mainAxios.get(`${this.url}/chara/${id}/review`);
+    }
+
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  likeReview(reviewId: string, animeId: string) {
-    return mainAxios.post(
-      `${this.url}/anime/${animeId}/review/${reviewId}/love`,
-    );
+  like(target: ReviewTarget, id: string, reviewId: string) {
+    if (target === 'Animation') {
+      return mainAxios.post(`${this.url}/anime/${id}/review/${reviewId}/love`);
+    }
+    if (target === 'Character') {
+      return mainAxios.post(`${this.url}/chara/${id}/review/${reviewId}/love`);
+    }
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  cancelLikeReview(reviewId: string, animeId: string) {
-    return mainAxios.delete(
-      `${this.url}/anime/${animeId}/review/${reviewId}/love`,
-    );
+  cancelLike(target: ReviewTarget, id: string, reviewId: string) {
+    if (target === 'Animation') {
+      return mainAxios.delete(
+        `${this.url}/anime/${id}/review/${reviewId}/love`,
+      );
+    }
+    if (target === 'Character') {
+      return mainAxios.delete(
+        `${this.url}/chara/${id}/review/${reviewId}/love`,
+      );
+    }
+    throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 }
 

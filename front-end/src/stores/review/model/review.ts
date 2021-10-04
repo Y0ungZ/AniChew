@@ -1,7 +1,7 @@
 export class Review {
   constructor(
     readonly id: string,
-    readonly animeId: string,
+    readonly targetId: string,
     readonly userId: string,
     readonly content: string,
     readonly createdDate: Date,
@@ -13,3 +13,11 @@ export class Review {
     readonly loveCnt: number,
   ) {}
 }
+
+export type Reviews = {
+  [key: string]: Review;
+};
+
+export type ReviewFormMode = 'Write' | 'Read' | 'Update';
+
+export type ReviewTarget = 'Animation' | 'Character';

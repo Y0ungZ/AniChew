@@ -18,11 +18,11 @@ const styles: CssKeyObject = {
 const ReviewReadForm = observer(({ id }: {id: string}) => {
   const review = useReview();
   const changeUpdateMode = () => {
-    review.reviewFormMode = 'Update';
+    review.formMode = 'Update';
   };
 
   const deleteReview = () => {
-    review.deleteReview(id, review.myReview!.id)
+    review.delete(id, review.myReview!.id)
       .then()
       .catch((error) => msg('Error', error.message));
   };

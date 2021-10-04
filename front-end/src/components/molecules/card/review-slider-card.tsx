@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Card } from 'antd';
+import { Card, List } from 'antd';
 import Slider, { Settings } from 'react-slick';
 import ReviewItemCard from './review-item-card';
 import { CssKeyObject } from '../../../types/css-basic-type';
@@ -35,9 +35,13 @@ const ReviewSliderCard = observer(() => {
       style={styles.card}
       bodyStyle={styles.cardBody}
     >
-      <Slider {...settings}>
-        { Object.keys(reviews).map((key) => <ReviewItemCard key={key} review={reviews[key]} />)}
-      </Slider>
+      {Object.keys(reviews).length > 0 ? (
+        <Slider {...settings}>
+          { Object.keys(reviews).map((key) => <ReviewItemCard key={key} review={reviews[key]} />)}
+        </Slider>
+      ) : (
+        <List />
+      )}
     </Card>
   );
 });

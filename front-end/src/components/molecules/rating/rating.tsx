@@ -37,7 +37,7 @@ const Rating = ({ store, info } : {store: Store, info: Info}) => {
   const resetRate = () => {
     checkisLoggedIn(isLoggedIn, () => {
       setRate(0);
-      review.reviewFormDisplayState = true;
+      review.showForm = true;
     });
   };
 
@@ -53,7 +53,7 @@ const Rating = ({ store, info } : {store: Store, info: Info}) => {
         .catch((error) => msg('Error', error.message));
     } else {
       store.setScore(info.id, value)
-        .then(() => { review.reviewFormDisplayState = true; })
+        .then(() => { review.showForm = true; })
         .catch((error) => msg('Error', error.message));
     }
   };

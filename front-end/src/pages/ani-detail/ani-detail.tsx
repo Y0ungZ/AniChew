@@ -23,15 +23,19 @@ const AniDetail = observer(() => {
   const review = useReview();
 
   useEffect(() => {
+    review.type = 'Animation';
     ani
       .getInfo(param.id)
-      .then(() => window.scroll(0, 0))
+      .then(() => {
+        window.scroll(0, 0);
+        if (ani.info!.myScore > 0) review.showForm = true;
+      })
       .catch((error) => msg('Error', error.message));
-  }, [ani, param.id]);
+  }, [ani, param.id, review]);
 
   useEffect(() => {
     review
-      .getAllReviews(param.id)
+      .getAll(param.id)
       .then()
       .catch((error) => msg('Error', error.message));
   }, [review, param.id]);
@@ -39,7 +43,7 @@ const AniDetail = observer(() => {
   useEffect(() => {
     if (auth.isLoggedIn) {
       review
-        .getMyReview(param.id)
+        .getMy(param.id)
         .then()
         .catch((error) => msg('Error', error.message));
     }
@@ -48,24 +52,19 @@ const AniDetail = observer(() => {
   return (
     <section>
       {ani.info ? (
-        <>
-          <AniDetailTemplate
-            meta={<AniMetaSection info={ani.info} store={ani} />}
-            info={<AnimeInfoCard info={ani.info} />}
-            series={<AnimeSeriesCard series={ani.info.relatedAnis} />}
-            reviewForm={
-              review.reviewFormDisplayState && (
-                <ReviewFormCard id={ani.info.id} />
-              )
-            }
-            syno={<SynopsisCard />}
-            char={<CharacterListCard />}
-            reviewList={<ReviewSliderCard />}
-            rateChart={<RateChartCard scores={ani.info.scoreList} />}
-          />
-        </>
-      ) : <NotFound type="애니메이션 정보" />}
-
+        <AniDetailTemplate
+          meta={<AniMetaSection info={ani.info} store={ani} />}
+          info={<AnimeInfoCard info={ani.info} />}
+          series={<AnimeSeriesCard series={ani.info.relatedAnis} />}
+          reviewForm={review.showForm && <ReviewFormCard id={ani.info.id} />}
+          syno={<SynopsisCard />}
+          char={<CharacterListCard />}
+          reviewList={<ReviewSliderCard />}
+          rateChart={<RateChartCard scores={ani.info.scoreList} />}
+        />
+      ) : (
+        <NotFound type="애니메이션 정보" />
+      )}
     </section>
   );
 });

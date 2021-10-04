@@ -2,45 +2,63 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_CANCEL_LIKE_REVIEW,
   FAIL_DELETE_REVIEW,
+  FAIL_GET_ALL_REVIEW,
   FAIL_GET_MY_REVIEW,
   FAIL_LIKE_REVIEW,
   FAIL_UPDATE_REVIEW,
   FAIL_WRITE_REVIEW,
 } from '../../../common/string-template/string-template';
-import { Review } from '../model/review';
-import aniRepository from '../repository/review-repository';
+import { Review, ReviewFormMode, Reviews, ReviewTarget } from '../model/review';
+import reviewRepository from '../repository/review-repository';
 
-type ReviewFormMode = 'Write' | 'Read' | 'Update';
-type Reviews = {
-  [key: string]: Review;
-};
+interface ReviewStore {
+  formMode: ReviewFormMode;
+  showForm: boolean;
+  reviews: Reviews;
+  myReview: Review | null;
+  submit(target: ReviewTarget, id: string, content: string): Promise<void>;
+  write(target: ReviewTarget, id: string, content: string): Promise<void>;
+  update(
+    target: ReviewTarget,
+    id: string,
+    content: string,
+    reviewId: string,
+  ): Promise<void>;
+  delete(target: ReviewTarget, id: string, content: string): Promise<void>;
+  getAll(target: ReviewTarget, id: string): Promise<void>;
+  getMy(target: ReviewTarget, id: string): Promise<void>;
+  like(target: ReviewTarget, reviewId: string, id: string): Promise<void>;
+  cancelLike(target: ReviewTarget, reviewId: string, id: string): Promise<void>;
+}
 
-export default class ReviewStore {
-  reviewFormMode: ReviewFormMode = 'Write';
+export default class ReviewStoreImpl implements ReviewStore {
+  formMode: ReviewFormMode = 'Write';
 
-  reviewFormDisplayState = false;
+  showForm = false;
 
   reviews: Reviews = {};
 
   myReview: Review | null = null;
 
+  type: ReviewTarget = 'Animation';
+
   constructor() {
     makeAutoObservable(this);
   }
 
-  async submitReview(animeId: string, content: string) {
-    if (this.reviewFormMode === 'Write') {
-      this.writeReview(animeId, content);
-    } else if (this.reviewFormMode === 'Update') {
-      this.updateReview(animeId, content, this.myReview!.id);
+  async submit(id: string, content: string) {
+    if (this.formMode === 'Write') {
+      this.write(id, content);
+    } else if (this.formMode === 'Update') {
+      this.update(id, content, this.myReview!.id);
     }
   }
 
-  async writeReview(animeId: string, content: string) {
+  async write(id: string, content: string) {
     try {
-      const res = await aniRepository.writeReview(animeId, content);
+      const res = await reviewRepository.write(this.type, id, content);
       const {
-        id,
+        reviewId,
         userId,
         createdDate,
         modifiedDate,
@@ -52,8 +70,8 @@ export default class ReviewStore {
       } = res.data;
       runInAction(() => {
         this.myReview = new Review(
+          reviewId,
           id,
-          animeId,
           userId,
           content,
           createdDate,
@@ -64,7 +82,7 @@ export default class ReviewStore {
           love,
           loveCnt,
         );
-        this.reviewFormMode = 'Read';
+        this.formMode = 'Read';
         this.reviews[id] = this.myReview;
       });
     } catch (error) {
@@ -73,13 +91,13 @@ export default class ReviewStore {
     }
   }
 
-  async updateReview(animeId: string, content: string, reviewId: string) {
+  async update(targetId: string, content: string, id: string) {
     try {
-      await aniRepository.updateReview(animeId, content, reviewId);
+      await reviewRepository.update(this.type, targetId, content, id);
       runInAction(() => {
         this.myReview = new Review(
           this.myReview!.id,
-          this.myReview!.animeId,
+          this.myReview!.targetId,
           this.myReview!.userId,
           content,
           this.myReview!.createdDate,
@@ -90,8 +108,8 @@ export default class ReviewStore {
           this.myReview!.love,
           this.myReview!.loveCnt,
         );
-        this.reviews[reviewId] = this.myReview;
-        this.reviewFormMode = 'Read';
+        this.reviews[id] = this.myReview;
+        this.formMode = 'Read';
       });
     } catch (error) {
       console.log(error);
@@ -99,11 +117,11 @@ export default class ReviewStore {
     }
   }
 
-  async deleteReview(animeId: string, id: string) {
+  async delete(targetId: string, id: string) {
     try {
-      await aniRepository.deleteReview(animeId, id);
+      await reviewRepository.delete(this.type, targetId, id);
       runInAction(() => {
-        this.reviewFormMode = 'Write';
+        this.formMode = 'Write';
         this.myReview = null;
         delete this.reviews[id];
       });
@@ -113,9 +131,9 @@ export default class ReviewStore {
     }
   }
 
-  async getAllReviews(animeId: string) {
+  async getAll(animeId: string) {
     try {
-      const res = await aniRepository.getAllReviews(animeId);
+      const res = await reviewRepository.getAll(this.type, animeId);
       if (res.data.length === 0) return;
       runInAction(() => {
         res.data.forEach((review: Review) => {
@@ -124,17 +142,20 @@ export default class ReviewStore {
       });
     } catch (error) {
       console.log(error);
-      throw new Error(FAIL_GET_MY_REVIEW);
+      runInAction(() => {
+        this.reviews = {};
+      });
+      throw new Error(FAIL_GET_ALL_REVIEW);
     }
   }
 
-  async getMyReview(animeId: string) {
+  async getMy(animeId: string) {
     try {
-      const res = await aniRepository.getMyReview(animeId);
+      const res = await reviewRepository.getMy(this.type, animeId);
       if (res.data === '') {
         runInAction(() => {
           this.myReview = null;
-          this.reviewFormMode = 'Write';
+          this.formMode = 'Write';
         });
       } else {
         runInAction(() => {
@@ -164,8 +185,8 @@ export default class ReviewStore {
             love,
             lovecnt,
           );
-          this.reviewFormMode = 'Read';
-          this.reviewFormDisplayState = true;
+          this.formMode = 'Read';
+          this.showForm = true;
         });
       }
     } catch (error) {
@@ -174,18 +195,18 @@ export default class ReviewStore {
     }
   }
 
-  async likeReview(reviewId: string, animeId: string) {
+  async like(reviewId: string, animeId: string) {
     try {
-      await aniRepository.likeReview(reviewId, animeId);
+      await reviewRepository.like(this.type, reviewId, animeId);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_LIKE_REVIEW);
     }
   }
 
-  async cancelLikeReview(reviewId: string, animeId: string) {
+  async cancelLike(reviewId: string, animeId: string) {
     try {
-      await aniRepository.cancelLikeReview(reviewId, animeId);
+      await reviewRepository.cancelLike(this.type, reviewId, animeId);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_CANCEL_LIKE_REVIEW);
