@@ -2,6 +2,7 @@
 export { default as KakaoLoginBtn } from './atoms/btn/kakao-login-btn';
 export { default as ReviewLikeBtn } from './atoms/btn/review-like-btn';
 export { default as TextLikeBtn } from './atoms/btn/text-like-btn';
+export { default as BackTopBtn } from './atoms/btn/back-top-btn';
 
 export { default as FullLoading } from './atoms/loading/full-loading';
 
