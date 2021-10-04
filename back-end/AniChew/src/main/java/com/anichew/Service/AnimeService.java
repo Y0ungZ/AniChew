@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
+import com.anichew.Response.CharaResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
 
@@ -28,5 +29,6 @@ public interface AnimeService {
 	boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
 	boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
 	List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long animeid);
+	List<CharaResponse> getCharas(long animeid);
 	
 }

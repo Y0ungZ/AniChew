@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Request.ScoreRequest;
 import com.anichew.Response.AnimeDetailResponse;
+import com.anichew.Response.CharaResponse;
 import com.anichew.Response.FavoriteResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
@@ -295,6 +296,24 @@ public class AnimeController {
 		
 		response.setSuccess(true);
 		return new ResponseEntity<FavoriteResponse>(response,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value="/{animeid}/charas")
+	public ResponseEntity<List<CharaResponse>> getCharas (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		List<CharaResponse> response = null;
+		
+		
+		if(!animeService.existsAnime(animeid)) {
+			return new ResponseEntity<List<CharaResponse>>(response,HttpStatus.NOT_FOUND);
+		}
+		
+		response = animeService.getCharas(animeid);
+		
+		
+		
+		return new ResponseEntity<List<CharaResponse>>(response,HttpStatus.OK);
 	}
 	
 }
