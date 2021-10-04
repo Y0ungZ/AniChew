@@ -29,6 +29,7 @@ public class AnimeDetailResponse {
 	private String duration;
 	private AnimeStatus status;
 	private Agerate rate;
+	private String synopsis;
 	private List<GenreResponse> genres;
 	private List<AnimeResponse> relatedAnimes;
 	private SeriesResponse series;
@@ -51,6 +52,7 @@ public class AnimeDetailResponse {
 		this.duration = anime.getDuration();
 		this.status = anime.getStatus();	
 		this.rate = anime.getRate();
+		this.synopsis = anime.getSynopsis();
 	}
 	
 }

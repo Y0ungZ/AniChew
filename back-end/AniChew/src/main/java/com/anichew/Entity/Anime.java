@@ -59,6 +59,9 @@ public class Anime {
 	@Column(name="anime_duration")
 	private String duration;
 	
+	@Column(name="synopsis")
+	private String synopsis;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="anime_status")
 	private AnimeStatus status;
@@ -70,22 +73,5 @@ public class Anime {
 	@OneToMany(mappedBy ="anime", fetch = FetchType.LAZY)
 	private List<AnimeGenre> genres;
 	
-	@Builder
-	public Anime(long id, String name, String englishName, String japanesName, String koreanName, AnimeType type, int episodes, LocalDate airedStart, LocalDate airedEnd, String season, String duration, AnimeStatus status, Agerate rate) {
-		this.id = id;
-		this.name = name;
-		this.englishName = englishName;
-		this.japaneseName = japanesName;
-		this.koreanName = koreanName;
-		this.type = type;
-		this.episodes = episodes;
-		this.airedStart = airedStart;
-		this.airedEnd = airedEnd;
-		this.season = season;
-		this.duration = duration;
-		this.status = status;
-		this.rate = rate;
-		
-	}
 
 }
