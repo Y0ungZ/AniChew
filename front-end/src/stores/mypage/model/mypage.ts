@@ -29,6 +29,6 @@ export default class MyPageType {
     readonly mine: boolean,
     readonly favoriteAnimes?: FavoriteAnimeType[],
     readonly favoriteCharas?: FavoriteCharaType[],
-    readonly FavoriteSeiyus?: FavoriteSeiyuType[],
+    readonly favoriteSeiyus?: FavoriteSeiyuType[],
   ) {}
 }

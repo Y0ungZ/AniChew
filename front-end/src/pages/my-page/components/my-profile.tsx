@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
 import { Avatar, Button, Image } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useMyPage } from '../../../hooks';
 import ProfileModifyModal from './modal/profile-modify-modal';
 import { CssKeyObject } from '../../../types/css-basic-type';
+import MyPageType from '../../../stores/mypage/model/mypage';
 
 const styles: CssKeyObject = {
   container: {
@@ -29,24 +28,23 @@ const styles: CssKeyObject = {
   },
 };
 
-const MyProfile = observer(() => {
-  const user = useMyPage();
+const MyProfile = ({ info }:{info:MyPageType}) => {
   const [visible, setVisible] = useState(false);
   return (
     <div style={styles.container}>
       <Avatar
         size={120}
         src={(
-          user.user?.avatar && (
+          info.avatar && (
             <Image src={`${process.env.REACT_APP_IMAGE_BASE_URL
-            }/user_imgs/${user.user.userid}/${user.user.avatar}`}
+            }/user_imgs/${info.userid}/${info.avatar}`}
             />
           )
         )}
       >
-        {user.user?.nickname[0]}
+        {info.nickname[0]}
       </Avatar>
-      {user.user?.mine && (
+      {info.mine && (
         <Button
           style={styles.avatarEditBtn}
           shape="circle"
@@ -56,12 +54,12 @@ const MyProfile = observer(() => {
       )}
       <div style={styles.profile}>
         <span style={styles.nickname}>
-          {user.user?.nickname}
+          {info.nickname}
         </span>
       </div>
       <ProfileModifyModal visible={visible} setVisible={setVisible} />
     </div>
   );
-});
+};
 
 export default MyProfile;
