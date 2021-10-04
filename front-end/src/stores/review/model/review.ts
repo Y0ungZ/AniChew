@@ -1,6 +1,6 @@
 export class Review {
   constructor(
-    readonly id: string,
+    readonly reviewId: string,
     readonly targetId: string,
     readonly userId: string,
     readonly content: string,

@@ -50,7 +50,7 @@ export default class ReviewStoreImpl implements ReviewStore {
     if (this.formMode === 'Write') {
       this.write(id, content);
     } else if (this.formMode === 'Update') {
-      this.update(id, content, this.myReview!.id);
+      this.update(id, content, this.myReview!.reviewId);
     }
   }
 
@@ -96,7 +96,7 @@ export default class ReviewStoreImpl implements ReviewStore {
       await reviewRepository.update(this.type, targetId, content, id);
       runInAction(() => {
         this.myReview = new Review(
-          this.myReview!.id,
+          this.myReview!.reviewId,
           this.myReview!.targetId,
           this.myReview!.userId,
           content,
@@ -137,7 +137,7 @@ export default class ReviewStoreImpl implements ReviewStore {
       if (res.data.length === 0) return;
       runInAction(() => {
         res.data.forEach((review: Review) => {
-          this.reviews[review.id] = review;
+          this.reviews[review.reviewId] = review;
         });
       });
     } catch (error) {
@@ -195,18 +195,18 @@ export default class ReviewStoreImpl implements ReviewStore {
     }
   }
 
-  async like(reviewId: string, animeId: string) {
+  async like(id: string, targetId: string) {
     try {
-      await reviewRepository.like(this.type, reviewId, animeId);
+      await reviewRepository.like(this.type, id, targetId);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_LIKE_REVIEW);
     }
   }
 
-  async cancelLike(reviewId: string, animeId: string) {
+  async cancelLike(id: string, targetId: string) {
     try {
-      await reviewRepository.cancelLike(this.type, reviewId, animeId);
+      await reviewRepository.cancelLike(this.type, id, targetId);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_CANCEL_LIKE_REVIEW);
