@@ -8,6 +8,7 @@ import MainHeader from './components/header/header';
 import { mainAxios } from './libs/axios';
 import { useAuth, useUser } from './hooks';
 import { CssKeyObject } from './types/css-basic-type';
+import { BackTopBtn } from './components';
 
 const styles: CssKeyObject = {
   marginSpace: {
@@ -33,6 +34,7 @@ const App = () => {
         <MainHeader />
         <div style={styles.marginSpace} />
         <Router routes={routes} />
+        <BackTopBtn />
       </BrowserRouter>
     </Layout>
   );
