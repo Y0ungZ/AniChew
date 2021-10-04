@@ -39,17 +39,24 @@ ul.slick-dots.slick-dots-bottom{
 /* slick arrow custom */
 
 .slick-prev, .slick-next{
-  transform: translate(0, -100%);
+  transform: translate(0, -400%);
+}
+
+.slick-prev{
+  z-index: 10;
+  left:0;
 }
 
 .slick-next{
+  z-index:10;
   right:0;
 }
 
 .slick-prev:before, .slick-next:before{
-  color:#ff9999;
+  display:none;
 }
 
 .slick-disabled{
   opacity: 0;
+  transition: 0.5s;
 }
