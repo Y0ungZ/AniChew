@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Image } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import ProfileModifyModal from './modal/profile-modify-modal';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import MyPageType from '../../../stores/mypage/model/mypage';
+import { ProfileModifyModal } from '../../components';
+import { CssKeyObject } from '../../types/css-basic-type';
+import MyPageType from '../../stores/mypage/model/mypage';
 
 const styles: CssKeyObject = {
   container: {

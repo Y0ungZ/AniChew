@@ -24,8 +24,14 @@ export { default as ReviewForm } from './molecules/form/review-form';
 export { default as ReviewReadForm } from './molecules/form/review-read-form';
 
 export { default as LoginModal } from './molecules/modal/login-modal';
+export { default as ProfileModifyModal } from './molecules/modal/profile-modify-modal';
+export { default as CoverModifyModal } from './molecules/modal/cover-modify-modal';
 
 export { default as Rating } from './molecules/rating/rating';
+
+export { default as FavoriteAnimeItem } from './molecules/item/favorite-anime-item';
+export { default as FavoriteCharaItem } from './molecules/item/favorite-chara-item';
+export { default as FavoriteSeiyuItem } from './molecules/item/favorite-seiyu-item';
 
 /* organisms */
 export { default as AniMetaSection } from './organisms/ani-meta-section/ani-meta-section';

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import { EditFilled } from '@ant-design/icons';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import CoverModifyModal from './modal/cover-modify-modal';
-import '../../../assets/css/color.css';
-import MyPageType from '../../../stores/mypage/model/mypage';
+import { CssKeyObject } from '../../types/css-basic-type';
+import { CoverModifyModal } from '../../components';
+import MyPageType from '../../stores/mypage/model/mypage';
 
 const styles: CssKeyObject = {
   container: {

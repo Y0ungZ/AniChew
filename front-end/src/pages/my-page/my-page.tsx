@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
-import MyFavorite from './components/my-favorite';
-import MyCover from './components/my-cover';
-import MyProfile from './components/my-profile';
+import MyFavorite from './my-favorite';
+import MyCover from './my-cover';
+import MyProfile from './my-profile';
 import { useMyPage } from '../../hooks';
 import NotFound from '../error/not-found';
 
