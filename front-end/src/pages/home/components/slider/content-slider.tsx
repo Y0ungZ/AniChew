@@ -5,6 +5,7 @@ import ContentSliderItem from './content-slider-item';
 import { AnimeList } from '../../../../types/anime-list-type';
 import { CssKeyObject } from '../../../../types/css-basic-type';
 import '../../../../assets/css/color.css';
+import { NextArrow, PrevArrow } from '../../../../components';
 
 const { Title } = Typography;
 
@@ -15,13 +16,15 @@ type ContentItemProps = {
 
 const styles: CssKeyObject = {
   position: {
-    marginLeft: '2em',
+    maxWidth: '80em',
+    margin: '0 auto',
     paddingTop: '2em',
     paddingBottom: '2em',
   },
   title: {
     fontFamily: 'titleFont',
     color: 'var(--text-dark)',
+    marginLeft: '1em',
   },
 };
 
@@ -30,6 +33,8 @@ const settings: Settings = {
   slidesToShow: 5,
   slidesToScroll: 5,
   initialSlide: 0,
+  prevArrow: <PrevArrow />,
+  nextArrow: <NextArrow />,
   responsive: [
     {
       breakpoint: 769,

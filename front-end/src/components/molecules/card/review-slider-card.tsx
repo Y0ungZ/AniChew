@@ -5,6 +5,7 @@ import Slider, { Settings } from 'react-slick';
 import ReviewItemCard from './review-item-card';
 import { CssKeyObject } from '../../../types/css-basic-type';
 import { useReview } from '../../../hooks';
+import { PrevArrow, NextArrow } from '../..';
 
 const styles: CssKeyObject = {
   card: {
@@ -13,7 +14,7 @@ const styles: CssKeyObject = {
     marginBottom: '2em',
   },
   cardBody: {
-    padding: '3em',
+    padding: '1em',
   },
 };
 
@@ -24,6 +25,8 @@ const settings: Settings = {
   centerPadding: '1em',
   slidesToShow: 1.2,
   speed: 500,
+  prevArrow: <PrevArrow />,
+  nextArrow: <NextArrow />,
 };
 
 const ReviewSliderCard = observer(() => {

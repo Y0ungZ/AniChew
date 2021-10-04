@@ -6,6 +6,9 @@ export { default as BackTopBtn } from './atoms/btn/back-top-btn';
 
 export { default as FullLoading } from './atoms/loading/full-loading';
 
+export { default as NextArrow } from './atoms/slick-arrow/next-arrow';
+export { default as PrevArrow } from './atoms/slick-arrow/prev-arrow';
+
 /* molecules */
 export { default as AnimeInfoCard } from './molecules/card/anime-info-card';
 export { default as AnimeSeriesCard } from './molecules/card/anime-series-card';
