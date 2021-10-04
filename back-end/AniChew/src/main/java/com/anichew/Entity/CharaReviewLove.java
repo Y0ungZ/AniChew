@@ -1,7 +1,5 @@
 package com.anichew.Entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,31 +12,35 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 @Entity
-@Table(name="review_love")
+@Table(name="chara_review_love")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DynamicInsert
-public class ReviewLove {
-	
+public class CharaReviewLove {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="review_love_id")
+	@Column(name="chara_review_love_id")
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="review_id")
-	private Review review;
+	@JoinColumn(name="chara_review_id")
+	private CharaReview review;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
 	
 	
-	public ReviewLove() {}
 	
-	public ReviewLove(User user, Review review) {
+	@Builder
+	public CharaReviewLove(User user, CharaReview review) {
 		this.user = user;
 		this.review = review;
 	}

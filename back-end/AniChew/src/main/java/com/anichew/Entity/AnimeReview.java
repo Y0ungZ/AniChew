@@ -22,14 +22,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="review")
+@Table(name="anime_review")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DynamicInsert
-public class Review {
+public class AnimeReview {
 	
 	@Id
-	@Column(name="review_id")
+	@Column(name="anime_review_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
@@ -41,22 +41,22 @@ public class Review {
 	@JoinColumn(name="anime_id")
 	private Anime anime;
 	
-	@Column(name="review_content")
+	@Column(name="anime_review_content")
 	private String content;
 	
-	@Column(name="review_created_date")
+	@Column(name="anime_review_created_date")
 	private LocalDateTime createdDate;
 	
-	@Column(name="review_modified_date")
+	@Column(name="anime_review_modified_date")
 	private LocalDateTime modifiedDate;
 	
 	@OneToMany(mappedBy="review", cascade=CascadeType.ALL)
-	List<ReviewLove> loves;
+	List<AnimeReviewLove> loves;
 	
 	
 	
 	@Builder
-	public Review(long id, User user, Anime anime, String content, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+	public AnimeReview(long id, User user, Anime anime, String content, LocalDateTime createdDate, LocalDateTime modifiedDate) {
 		this.id = id;
 		this.user = user;
 		this.anime = anime;

@@ -2,7 +2,8 @@ package com.anichew.Response;
 
 import java.time.LocalDateTime;
 
-import com.anichew.Entity.Review;
+import com.anichew.Entity.AnimeReview;
+import com.anichew.Entity.CharaReview;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,12 +25,23 @@ public class ReviewResponse {
 	
 	public ReviewResponse(){}
 	
-	public ReviewResponse(Review review){
+	public ReviewResponse(AnimeReview review){
 		this.animeId = review.getId();
 		this.userId = review.getUser().getId();
 		this.animeId = review.getAnime().getId();
 		this.nickname = review.getUser().getNickname();
 		this.name = review.getAnime().getKoreanName();
+		this.content = review.getContent();
+		this.createdDate = review.getCreatedDate();
+		this.modifiedDate = review.getModifiedDate();		
+	}	
+	
+	public ReviewResponse(CharaReview review){
+		this.animeId = review.getId();
+		this.userId = review.getUser().getId();
+		this.animeId = review.getChara().getId();
+		this.nickname = review.getUser().getNickname();
+		this.name = review.getChara().getLastName()+ " "+review.getChara().getFirstName();
 		this.content = review.getContent();
 		this.createdDate = review.getCreatedDate();
 		this.modifiedDate = review.getModifiedDate();		
