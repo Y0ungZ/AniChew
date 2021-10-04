@@ -83,7 +83,11 @@ const AniMetaSection = ({ info, store }: { info: Ani; store: Store }) => (
           </Text>
           <section>
             <Text style={styles.estimatedRating}>예상 ☆ 4.2</Text>
-            <Text style={styles.realRating}>평점 ☆ 4.1</Text>
+            <Text style={styles.realRating}>
+              평점 ☆
+              {' '}
+              {info.avgScore === 0 ? '점수가 없습니다.' : info.avgScore}
+            </Text>
           </section>
         </div>
         <Divider style={styles.divider} />
