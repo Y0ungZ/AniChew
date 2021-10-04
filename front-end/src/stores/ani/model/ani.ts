@@ -18,7 +18,7 @@ export type Score = {
   readonly type: string;
   readonly value: number;
 };
-export const AniGenreDict = {
+export const AniGenreDict: { [key: string]: string } = {
   1: '드라마',
   2: 'SF',
   3: '괴물',
