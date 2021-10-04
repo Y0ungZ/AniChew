@@ -308,8 +308,7 @@ public class CharaServiceImpl implements CharaService {
 		
 		ReviewResponse response = new ReviewResponse(review);
 		response.setMine(true);
-		response.setLoveCnt(review.getLoves().size());		
-		response.setId(review.getId());
+		response.setLoveCnt(review.getLoves().size());
 		if(charaReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		
@@ -343,7 +342,7 @@ public class CharaServiceImpl implements CharaService {
 		response = new ReviewResponse(review);
 		response.setMine(true);
 		review = charaReviewRepo.findByUserAndChara(user, chara);
-		response.setId(review.getId());
+		response.setReviewId(review.getId());
 		
 		
 		return response;
@@ -494,7 +493,6 @@ public class CharaServiceImpl implements CharaService {
 		List<ReviewResponse> reviewsRes = new ArrayList();
 		for(CharaReview review : reviews) {
 			ReviewResponse reviewRes = new ReviewResponse(review);
-			reviewRes.setId(review.getId());
 			
 			if(review.getUser().getId() == accessor_id)
 				reviewRes.setMine(true);
