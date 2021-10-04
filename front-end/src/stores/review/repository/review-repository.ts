@@ -66,25 +66,25 @@ class ReviewRepository {
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  like(target: ReviewTarget, id: string, reviewId: string) {
+  like(target: ReviewTarget, id: string, targetId: string) {
     if (target === 'Animation') {
-      return mainAxios.post(`${this.url}/anime/${id}/review/${reviewId}/love`);
+      return mainAxios.post(`${this.url}/anime/${targetId}/review/${id}/love`);
     }
     if (target === 'Character') {
-      return mainAxios.post(`${this.url}/chara/${id}/review/${reviewId}/love`);
+      return mainAxios.post(`${this.url}/chara/${targetId}/review/${id}/love`);
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  cancelLike(target: ReviewTarget, id: string, reviewId: string) {
+  cancelLike(target: ReviewTarget, id: string, targetId: string) {
     if (target === 'Animation') {
       return mainAxios.delete(
-        `${this.url}/anime/${id}/review/${reviewId}/love`,
+        `${this.url}/anime/${targetId}/review/${id}/love`,
       );
     }
     if (target === 'Character') {
       return mainAxios.delete(
-        `${this.url}/chara/${id}/review/${reviewId}/love`,
+        `${this.url}/chara/${targetId}/review/${id}/love`,
       );
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);

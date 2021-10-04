@@ -19,14 +19,14 @@ const ReviewLikeBtn = observer(({ review }: {review: Review}) => {
       return;
     }
     if (isLove) {
-      reviewStore.cancelLike(review.id, review.targetId)
+      reviewStore.cancelLike(review.reviewId, review.targetId)
         .then(() => {
           setIsLove((prev) => !prev);
           setLoveCnt((prev) => prev - 1);
         })
         .catch((error) => msg('Error', error.message));
     } else {
-      reviewStore.like(review.id, review.targetId)
+      reviewStore.like(review.reviewId, review.targetId)
         .then(() => {
           setIsLove((prev) => !prev);
           setLoveCnt((prev) => prev + 1);
