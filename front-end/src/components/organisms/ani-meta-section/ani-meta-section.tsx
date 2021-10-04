@@ -9,19 +9,27 @@ const { Title, Text } = Typography;
 
 const styles: CssKeyObject = {
   container: {
-    backgroundColor: '#181818', padding: '2em',
+    backgroundColor: '#181818',
+    padding: '2em',
   },
   content: {
-    display: 'flex', margin: '0 auto', maxWidth: '60em', minWidth: '60em',
+    display: 'flex',
+    margin: '0 auto',
+    maxWidth: '60em',
+    minWidth: '60em',
   },
   thumbnailContainer: {
     width: '40%',
   },
   animeInfoContainer: {
-    width: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+    width: '60%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   divider: {
-    backgroundColor: 'whitesmoke', margin: '2em 0',
+    backgroundColor: 'whitesmoke',
+    margin: '2em 0',
   },
   metaData: {
     color: '#b2b2b2',
@@ -45,7 +53,7 @@ const styles: CssKeyObject = {
   },
 };
 
-const AniMetaSection = ({ info, store } : { info: Ani, store: Store }) => (
+const AniMetaSection = ({ info, store }: { info: Ani; store: Store }) => (
   <section style={styles.container}>
     <div style={styles.content}>
       <div style={styles.thumbnailContainer}>
