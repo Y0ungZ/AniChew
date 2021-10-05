@@ -180,7 +180,7 @@ public class AnimeController {
 		return new ResponseEntity<ReviewResponse>(response,HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/{animeid}/review/")
+	@DeleteMapping(value="/{animeid}/review")
 	public ResponseEntity<String> deleteReview (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
