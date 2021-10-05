@@ -19,7 +19,7 @@ public interface AnimeService {
 	AnimeDetailResponse animeDetail(HttpServletRequest httpServletReq, long animeid);
 	ReviewResponse writeReview(HttpServletRequest httpServletReq, String content, long anime_id);
 	ReviewResponse modifyReview(HttpServletRequest httpServletReq, ReviewRequest req, long anime_id);
-	boolean deleteReview(HttpServletRequest httpServletReq, long reviewid, long anime_id);
+	boolean deleteReview(HttpServletRequest httpServletReq, long anime_id);
 	boolean existsReview(long reviewid);
 	boolean existsReview(HttpServletRequest httpServletReq, long animeid);
 	boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid);

@@ -229,8 +229,8 @@ public class CharaController {
 		return new ResponseEntity<ReviewResponse>(response,HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/{charaid}/review/{reviewid}")
-	public ResponseEntity<String> deleteReview (@PathVariable("charaid") long charaid, @PathVariable("reviewid") long reviewid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	@DeleteMapping(value="/{charaid}/review")
+	public ResponseEntity<String> deleteReview (@PathVariable("charaid") long charaid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
 		ReviewResponse response = null;
@@ -241,7 +241,7 @@ public class CharaController {
 			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);
 		
 		
-		if(!charaService.deleteReview(httpServletReq, reviewid, charaid))
+		if(!charaService.deleteReview(httpServletReq, charaid))
 			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);		
 		
 		

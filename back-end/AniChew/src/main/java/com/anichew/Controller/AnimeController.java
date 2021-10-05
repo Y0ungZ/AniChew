@@ -180,8 +180,8 @@ public class AnimeController {
 		return new ResponseEntity<ReviewResponse>(response,HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/{animeid}/review/{reviewid}")
-	public ResponseEntity<String> deleteReview (@PathVariable("animeid") long animeid, @PathVariable("reviewid") long reviewid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+	@DeleteMapping(value="/{animeid}/review/")
+	public ResponseEntity<String> deleteReview (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		
 		ReviewResponse response = null;
@@ -192,7 +192,7 @@ public class AnimeController {
 			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);
 		
 		
-		if(!animeService.deleteReview(httpServletReq, reviewid, animeid))
+		if(!animeService.deleteReview(httpServletReq,animeid))
 			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);		
 		
 		
