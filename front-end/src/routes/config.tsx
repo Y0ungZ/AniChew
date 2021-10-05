@@ -68,4 +68,11 @@ export const routes: RouteType[] = [
     component: lazy(() => import('../pages/character-detail/character-detail')),
     fallback: <FullLoading />,
   },
+  {
+    path: '/hellomrmyyesterday',
+    exact: false,
+    private: false,
+    component: lazy(() => import('../pages/test/test')),
+    fallback: <FullLoading />,
+  },
 ];
