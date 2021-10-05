@@ -316,4 +316,21 @@ public class AnimeController {
 		return new ResponseEntity<List<CharaResponse>>(response,HttpStatus.OK);
 	}
 	
+	
+	@GetMapping(value="/promotion")
+	public ResponseEntity<List<AnimeDetailResponse>> getPromotion (HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		List<AnimeDetailResponse> response = null;
+		
+
+		
+		response = animeService.getPromotion(httpServletReq);
+		
+		
+		
+		return new ResponseEntity<List<AnimeDetailResponse>>(response,HttpStatus.OK);
+	}
+	
+	
+	
 }

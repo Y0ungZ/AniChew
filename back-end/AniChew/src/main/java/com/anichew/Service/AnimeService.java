@@ -29,6 +29,7 @@ public interface AnimeService {
 	boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
 	boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid);
 	List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long animeid);
-	List<CharaResponse> getCharas(long animeid);
+	List<CharaResponse> getCharas(long animeid);	
+	List<AnimeDetailResponse> getPromotion(HttpServletRequest httpServletReq);
 	
 }
