@@ -7,6 +7,10 @@ class AniRepository {
     return mainAxios.get(`${this.url}/anime/${id}`);
   }
 
+  getCharacterInfo(id: string) {
+    return mainAxios.get(`${this.url}/anime/${id}/charas`);
+  }
+
   setScore(id: string, score: number) {
     return mainAxios.post(`${this.url}/anime/${id}/score`, {
       score: score * 2,

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Card, Col, Row, Avatar } from 'antd';
-import Text from 'antd/lib/typography/Text';
+import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import { Card, Col, Row, Avatar, List, Image } from 'antd';
 import { CssKeyObject } from '../../../types/css-basic-type';
+import { useAni } from '../../../hooks';
 
 const styles: CssKeyObject = {
   card: {
@@ -20,95 +22,43 @@ const styles: CssKeyObject = {
   },
 };
 
-const CharacterInfo = ({
-  name,
-  seiyu,
-  heartCnt,
-}: {
-  name: string;
-  seiyu: string;
-  heartCnt: string;
-}) => (
+const CharacterInfo = ({ id, name }: { id: string; name: string }) => (
   <section style={styles.container}>
-    <Avatar shape="square" size="large" />
+    <Avatar
+      shape="square"
+      size="large"
+      src={(
+        <Image
+          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/chara_imgs/${id}.jpg`}
+        />
+      )}
+    />
     <div style={styles.metaData}>
-      <Text strong>{name}</Text>
-      <Text>{seiyu}</Text>
-      <Text>
-        {heartCnt}
-        명
-      </Text>
+      <Link to={`/character/${id}`}>{name}</Link>
     </div>
   </section>
 );
 
-const CharacterListCard = () => (
-  <Card title="캐릭터" bordered={false} style={styles.card}>
-    <Row gutter={[16, 16]}>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-    </Row>
-    <Row gutter={[16, 16]}>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-    </Row>
-    <Row gutter={[16, 16]}>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-    </Row>
-    <Row gutter={[16, 16]}>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-      <Col style={styles.character} span={12}>
-        <CharacterInfo
-          name="나까무라 노자키"
-          seiyu="타나카 마유미"
-          heartCnt="6"
-        />
-      </Col>
-    </Row>
-  </Card>
-);
+const CharacterListCard = observer(() => {
+  const { characterInfo } = useAni();
+  return (
+    <Card title="캐릭터" bordered={false} style={styles.card}>
+      {characterInfo ? (
+        <Row gutter={[16, 16]}>
+          {characterInfo.map((info) => (
+            <Col key={info.id} style={styles.character} span={12}>
+              <CharacterInfo
+                id={info.id}
+                name={info.lastName + info.firstName}
+              />
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <List />
+      )}
+    </Card>
+  );
+});
 
 export default CharacterListCard;
