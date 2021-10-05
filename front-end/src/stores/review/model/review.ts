@@ -11,6 +11,7 @@ export class Review {
     readonly nickname: string,
     readonly love: boolean,
     readonly loveCnt: number,
+    readonly userAvatar: string,
   ) {}
 }
 

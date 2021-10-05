@@ -67,6 +67,7 @@ export default class ReviewStoreImpl implements ReviewStore {
         nickname,
         love,
         loveCnt,
+        userAvatar,
       } = res.data;
       runInAction(() => {
         this.myReview = new Review(
@@ -81,6 +82,7 @@ export default class ReviewStoreImpl implements ReviewStore {
           nickname,
           love,
           loveCnt,
+          userAvatar,
         );
         this.formMode = 'Read';
         this.reviews[reviewId] = this.myReview;
@@ -107,6 +109,7 @@ export default class ReviewStoreImpl implements ReviewStore {
           this.myReview!.nickname,
           this.myReview!.love,
           this.myReview!.loveCnt,
+          this.myReview!.userAvatar,
         );
         this.reviews[reviewId] = this.myReview;
         this.formMode = 'Read';
@@ -134,6 +137,7 @@ export default class ReviewStoreImpl implements ReviewStore {
   async getAll(targetId: string) {
     try {
       const res = await reviewRepository.getAll(this.type, targetId);
+      this.reviews = {};
       if (res.data.length === 0) return;
       runInAction(() => {
         res.data.forEach((review: Review) => {
@@ -170,6 +174,7 @@ export default class ReviewStoreImpl implements ReviewStore {
             nickname,
             love,
             loveCnt,
+            userAvatar,
           } = res.data;
 
           this.myReview = new Review(
@@ -184,6 +189,7 @@ export default class ReviewStoreImpl implements ReviewStore {
             nickname,
             love,
             loveCnt,
+            userAvatar,
           );
           this.formMode = 'Read';
           this.showForm = true;
