@@ -7,14 +7,11 @@ const styles: CssKeyObject = {
   btn: {
     width: '2.5em',
     height: '2.5em',
-    overflow: 'hidden',
     position: 'absolute',
     top: '2em',
     left: '0.3em',
-    color: 'white',
     borderRadius: '0.5em',
-    backgroundColor: 'var(--text-dark)',
-    opacity: '0.6',
+    opacity: '0.9',
   },
 
 };
@@ -27,6 +24,7 @@ const PrevArrow = ({ className, onClick }:any) => (
     onKeyDown={onClick}
   >
     <Button
+      type="primary"
       size="large"
       style={styles.btn}
       icon={<LeftOutlined />}
