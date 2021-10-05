@@ -101,5 +101,6 @@ export class Ani {
     readonly relatedAnis: RelatedAni[],
     readonly seriesList: Series[],
     readonly favorite: boolean,
+    readonly synopsis: string | null,
   ) {}
 }

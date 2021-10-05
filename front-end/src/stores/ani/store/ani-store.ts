@@ -54,6 +54,7 @@ export default class AniStoreImpl implements AniStore {
         series,
         favorite,
         myScore,
+        synopsis,
       } = res.data;
 
       const scoreList = scores.map((score: number, i: number) => ({
@@ -81,6 +82,7 @@ export default class AniStoreImpl implements AniStore {
           relatedAnimes,
           series,
           favorite,
+          synopsis,
         );
         this.favorite = favorite;
       });
