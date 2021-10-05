@@ -2,16 +2,19 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_CANCEL_LIKE_ANI,
   FAIL_DELETE_ANI_SCORE,
+  FAIL_GET_ANI_CHARACTER_INFO,
   FAIL_GIVE_ANI_SCORE,
   FAIL_LIKE_ANI,
 } from '../../../common/string-template/string-template';
-import { Ani } from '../model/ani';
+import { Ani, CharacterInfo } from '../model/ani';
 import aniRepository from '../repository/ani-repository';
 
 export interface AniStore {
   info: Ani | null;
+  characterInfo: CharacterInfo[] | null;
   favorite: boolean;
   getInfo: (id: string) => Promise<void>;
+  getCharacterInfo: (id: string) => Promise<void>;
   setScore: (id: string, score: number) => Promise<void>;
   removeScore: (id: string) => Promise<void>;
   like: (id: string) => Promise<void>;
@@ -21,6 +24,8 @@ export interface AniStore {
 
 export default class AniStoreImpl implements AniStore {
   info: Ani | null = null;
+
+  characterInfo: CharacterInfo[] | null = null;
 
   favorite = false;
 
@@ -84,6 +89,24 @@ export default class AniStoreImpl implements AniStore {
       runInAction(() => {
         this.info = null;
       });
+    }
+  }
+
+  async getCharacterInfo(id: string) {
+    try {
+      const res = await aniRepository.getCharacterInfo(id);
+      if (res.data.length === 0) {
+        runInAction(() => {
+          this.characterInfo = null;
+        });
+      } else {
+        runInAction(() => {
+          this.characterInfo = res.data;
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_GET_ANI_CHARACTER_INFO);
     }
   }
 

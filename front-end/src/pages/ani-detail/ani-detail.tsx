@@ -34,6 +34,13 @@ const AniDetail = observer(() => {
   }, [ani, param.id, review]);
 
   useEffect(() => {
+    ani
+      .getCharacterInfo(param.id)
+      .then()
+      .catch((error) => msg('Error', error.message));
+  }, [ani, param.id]);
+
+  useEffect(() => {
     review
       .getAll(param.id)
       .then()

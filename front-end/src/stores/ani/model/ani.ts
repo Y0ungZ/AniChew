@@ -10,6 +10,11 @@ export type RelatedAni = {
   readonly name: string;
   readonly koreanName: string;
 };
+export type CharacterInfo = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
 export type Series = {
   readonly id: number;
   readonly name: string;
