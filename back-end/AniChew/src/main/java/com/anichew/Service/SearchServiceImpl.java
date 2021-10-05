@@ -42,6 +42,7 @@ public class SearchServiceImpl implements SearchService {
 			search.setType("Animation");
 			search.setId(anime.getId());
 			search.setName(anime.getKoreanName());
+			search.setImage(Long.toString(anime.getId()));
 			response.add(search);
 		}
 		
@@ -63,6 +64,7 @@ public class SearchServiceImpl implements SearchService {
 			search.setType("Character");
 			search.setId(chara.getId());
 			search.setName(chara.getLastName()+" "+chara.getFirstName());
+			search.setImage(Long.toString(chara.getId()));
 			response.add(search);
 		}
 		
@@ -82,6 +84,7 @@ public class SearchServiceImpl implements SearchService {
 			search.setType("User");
 			search.setId(user.getId());
 			search.setName(user.getNickname());
+			search.setImage(user.getAvatar());
 			response.add(search);
 			
 		}
