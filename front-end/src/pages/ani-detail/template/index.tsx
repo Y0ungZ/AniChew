@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
-import { Col, Row } from 'antd';
+import { Col, Row, Grid } from 'antd';
 import { CssKeyObject } from '../../../types/css-basic-type';
+
+const { useBreakpoint } = Grid;
 
 type Props = {
   meta: ReactNode;
@@ -14,6 +16,10 @@ type Props = {
 };
 
 const styles: CssKeyObject = {
+  container: {
+    width: '95%',
+    margin: '0 auto',
+  },
   main: {
     margin: '2em auto',
     maxWidth: '60em',
@@ -37,23 +43,22 @@ const AniDetailTemplate = ({
   char,
   reviewList,
   rateChart,
-}: Props) => (
-  <div>
-    <Row>
-      <Col span={24}>{meta}</Col>
-    </Row>
-    <Row style={styles.main}>
-      <Col span={9} style={styles.left}>
+}: Props) => {
+  const { xs } = useBreakpoint();
+  if (xs) {
+    return (
+      <div style={styles.container}>
+        <Row>
+          <Col span={24}>{meta}</Col>
+        </Row>
+        <Row>
+          <Col span={24}>{reviewForm}</Col>
+        </Row>
         <Row>
           <Col span={24}>{info}</Col>
         </Row>
         <Row>
           <Col span={24}>{series}</Col>
-        </Row>
-      </Col>
-      <Col span={15} style={styles.right}>
-        <Row>
-          <Col span={24}>{reviewForm}</Col>
         </Row>
         <Row>
           <Col span={24}>{syno}</Col>
@@ -67,9 +72,43 @@ const AniDetailTemplate = ({
         <Row>
           <Col span={24}>{rateChart}</Col>
         </Row>
-      </Col>
-    </Row>
-  </div>
-);
+      </div>
+    );
+  }
+  return (
+    <div>
+      <Row>
+        <Col span={24}>{meta}</Col>
+      </Row>
+      <Row style={styles.main}>
+        <Col span={9} style={styles.left}>
+          <Row>
+            <Col span={24}>{info}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{series}</Col>
+          </Row>
+        </Col>
+        <Col span={15} style={styles.right}>
+          <Row>
+            <Col span={24}>{reviewForm}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{syno}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{char}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{reviewList}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{rateChart}</Col>
+          </Row>
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
 export default AniDetailTemplate;
