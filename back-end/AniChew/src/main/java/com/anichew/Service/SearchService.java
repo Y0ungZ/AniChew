@@ -7,4 +7,5 @@ import com.anichew.Response.SearchResponse;
 public interface SearchService {
 	List<SearchResponse> getAnimeList(String keyword);
 	List<SearchResponse> getCharaList(String keyword);
+	List<SearchResponse> getUserList(String keyword);
 }
