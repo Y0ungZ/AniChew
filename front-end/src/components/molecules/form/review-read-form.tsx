@@ -22,7 +22,7 @@ const ReviewReadForm = observer(({ id }: {id: string}) => {
   };
 
   const deleteReview = () => {
-    review.delete(id, review.myReview!.reviewId)
+    review.delete(id)
       .then()
       .catch((error) => msg('Error', error.message));
   };

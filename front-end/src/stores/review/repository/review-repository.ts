@@ -19,28 +19,26 @@ class ReviewRepository {
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  update(target: ReviewTarget, targetId: string, content: string, id: string) {
+  update(target: ReviewTarget, targetId: string, content: string) {
     if (target === 'Animation') {
       return mainAxios.put(`${this.url}/anime/${targetId}/review`, {
-        id,
         content,
       });
     }
     if (target === 'Character') {
       return mainAxios.put(`${this.url}/chara/${targetId}/review`, {
-        id,
         content,
       });
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
-  delete(target: ReviewTarget, targetId: string, id: string) {
+  delete(target: ReviewTarget, targetId: string) {
     if (target === 'Animation') {
-      return mainAxios.delete(`${this.url}/anime/${targetId}/review/${id}`);
+      return mainAxios.delete(`${this.url}/anime/${targetId}/review`);
     }
     if (target === 'Character') {
-      return mainAxios.delete(`${this.url}/chara/${targetId}/review/${id}`);
+      return mainAxios.delete(`${this.url}/chara/${targetId}/review`);
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
