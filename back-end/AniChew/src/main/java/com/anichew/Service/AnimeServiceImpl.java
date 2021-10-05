@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeChara;
 import com.anichew.Entity.AnimeGenre;
+import com.anichew.Entity.AnimePromotion;
 import com.anichew.Entity.AnimeReview;
 import com.anichew.Entity.AnimeReviewLove;
 import com.anichew.Entity.AnimeSeries;
@@ -21,6 +22,7 @@ import com.anichew.Entity.FavoriteAnime;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeCharaRepository;
 import com.anichew.Repository.AnimeGenreRepository;
+import com.anichew.Repository.AnimePromotionRepository;
 import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.AnimeReviewLoveRepository;
 import com.anichew.Repository.AnimeReviewRepository;
@@ -70,6 +72,9 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	@Autowired
 	private AnimeReviewLoveRepository animeReviewLoveRepo;	
+	
+	@Autowired
+	private AnimePromotionRepository animePromotionRepo;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -209,13 +214,15 @@ public class AnimeServiceImpl implements AnimeService {
 	
 				
 		float avgScore=0;
-		
-//		avgScore = animescoreRepo.avgByAnime((Long)anime.getId()); 
+		float sum=0;
+		int cntSum = 0; 
 		
 		long scores[] = new long[5];
 		for(int i=1;i<=10;i++) {
 			long cnt = animescoreRepo.countByAnimeAndScore(anime, i);
 			scores[(i-1)/2] += cnt;
+			cntSum += cnt;
+			sum += i * cnt;
 		}			
 		
 		float myScore = 0;
@@ -224,6 +231,8 @@ public class AnimeServiceImpl implements AnimeService {
 			myScore = animescoreRepo.findByUserAndAnime(user, anime).getScore();
 		}
 		
+		if(cntSum != 0)
+			avgScore = sum / cntSum;   
 		
 		
 		response.setGenres(genres);
@@ -544,6 +553,19 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 	
 
+	public List<AnimeDetailResponse> getPromotion(HttpServletRequest httpServletReq){
+		
+		List<AnimePromotion> promotions = animePromotionRepo.findAll();
+		
+		List<AnimeDetailResponse> response = new ArrayList();
+		
+		for(AnimePromotion promotion : promotions) {
+			response.add(animeDetail(httpServletReq,promotion.getAnimeId()));
+		}
+		
+		
+		return response;
+	}
 	
 	
 
