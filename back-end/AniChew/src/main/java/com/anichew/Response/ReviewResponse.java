@@ -14,6 +14,7 @@ public class ReviewResponse {
 	private long reviewId;
 	private long userId;
 	private long targetId;
+	private String userAvatar;
 	private String nickname;
 	private String name;
 	private String content;

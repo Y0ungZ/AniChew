@@ -312,6 +312,8 @@ public class CharaServiceImpl implements CharaService {
 		if(charaReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		
+		response.setUserAvatar(user.getAvatar());
+		
 		return response;
 	}
 	
@@ -343,7 +345,7 @@ public class CharaServiceImpl implements CharaService {
 		response.setMine(true);
 		review = charaReviewRepo.findByUserAndChara(user, chara);
 		response.setReviewId(review.getId());
-		
+		response.setUserAvatar(user.getAvatar());
 		
 		return response;
 				
@@ -392,7 +394,7 @@ public class CharaServiceImpl implements CharaService {
 		if(charaReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		response.setMine(true);
-		
+		response.setUserAvatar(user.getAvatar());
 		
 		return response;
 				
@@ -497,6 +499,8 @@ public class CharaServiceImpl implements CharaService {
 			if(user !=null && charaReviewLoveRepo.existsByUserAndReview(user, review))
 				reviewRes.setLove(true);
 			
+			User reviewUser = review.getUser();
+			reviewRes.setUserAvatar(reviewUser.getAvatar());			
 			reviewRes.setLoveCnt(review.getLoves().size());
 			reviewsRes.add(reviewRes);
 		}		

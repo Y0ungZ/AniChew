@@ -276,6 +276,7 @@ public class AnimeServiceImpl implements AnimeService {
 		ReviewResponse response = new ReviewResponse(review);
 		response.setMine(true);
 		response.setLoveCnt(review.getLoves().size());		
+		response.setUserAvatar(user.getAvatar());
 		if(animeReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		
@@ -311,7 +312,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		review = animeReviewRepo.findByUserAndAnime(user, anime);
 		response.setReviewId(review.getId());
-		
+		response.setUserAvatar(user.getAvatar());
 		return response;
 				
 	}
@@ -358,7 +359,7 @@ public class AnimeServiceImpl implements AnimeService {
 		if(animeReviewLoveRepo.existsByUserAndReview(user, review))
 			response.setLove(true);
 		response.setMine(true);
-		
+		response.setUserAvatar(user.getAvatar());
 		
 		return response;
 				
@@ -515,6 +516,8 @@ public class AnimeServiceImpl implements AnimeService {
 			if(user !=null && animeReviewLoveRepo.existsByUserAndReview(user, review))
 				reviewRes.setLove(true);
 			
+			User reviewUser = review.getUser();
+			reviewRes.setUserAvatar(reviewUser.getAvatar());
 			reviewRes.setLoveCnt(review.getLoves().size());
 			reviewsRes.add(reviewRes);
 		}
