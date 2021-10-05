@@ -46,17 +46,17 @@ export default class ReviewStoreImpl implements ReviewStore {
     makeAutoObservable(this);
   }
 
-  async submit(id: string, content: string) {
+  async submit(targetId: string, content: string) {
     if (this.formMode === 'Write') {
-      this.write(id, content);
+      this.write(targetId, content);
     } else if (this.formMode === 'Update') {
-      this.update(id, content, this.myReview!.reviewId);
+      this.update(targetId, content, this.myReview!.reviewId);
     }
   }
 
-  async write(id: string, content: string) {
+  async write(targetId: string, content: string) {
     try {
-      const res = await reviewRepository.write(this.type, id, content);
+      const res = await reviewRepository.write(this.type, targetId, content);
       const {
         reviewId,
         userId,
@@ -71,7 +71,7 @@ export default class ReviewStoreImpl implements ReviewStore {
       runInAction(() => {
         this.myReview = new Review(
           reviewId,
-          id,
+          targetId,
           userId,
           content,
           createdDate,
@@ -83,7 +83,7 @@ export default class ReviewStoreImpl implements ReviewStore {
           loveCnt,
         );
         this.formMode = 'Read';
-        this.reviews[id] = this.myReview;
+        this.reviews[reviewId] = this.myReview;
       });
     } catch (error) {
       console.log(error);
@@ -91,9 +91,9 @@ export default class ReviewStoreImpl implements ReviewStore {
     }
   }
 
-  async update(targetId: string, content: string, id: string) {
+  async update(targetId: string, content: string, reviewId: string) {
     try {
-      await reviewRepository.update(this.type, targetId, content, id);
+      await reviewRepository.update(this.type, targetId, content);
       runInAction(() => {
         this.myReview = new Review(
           this.myReview!.reviewId,
@@ -108,7 +108,7 @@ export default class ReviewStoreImpl implements ReviewStore {
           this.myReview!.love,
           this.myReview!.loveCnt,
         );
-        this.reviews[id] = this.myReview;
+        this.reviews[reviewId] = this.myReview;
         this.formMode = 'Read';
       });
     } catch (error) {
@@ -117,13 +117,13 @@ export default class ReviewStoreImpl implements ReviewStore {
     }
   }
 
-  async delete(targetId: string, id: string) {
+  async delete(targetId: string) {
     try {
-      await reviewRepository.delete(this.type, targetId, id);
+      await reviewRepository.delete(this.type, targetId);
       runInAction(() => {
         this.formMode = 'Write';
+        delete this.reviews[this.myReview!.reviewId];
         this.myReview = null;
-        delete this.reviews[id];
       });
     } catch (error) {
       console.log(error);
@@ -131,9 +131,9 @@ export default class ReviewStoreImpl implements ReviewStore {
     }
   }
 
-  async getAll(animeId: string) {
+  async getAll(targetId: string) {
     try {
-      const res = await reviewRepository.getAll(this.type, animeId);
+      const res = await reviewRepository.getAll(this.type, targetId);
       if (res.data.length === 0) return;
       runInAction(() => {
         res.data.forEach((review: Review) => {
@@ -149,9 +149,9 @@ export default class ReviewStoreImpl implements ReviewStore {
     }
   }
 
-  async getMy(animeId: string) {
+  async getMy(targetId: string) {
     try {
-      const res = await reviewRepository.getMy(this.type, animeId);
+      const res = await reviewRepository.getMy(this.type, targetId);
       if (res.data === '') {
         runInAction(() => {
           this.myReview = null;
@@ -160,7 +160,7 @@ export default class ReviewStoreImpl implements ReviewStore {
       } else {
         runInAction(() => {
           const {
-            id,
+            reviewId,
             userId,
             content,
             createdDate,
@@ -169,12 +169,12 @@ export default class ReviewStoreImpl implements ReviewStore {
             name,
             nickname,
             love,
-            lovecnt,
+            loveCnt,
           } = res.data;
 
           this.myReview = new Review(
-            id,
-            animeId,
+            reviewId,
+            targetId,
             userId,
             content,
             createdDate,
@@ -183,7 +183,7 @@ export default class ReviewStoreImpl implements ReviewStore {
             name,
             nickname,
             love,
-            lovecnt,
+            loveCnt,
           );
           this.formMode = 'Read';
           this.showForm = true;
@@ -195,18 +195,18 @@ export default class ReviewStoreImpl implements ReviewStore {
     }
   }
 
-  async like(id: string, targetId: string) {
+  async like(reviewId: string, targetId: string) {
     try {
-      await reviewRepository.like(this.type, id, targetId);
+      await reviewRepository.like(this.type, reviewId, targetId);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_LIKE_REVIEW);
     }
   }
 
-  async cancelLike(id: string, targetId: string) {
+  async cancelLike(reviewId: string, targetId: string) {
     try {
-      await reviewRepository.cancelLike(this.type, id, targetId);
+      await reviewRepository.cancelLike(this.type, reviewId, targetId);
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_CANCEL_LIKE_REVIEW);
