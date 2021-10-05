@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.Chara;
+import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.CharaRepository;
+import com.anichew.Repository.UserRepository;
 import com.anichew.Response.SearchResponse;
 
 
@@ -23,6 +25,9 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private CharaRepository charaRepo;
 	
+	@Autowired
+	private UserRepository userRepo;
+	
 	
 	public List<SearchResponse> getAnimeList(String keyword){
 		
@@ -34,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
 		for(Anime anime : animes) {
 			
 			SearchResponse search = new SearchResponse();
-			search.setType("ANIME");
+			search.setType("Animation");
 			search.setId(anime.getId());
 			search.setName(anime.getKoreanName());
 			response.add(search);
@@ -55,7 +60,7 @@ public class SearchServiceImpl implements SearchService {
 		for(Chara chara : charas) {
 			
 			SearchResponse search = new SearchResponse();
-			search.setType("CHARA");
+			search.setType("Character");
 			search.setId(chara.getId());
 			search.setName(chara.getLastName()+" "+chara.getFirstName());
 			response.add(search);
@@ -63,6 +68,27 @@ public class SearchServiceImpl implements SearchService {
 		
 		return response;
 		
+	}
+
+	@Override
+	public List<SearchResponse> getUserList(String keyword) {
+		
+		List<SearchResponse> response = new ArrayList();
+		
+		List<User> users = userRepo.findAllByNicknameContains(keyword);
+		
+		for(User user : users) {			
+			SearchResponse search = new SearchResponse();
+			search.setType("User");
+			search.setId(user.getId());
+			search.setName(user.getNickname());
+			response.add(search);
+			
+		}
+		
+		
+		
+		return response;
 	}
 	
 }
