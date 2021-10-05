@@ -355,16 +355,17 @@ public class CharaServiceImpl implements CharaService {
 		
 		CharaReview review = null;
 		
-		if(!charaReviewRepo.existsById(req.getId())) 
-			return null;
-		
-		review = charaReviewRepo.findById(req.getId());
-		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
 		
 		User user = userRepo.findById(Long.parseLong(userid));			
 		Chara chara = charaRepo.findById(charaid);
+		
+		if(!charaReviewRepo.existsByUserAndChara(user,chara)) 
+			return null;
+		
+		review = charaReviewRepo.findByUserAndChara(user,chara);
+		
 		
 		
 		if(review.getUser() != user) 
@@ -397,16 +398,11 @@ public class CharaServiceImpl implements CharaService {
 				
 	}
 	
-	public boolean deleteReview(HttpServletRequest httpServletReq, long reviewid, long charaid) {
+	public boolean deleteReview(HttpServletRequest httpServletReq, long charaid) {
 		
 		ReviewResponse response = null;
 		
 		CharaReview review = null;
-		
-		if(!charaReviewRepo.existsById(reviewid)) 
-			return false;
-		
-		review = charaReviewRepo.findById(reviewid);
 		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		String userid = jwtUtil.getUserid(requestTokenHeader);
@@ -415,14 +411,13 @@ public class CharaServiceImpl implements CharaService {
 		Chara chara = charaRepo.findById(charaid);
 		
 		
-		if(review.getUser() != user) 
+		if(!charaReviewRepo.existsByUserAndChara(user,chara)) 
 			return false;
 		
+		review = charaReviewRepo.findByUserAndChara(user,chara);
+			
 		
 		charaReviewRepo.delete(review);
-		
-				
-		
 		
 		return true;
 				

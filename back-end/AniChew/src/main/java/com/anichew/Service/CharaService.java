@@ -19,7 +19,7 @@ public interface CharaService {
 	boolean exsitsCharascore(HttpServletRequest httpServletReq, long charaid);
 	ReviewResponse writeReview(HttpServletRequest httpServletReq, String content, long charaid);
 	ReviewResponse modifyReview(HttpServletRequest httpServletReq, ReviewRequest req, long charaid);
-	boolean deleteReview(HttpServletRequest httpServletReq, long reviewid, long charaid);
+	boolean deleteReview(HttpServletRequest httpServletReq, long charaid);
 	boolean existsReview(long reviewid);
 	boolean existsReview(HttpServletRequest httpServletReq, long charaid);
 	boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid);
