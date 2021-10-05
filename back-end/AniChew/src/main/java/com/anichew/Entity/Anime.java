@@ -59,7 +59,7 @@ public class Anime {
 	@Column(name="anime_duration")
 	private String duration;
 	
-	@Column(name="synopsis")
+	@Column(name="anime_synopsis")
 	private String synopsis;
 	
 	@Enumerated(EnumType.STRING)
