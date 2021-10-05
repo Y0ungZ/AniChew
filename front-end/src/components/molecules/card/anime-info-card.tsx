@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
+import moment from 'moment';
 import { CssKeyObject } from '../../../types/css-basic-type';
 import { Ani } from '../../../stores/ani/model/ani';
 
@@ -25,6 +26,19 @@ const AnimeInfoCard = ({ info } : { info: Ani }) => (
       :
       {' '}
       {info.rate}
+    </p>
+    <p>
+      <strong>분량</strong>
+      :
+      {' '}
+      {info.duration}
+    </p>
+    <p>
+      <strong>방영</strong>
+      :
+      <br />
+      {moment(info.airedStart).format('YYYY-MM-DD')}
+      {info.airedEnd && ` ~ ${moment(info.airedEnd).format('YYYY-MM-DD')}` }
     </p>
   </Card>
 );
