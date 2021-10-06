@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { toJS } from 'mobx';
-import { ResultAni } from '../../stores/search/model/search';
-import { FullLoading, SearchAniItem } from '../../components';
+import { ResultAni } from 'stores/search/model/search';
+import { FullLoading, SearchAniItem } from 'components';
 import NotFound from '../error/not-found';
 
 const SearchResultAni = ({ results }:{ results : ResultAni[] | undefined }) => {

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import kakaoLogo from 'assets/img/kakao-logo.jpg';
+import { CssKeyObject } from 'types/css-basic-type';
 
 const styles: CssKeyObject = {
   btn: {
@@ -28,7 +29,7 @@ const KakaoLoginBtn = () => {
       style={styles.btn}
     >
       <img
-        src="/assets/kakao-logo.jpg"
+        src={kakaoLogo}
         alt="kakao-logo"
         width="27px"
         height="27px"

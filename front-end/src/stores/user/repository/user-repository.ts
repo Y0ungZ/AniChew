@@ -1,4 +1,4 @@
-import { mainAxios } from '../../../libs/axios';
+import { mainAxios } from 'libs/axios';
 import User from '../model/user';
 
 class UserRepository {

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
 import { Menu } from 'antd';
+import { useSearch } from 'hooks';
+import { CssKeyObject } from 'types/css-basic-type';
+import { msg } from 'util/message';
 import SearchResultAni from './search-result-ani';
 import SearchResultChara from './search-result-chara';
 import SearchResultUser from './search-result-user';
-import { useSearch } from '../../hooks';
-import { CssKeyObject } from '../../types/css-basic-type';
-import { msg } from '../../util/message';
 
 const styles: CssKeyObject = {
   container: {

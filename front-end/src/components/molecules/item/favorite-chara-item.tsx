@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { FavoriteCharaType } from '../../../stores/mypage/model/mypage';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { FavoriteCharaType } from 'stores/mypage/model/mypage';
+import { CssKeyObject } from 'types/css-basic-type';
 
 type MyFavoriteCharaProps = {
     title: string;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Typography } from 'antd';
 import Slider, { Settings } from 'react-slick';
+import { NextArrow, PrevArrow } from 'components';
+import { AnimeList } from 'types/anime-list-type';
+import { CssKeyObject } from 'types/css-basic-type';
 import ContentSliderItem from './content-slider-item';
-import { AnimeList } from '../../../../types/anime-list-type';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import '../../../../assets/css/color.css';
-import { NextArrow, PrevArrow } from '../../../../components';
+import 'assets/css/color.css';
 
 const { Title } = Typography;
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card, List } from 'antd';
 import { observer } from 'mobx-react';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { useAni } from '../../../hooks';
+import { CssKeyObject } from 'types/css-basic-type';
+import { useAni } from 'hooks';
 
 const styles: CssKeyObject = {
   card: {

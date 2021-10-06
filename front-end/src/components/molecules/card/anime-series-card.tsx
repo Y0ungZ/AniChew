@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card, List } from 'antd';
 import { Link } from 'react-router-dom';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { RelatedAni } from '../../../stores/ani/model/ani';
+import { CssKeyObject } from 'types/css-basic-type';
+import { RelatedAni } from 'stores/ani/model/ani';
 
 const styles: CssKeyObject = {
   card: {

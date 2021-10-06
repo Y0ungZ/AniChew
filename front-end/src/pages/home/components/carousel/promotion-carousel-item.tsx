@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'antd';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import { Ani, AniGenreDict } from '../../../../stores/ani/model/ani';
-import '../../../../assets/css/color.css';
+import { CssKeyObject } from 'types/css-basic-type';
+import 'assets/css/color.css';
+import { Ani, AniGenreDict } from 'stores/ani/model/ani';
 
 const styles: CssKeyObject = {
   title: {
@@ -27,7 +27,7 @@ const styles: CssKeyObject = {
   },
 };
 
-const PromotionCarouselItem = ({ data }: { data:Ani }) => {
+const PromotionCarouselItem = ({ data }: { data: Ani }) => {
   const history = useHistory();
 
   const goToAnimeDetail = () => {

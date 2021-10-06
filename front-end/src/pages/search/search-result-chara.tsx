@@ -1,9 +1,9 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { toJS } from 'mobx';
-import { ResultChara } from '../../stores/search/model/search';
+import { ResultChara } from 'stores/search/model/search';
+import { FullLoading, SearchCharaItem } from 'components';
+import { CssKeyObject } from 'types/css-basic-type';
 import NotFound from '../error/not-found';
-import { FullLoading, SearchCharaItem } from '../../components';
-import { CssKeyObject } from '../../types/css-basic-type';
 
 const styles: CssKeyObject = {
   container: {

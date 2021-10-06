@@ -1,4 +1,4 @@
-import { Score } from '../../ani/model/ani';
+import { Score } from 'stores/ani/model/ani';
 
 type Anime = {
   id: string;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { toJS } from 'mobx';
 import { Carousel } from 'antd';
+import { CssKeyObject } from 'types/css-basic-type';
+import { useAni } from 'hooks';
+import { Ani } from 'stores/ani/model/ani';
 import PromotionCarouselItem from './promotion-carousel-item';
-import { useAni } from '../../../../hooks';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import '../../../../assets/css/color.css';
-import { Ani } from '../../../../stores/ani/model/ani';
+import 'assets/css/color.css';
 
 const styles: CssKeyObject = {
   carousel: {

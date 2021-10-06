@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography, Divider, Grid } from 'antd';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { Rating, ThumbnailCard } from '../..';
-import { Store } from '../../../types/common';
-import { Ani, AniGenreDict, AniRateDict, AniStatusDict } from '../../../stores/ani/model/ani';
+import { CssKeyObject } from 'types/css-basic-type';
+import { Rating, ThumbnailCard } from 'components';
+import { Store } from 'types/common';
+import { Ani, AniGenreDict, AniRateDict, AniStatusDict } from 'stores/ani/model/ani';
 
 const { Title, Text } = Typography;
 const { useBreakpoint } = Grid;

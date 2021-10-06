@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Card } from 'antd';
-import { TextLikeBtn } from '../..';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { Store } from '../../../types/common';
-import { isAnimation, isCharacter } from '../../../util/type-check';
+import { TextLikeBtn } from 'components';
+import { CssKeyObject } from 'types/css-basic-type';
+import { Store } from 'types/common';
+import { isAnimation, isCharacter } from 'util/type-check';
 
 const styles: CssKeyObject = {
   card: { width: 240, textAlign: 'center', borderRadius: '1em' },

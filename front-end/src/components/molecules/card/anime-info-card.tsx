@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card } from 'antd';
 import moment from 'moment';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { Ani } from '../../../stores/ani/model/ani';
+import { CssKeyObject } from 'types/css-basic-type';
+import { Ani } from 'stores/ani/model/ani';
 
 const styles: CssKeyObject = {
   card: {

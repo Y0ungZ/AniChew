@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Col, Row, Grid } from 'antd';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { CssKeyObject } from 'types/css-basic-type';
 
 const { useBreakpoint } = Grid;
 

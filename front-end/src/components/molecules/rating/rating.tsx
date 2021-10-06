@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Rate } from 'antd';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { useAuth, useReview } from '../../../hooks';
-import { msg } from '../../../util/message';
-import { REQUIRE_LOGIN } from '../../../common/string-template/string-template';
-import { Info, Store } from '../../../types/common';
+import { CssKeyObject } from 'types/css-basic-type';
+import { useAuth, useReview } from 'hooks';
+import { msg } from 'util/message';
+import { REQUIRE_LOGIN } from 'common/string-template/string-template';
+import { Info, Store } from 'types/common';
 
 const styles: CssKeyObject = {
   resetBtn: {

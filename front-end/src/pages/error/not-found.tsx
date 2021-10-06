@@ -1,6 +1,6 @@
 import React from 'react';
-import { CssKeyObject } from '../../types/css-basic-type';
-import { NotFoundType } from '../../types/not-found-type';
+import { CssKeyObject } from 'types/css-basic-type';
+import { NotFoundType } from 'types/not-found-type';
 
 const styles: CssKeyObject = {
   container: {

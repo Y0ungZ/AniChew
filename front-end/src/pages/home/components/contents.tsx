@@ -1,6 +1,6 @@
 import React from 'react';
+import { CssKeyObject } from 'types/css-basic-type';
 import ContentSlider from './slider/content-slider';
-import { CssKeyObject } from '../../../types/css-basic-type';
 
 const datas = [
   {

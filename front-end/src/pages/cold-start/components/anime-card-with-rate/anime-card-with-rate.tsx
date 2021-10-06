@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Card, Rate } from 'antd';
-import { CssKeyObject } from '../../../../types/css-basic-type';
-import '../../../../assets/css/color.css';
-import { useAni } from '../../../../hooks';
-import { msg } from '../../../../util/message';
+import { CssKeyObject } from 'types/css-basic-type';
+import 'assets/css/color.css';
+import { useAni } from 'hooks';
+import { msg } from 'util/message';
 
 const styles: CssKeyObject = {
   card: {

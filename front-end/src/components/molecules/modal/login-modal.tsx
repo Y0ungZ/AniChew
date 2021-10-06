@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-
 import { Typography, Modal } from 'antd';
-import KakaoLoginBtn from '../../atoms/btn/kakao-login-btn';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { KakaoLoginBtn } from 'components';
+import { CssKeyObject } from 'types/css-basic-type';
 
 const { Title, Paragraph } = Typography;
 

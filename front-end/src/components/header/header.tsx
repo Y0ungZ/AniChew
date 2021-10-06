@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Drawer, Layout, Grid } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { CssKeyObject } from 'types/css-basic-type';
 import LeftMenu from './menus/left-menu';
 import RightMenu from './menus/right-menu';
-import { CssKeyObject } from '../../types/css-basic-type';
-import '../../assets/css/color.css';
 import SearchHeader from './search-header';
+import 'assets/css/color.css';
 
 const { useBreakpoint } = Grid;
 

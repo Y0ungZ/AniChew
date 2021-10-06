@@ -2,11 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Button } from 'antd';
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { useAuth } from '../../../hooks';
-import { msg } from '../../../util/message';
-import { REQUIRE_LOGIN } from '../../../common/string-template/string-template';
-import { Store } from '../../../types/common';
+import { CssKeyObject } from 'types/css-basic-type';
+import { useAuth } from 'hooks';
+import { msg } from 'util/message';
+import { REQUIRE_LOGIN } from 'common/string-template/string-template';
+import { Store } from 'types/common';
 
 const styles: CssKeyObject = {
   card: { width: 240, textAlign: 'center', borderRadius: '1em' },
@@ -17,7 +17,6 @@ const styles: CssKeyObject = {
 
 const TextLikeBtn = observer(({ store }: {store: Store}) => {
   const auth = useAuth();
-  console.log(store);
   const handleLike = () => {
     if (!auth.isLoggedIn) {
       msg('Error', REQUIRE_LOGIN);

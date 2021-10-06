@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Input } from 'antd';
-import { CssKeyObject } from '../../types/css-basic-type';
-import '../../assets/css/color.css';
-import { SEARCH_INPUT } from '../../common/string-template/string-template';
+import { CssKeyObject } from 'types/css-basic-type';
+import { SEARCH_INPUT } from 'common/string-template/string-template';
+import 'assets/css/color.css';
 
 const { Search } = Input;
 

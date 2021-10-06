@@ -1,7 +1,7 @@
-import { Button } from 'antd';
 import React from 'react';
+import { Button } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { CssKeyObject } from 'types/css-basic-type';
 
 const styles: CssKeyObject = {
   btn: {

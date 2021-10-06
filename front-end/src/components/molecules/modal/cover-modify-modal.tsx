@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { observer } from 'mobx-react';
 import Compressor from 'compressorjs';
 import { Avatar, Button, Image, Modal, Row } from 'antd';
-import { useUser } from '../../../hooks';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import User from '../../../stores/user/model/user';
-import { msg } from '../../../util/message';
+import { useUser } from 'hooks';
+import { CssKeyObject } from 'types/css-basic-type';
+import User from 'stores/user/model/user';
+import { msg } from 'util/message';
 
 type CoverModifyProps = {
     visible: boolean;
