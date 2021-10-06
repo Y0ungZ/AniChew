@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { FavoriteAnimeType } from 'stores/mypage/model/mypage';
 import { CssKeyObject } from 'types/css-basic-type';
@@ -24,22 +25,20 @@ const styles: CssKeyObject = {
     color: 'var(--main-color)',
     textAlign: 'left',
     marginLeft: '2em',
-    fontSize: '1.2em',
-  },
-  favoriteEmptyItem: {
-    height: '10em',
-    lineHeight: '10em',
+    fontSize: '1.5em',
   },
   img: {
-    width: '7em',
-    height: '9em',
+    width: '10em',
+    height: '13em',
+    borderRadius: '1em',
   },
   content: {
-    width: '10em',
+    width: '12em',
     cursor: 'pointer',
+    margin: '1em 1em',
   },
   name: {
-    width: '7em',
+    width: '10em',
     display: '-webkit-box',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -75,9 +74,7 @@ const FavoriteAnimeItem = ({ title, datas }: MyFavoriteAnimeProps) => {
           ))}
         </div>
       ) : (
-        <div style={styles.favoriteEmptyItem}>
-          아직 좋아하는 컨텐츠가 없습니다.
-        </div>
+        <List />
       )}
     </div>
   );
