@@ -19,7 +19,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
-    public final static long TOKEN_VALIDATION_SECOND = 1000L * 60 * 60;
+    public final static long TOKEN_VALIDATION_SECOND = 1000L * 60 * 15;
     public final static long REFRESH_TOKEN_VALIDATION_SECOND = 1000L * 60 * 60 * 24 * 14;
 
     final static public String ACCESS_TOKEN_NAME = "accessToken";

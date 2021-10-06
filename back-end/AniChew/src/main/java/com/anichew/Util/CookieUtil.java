@@ -1,19 +1,23 @@
 package com.anichew.Util;
 
+import java.util.Collection;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CookieUtil {
-	 public final static long USER_NULL = -1;	
+	 public final static long USER_NULL = -1;
+	 public final static int COOKIE_MAX_AGE = 60 * 180;	
 		
     public Cookie createCookie(String cookieName, String value){
         Cookie token = new Cookie(cookieName,value);
         token.setHttpOnly(true);
-        token.setMaxAge((int)JwtUtil.TOKEN_VALIDATION_SECOND/100);
+        token.setMaxAge(COOKIE_MAX_AGE);
         token.setPath("/");
         return token;
     }
@@ -32,15 +36,28 @@ public class CookieUtil {
     	Cookie cookie = getCookie(req,cookieName);    	
     	long userid = USER_NULL;
     	
+    	
+    	
     	if(cookie != null) {
     		String token = cookie.getValue();
     		userid = Long.parseLong(jwtUtil.getUserid((token)));    	
     	}
-    	
-    	
+    	   	
     	
     	return userid;
     }
+    
+    public void deleteCookie(HttpServletRequest req, HttpServletResponse res, String cookieName) {
+    	Cookie cookie = new Cookie(cookieName,null);
+    	cookie.setMaxAge(0);
+    	cookie.setPath("/");
+    	res.addCookie(cookie);
+    	Collection<String> headers = res.getHeaders(HttpHeaders.SET_COOKIE);
+		for (String header : headers) {
+			res.setHeader(HttpHeaders.SET_COOKIE, header + "; " + "SameSite=None; Secure");
+		}
+    }
+    
     
 
 }

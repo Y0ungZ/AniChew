@@ -90,6 +90,9 @@ public class UserServiceImpl implements UserService {
 
 		return true;
 	}
+	
+	
+	
 
 	public String generateToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletResponse, String userid) {
 
@@ -110,6 +113,23 @@ public class UserServiceImpl implements UserService {
 
 		return accessToken;
 	}
+	
+	
+	public boolean generateRefreshToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);		
+		final String refreshToken = jwtUtil.generateRefreshToken(Long.toString(userid));
+		
+		HttpSession session = httpServletReq.getSession();
+		session.setAttribute("refreshToken",refreshToken);
+		redisUtil.setData(session.getId(), refreshToken);
+		redisUtil.setData(Long.toString(userid), session.getId());
+		Collection<String> headers = httpServletRes.getHeaders(HttpHeaders.SET_COOKIE);
+		for (String header : headers) {
+			httpServletRes.setHeader(HttpHeaders.SET_COOKIE, header + "; " + "SameSite=None; Secure");
+		}
+		return true;
+	}
+	
 
 	public MyInfoResponse getMyInfo(HttpServletRequest httpServletReq) {
 		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
@@ -191,10 +211,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void logout(HttpServletRequest httpServletReq) {
+	public void logout(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		String userid = Long.toString(cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME));
 		String data = userid.concat("jwt");
+		
+		HttpSession session = httpServletReq.getSession();
+		session.invalidate();
+		
 		boolean deleted = redisUtil.deleteData(data);
+		cookieUtil.deleteCookie(httpServletReq, httpServletRes, jwtUtil.ACCESS_TOKEN_NAME);
+		
 	}
 
 	@Override
@@ -264,7 +290,6 @@ public class UserServiceImpl implements UserService {
 			file.mkdirs();
 		}		
 		
-		System.out.println(mpf);
 		
 		String originalFileExtension;
 		String contentType = mpf.getContentType();		
@@ -419,6 +444,8 @@ public class UserServiceImpl implements UserService {
 		
 		return true;
 	}
+
+
 	
 
 }

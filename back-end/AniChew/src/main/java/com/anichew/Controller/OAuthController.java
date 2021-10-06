@@ -52,16 +52,27 @@ public class OAuthController {
 	}
 	
 	@GetMapping(value="/logout")
-	public ResponseEntity<String> logout (HttpServletRequest httpServletReq) {
+	public ResponseEntity<String> logout (HttpServletRequest httpServletReq,HttpServletResponse httpServletRes) {
 		
-		if(!userService.checkToken(httpServletReq))
-			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+//		if(!userService.checkToken(httpServletReq))
+//			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
 		
-		userService.logout(httpServletReq);
+		userService.logout(httpServletReq, httpServletRes);
 		
 		return new ResponseEntity<String>("logout",HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/token")
+	public ResponseEntity<String> getRefreshToken (HttpServletRequest httpServletReq,HttpServletResponse httpServletRes) {
+		
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+		
+		
+		userService.generateRefreshToken(httpServletReq, httpServletRes);
+		
+		return new ResponseEntity<String>("logout",HttpStatus.OK);
+	}
 	
 	
 }
