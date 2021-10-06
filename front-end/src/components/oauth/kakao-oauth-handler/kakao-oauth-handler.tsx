@@ -19,10 +19,12 @@ const KakaoOauthHandler = () => {
       auth
         .login(code)
         .then((newUser) => {
+          console.log(newUser);
           if (newUser) {
             history.push('/cold-start');
           } else {
-            user.me().then(() => history.push(history.location.pathname));
+            console.log(history.location.pathname);
+            user.me().then(() => history.push('/'));
           }
         })
         .catch((error) => msg('Error', error));
