@@ -6,6 +6,8 @@ import { useUser } from 'hooks';
 import { CssKeyObject } from 'types/css-basic-type';
 import User from 'stores/user/model/user';
 import { msg } from 'util/message';
+import { config } from 'config/config';
+import { SUCCESS_PROFILE_COVER_DELETE } from 'common/string-template/string-template';
 
 type CoverModifyProps = {
   visible: boolean;
@@ -28,13 +30,16 @@ const styles: CssKeyObject = {
   },
   uploadBtn: {
     color: 'var(--main-color)',
-    marginRight: '1em',
+    marginTop: '1em',
   },
   fileInput: {
     display: 'none',
   },
   btnGroupMargin: {
     marginTop: '3em',
+  },
+  deleteBtn: {
+    marginRight: '1em',
   },
 };
 
@@ -94,6 +99,16 @@ const CoverModifyModal = observer(
       window.location.href = `/user/${user.user?.userId}`;
     };
 
+    const coverDelete = () => {
+      user.deleteCover().then((info) => {
+        setCover(info.cover);
+      }).catch((error) => msg('Error', error.message));
+
+      msg('Success', SUCCESS_PROFILE_COVER_DELETE);
+      setVisible(false);
+      window.location.href = `/user/${user.user?.userId}`;
+    };
+
     return (
       <Modal
         centered
@@ -111,22 +126,26 @@ const CoverModifyModal = observer(
           src={
             cover && (
               <Image
-                src={`${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${user.user?.userId}/${cover}`}
+                src={`${config.img}/user_imgs/${user.user?.userId}/${cover}`}
               />
             )
           }
         >
           {user.user?.nickname[0]}
         </Avatar>
-        <Row style={styles.btnGroupMargin}>
+        <Row>
           <Button
             type="dashed"
+            size="large"
             onClick={uploadBtnClick}
             style={styles.uploadBtn}
           >
-            {' '}
-            업로드
-            {' '}
+            사진 변경
+          </Button>
+        </Row>
+        <Row style={styles.btnGroupMargin}>
+          <Button style={styles.deleteBtn} onClick={coverDelete}>
+            삭제
           </Button>
           <Button type="primary" onClick={coverModify}>
             수정
