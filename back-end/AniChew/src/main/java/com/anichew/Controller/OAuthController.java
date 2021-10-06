@@ -44,8 +44,8 @@ public class OAuthController {
 			response.setNewUser(true);
 		}
 		
-		String jwt = userService.generateToken(httpServletReq, httpServletRes, (String)userInfo.get("id"));
-		response.setToken(jwt);
+		userService.generateToken(httpServletReq, httpServletRes, (String)userInfo.get("id"));
+		
 		
 		
 		return new ResponseEntity<LoginResponse>(response,HttpStatus.OK);

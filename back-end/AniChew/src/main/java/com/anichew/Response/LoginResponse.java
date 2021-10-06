@@ -7,5 +7,4 @@ import lombok.Setter;
 @Getter
 public class LoginResponse {
 	private boolean isNewUser;
-	private String token;
 }
