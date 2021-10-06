@@ -10,6 +10,7 @@ import com.anichew.Entity.Series;
 
 public interface SeriesRepository extends JpaRepository<Series,Long> {
 	
+	Series findByName(String name);
 
 	
 }

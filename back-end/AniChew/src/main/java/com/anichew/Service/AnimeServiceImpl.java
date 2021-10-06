@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.anichew.Entity.AlarmSeries;
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeChara;
 import com.anichew.Entity.AnimeGenre;
@@ -19,7 +21,9 @@ import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Animescore;
 import com.anichew.Entity.Chara;
 import com.anichew.Entity.FavoriteAnime;
+import com.anichew.Entity.Series;
 import com.anichew.Entity.User;
+import com.anichew.Repository.AlarmSeriesRepository;
 import com.anichew.Repository.AnimeCharaRepository;
 import com.anichew.Repository.AnimeGenreRepository;
 import com.anichew.Repository.AnimePromotionRepository;
@@ -29,6 +33,7 @@ import com.anichew.Repository.AnimeReviewRepository;
 import com.anichew.Repository.AnimeSeriesRepository;
 import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.FavoriteAnimeRepository;
+import com.anichew.Repository.SeriesRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
@@ -38,6 +43,7 @@ import com.anichew.Response.GenreResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
 import com.anichew.Response.SeriesResponse;
+import com.anichew.Util.CookieUtil;
 import com.anichew.Util.JwtUtil;
 
 @Service
@@ -77,7 +83,16 @@ public class AnimeServiceImpl implements AnimeService {
 	private AnimePromotionRepository animePromotionRepo;
 	
 	@Autowired
+	private SeriesRepository seriesRepo;
+	
+	@Autowired
+	private AlarmSeriesRepository alarmSeriesRepo;	
+	
+	@Autowired
 	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private CookieUtil cookieUtil;
 	
 	@Override
 	public ScoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
@@ -566,6 +581,32 @@ public class AnimeServiceImpl implements AnimeService {
 			response.add(animeDetail(httpServletReq,promotion.getAnimeId()));
 		}
 		
+		
+		return response;
+	}
+	
+	
+	public SeriesResponse setAlarm (HttpServletRequest httpServletReq, long animeid) {
+		
+		
+		Anime anime = animeRepo.findById(animeid);
+		AnimeSeries animeSeries = animeSeriesRepo.findByAnime(anime);
+		Series series = animeSeries.getSeries();
+		
+		final Cookie jwtToken = cookieUtil.getCookie(httpServletReq, JwtUtil.ACCESS_TOKEN_NAME);
+		long userid = Long.parseLong(jwtUtil.getUserid(jwtToken.getValue()));
+		
+		User user = userRepo.findById(userid);
+		
+		if(alarmSeriesRepo.findByUserAndSeries(user, series)==null) {
+			AlarmSeries alarmSeries = AlarmSeries.builder().user(user).series(series).build();
+			
+			alarmSeriesRepo.save(alarmSeries);
+		}
+		
+		SeriesResponse response = new SeriesResponse();
+		response.setId(series.getId());
+		response.setName(series.getName());
 		
 		return response;
 	}

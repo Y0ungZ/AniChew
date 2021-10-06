@@ -11,13 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.AnimeChara;
-import com.anichew.Entity.AnimeReview;
 import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Chara;
 import com.anichew.Entity.CharaReview;
 import com.anichew.Entity.CharaReviewLove;
 import com.anichew.Entity.Charascore;
-import com.anichew.Entity.FavoriteAnime;
 import com.anichew.Entity.FavoriteChara;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimeCharaRepository;
@@ -30,11 +28,11 @@ import com.anichew.Repository.FavoriteCharaRepository;
 import com.anichew.Repository.SeriesRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Request.ReviewRequest;
-import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.AnimeResponse;
 import com.anichew.Response.CharaDetailResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
+import com.anichew.Util.CookieUtil;
 import com.anichew.Util.JwtUtil;
 
 @Service
@@ -71,19 +69,18 @@ public class CharaServiceImpl implements CharaService {
 	@Autowired
 	private JwtUtil jwtUtil;
 	
+	@Autowired
+	private CookieUtil cookieUtil;
+	
 	
 	public CharaDetailResponse charaDetail(HttpServletRequest httpServletReq, long charaid) {		
 		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		boolean isFavorite = false;
-		String accessor = null;
-		if (requestTokenHeader != null) {
-			accessor = jwtUtil.getUserid(requestTokenHeader);
-		}		
 		
-		User user = null;
-		if(accessor != null) {
-			user = userRepo.findById(Long.parseLong(accessor));
-		}
+		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		
+		User user = userRepo.findById(accessor);
+		
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -170,10 +167,11 @@ public class CharaServiceImpl implements CharaService {
 	}
 		
 	public boolean setFavorite(HttpServletRequest httpServletReq, long charaid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		boolean isFavorite = false;		
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));
+		
+		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		Chara chara = charaRepo.findById(charaid);
 		
 		if(favoriteCharaRepo.existsByCharaAndUser(chara, user))		
@@ -192,10 +190,12 @@ public class CharaServiceImpl implements CharaService {
 	}
 	
 	public boolean deleteFavorite(HttpServletRequest httpServletReq, long charaid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		
 		boolean isFavorite = false;		
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));
+		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		
+		User user = userRepo.findById(userid);
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -212,9 +212,8 @@ public class CharaServiceImpl implements CharaService {
 	
 	@Override
 	public boolean exsitsCharascore(HttpServletRequest httpServletReq, long charaid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -224,9 +223,8 @@ public class CharaServiceImpl implements CharaService {
 	
 	
 	public ScoreResponse setScore(HttpServletRequest httpServletReq, long charaid, float score) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -253,15 +251,14 @@ public class CharaServiceImpl implements CharaService {
 		response.setId(charaid);
 		response.setScore(score);
 		response.setType("CHARA");
-		response.setUserId(Long.parseLong(userid));
+		response.setUserId(userid);
 		
 		return response;
 	}
 	
 	public boolean deleteScore(HttpServletRequest httpServletReq, long charaid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -282,9 +279,8 @@ public class CharaServiceImpl implements CharaService {
 	
 	public boolean existsReview(HttpServletRequest httpServletReq, long charaid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));			
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		Chara chara = charaRepo.findById(charaid);
 		
 		return charaReviewRepo.existsByUserAndChara(user, chara);
@@ -299,9 +295,8 @@ public class CharaServiceImpl implements CharaService {
 	
 	public ReviewResponse getMyReview(HttpServletRequest httpServletReq, long charaid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		Chara chara = charaRepo.findById(charaid);
 		
 		CharaReview review = charaReviewRepo.findByUserAndChara(user, chara);
@@ -323,9 +318,8 @@ public class CharaServiceImpl implements CharaService {
 		ReviewResponse response = null;
 		
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -357,10 +351,8 @@ public class CharaServiceImpl implements CharaService {
 		
 		CharaReview review = null;
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		
-		User user = userRepo.findById(Long.parseLong(userid));			
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		Chara chara = charaRepo.findById(charaid);
 		
 		if(!charaReviewRepo.existsByUserAndChara(user,chara)) 
@@ -406,10 +398,8 @@ public class CharaServiceImpl implements CharaService {
 		
 		CharaReview review = null;
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		
-		User user = userRepo.findById(Long.parseLong(userid));			
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);		
 		Chara chara = charaRepo.findById(charaid);
 		
 		
@@ -426,9 +416,8 @@ public class CharaServiceImpl implements CharaService {
 	}
 	
 	public boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		CharaReview review = charaReviewRepo.findById(reviewid);
 		
 		
@@ -438,9 +427,8 @@ public class CharaServiceImpl implements CharaService {
 	}
 	
 	public void reviewLove(HttpServletRequest httpServletReq, long reviewid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		CharaReview review = charaReviewRepo.findById(reviewid);
 		
 		CharaReviewLove reviewLove = CharaReviewLove.builder().user(user).review(review).build();
@@ -452,9 +440,8 @@ public class CharaServiceImpl implements CharaService {
 	
 
 	public boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		CharaReview review = charaReviewRepo.findById(reviewid);		
 		
 		charaReviewLoveRepo.deleteByUserAndReview(user,review);
@@ -466,23 +453,13 @@ public class CharaServiceImpl implements CharaService {
 	public List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long charaid) {
 		
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		boolean isFavorite = false;
-		String accessor = null;
-		if (requestTokenHeader != null) {
-			accessor = jwtUtil.getUserid(requestTokenHeader);
-		}		
-	
 		
+		boolean isFavorite = false;		
 
 		Chara chara = charaRepo.findById(charaid);		
 		
-		long accessor_id = -1;
-		User user = null;
-		if(accessor!=null) {
-			accessor_id = Long.parseLong(accessor);
-			 user = userRepo.findById(accessor_id);
-		}
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 				
 		
 		List<CharaReview> reviews = charaReviewRepo.findAllByChara(chara);
@@ -491,7 +468,7 @@ public class CharaServiceImpl implements CharaService {
 		for(CharaReview review : reviews) {
 			ReviewResponse reviewRes = new ReviewResponse(review);
 			
-			if(review.getUser().getId() == accessor_id)
+			if(review.getUser().getId() == userid)
 				reviewRes.setMine(true);
 			
 			

@@ -37,7 +37,7 @@ public class ExceptionHanlderFilter extends OncePerRequestFilter {
 
 		} catch (RuntimeException ex) {
 			log.error("runtime exception exception handler filter");			
-			setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, response, "runtime exception occurred");
+			setErrorResponse(HttpStatus.FORBIDDEN, response, "runtime exception occurred");
 		}
 	}
 
