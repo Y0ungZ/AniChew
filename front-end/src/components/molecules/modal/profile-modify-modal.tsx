@@ -19,6 +19,7 @@ import InputValidator from 'util/input-validator';
 import User from 'stores/user/model/user';
 import { msg } from 'util/message';
 import { config } from 'config/config';
+import { SUCCESS_PROFILE_AVATAR_DELETE } from 'common/string-template/string-template';
 
 const { Option } = Select;
 
@@ -46,10 +47,14 @@ const styles: CssKeyObject = {
   },
   uploadBtn: {
     marginTop: '1em',
+    marginLeft: '1em',
     color: 'var(--main-color)',
   },
   fileInput: {
     display: 'none',
+  },
+  inputWidth: {
+    width: '15em',
   },
 };
 
@@ -93,6 +98,16 @@ const ProfileModifyModal = observer(
 
     const uploadBtnClick = () => {
       fileRef.current.click();
+    };
+
+    const deleteBtnClick = () => {
+      user.deleteAvatar().then((info) => {
+        setAvatar(info.avatar);
+      }).catch((error) => msg('Error', error.message));
+
+      msg('Success', SUCCESS_PROFILE_AVATAR_DELETE);
+      setVisible(false);
+      window.location.href = `/user/${user.user?.userId}`;
     };
 
     const profileModify = (values: any) => {
@@ -146,11 +161,16 @@ const ProfileModifyModal = observer(
           <Form.Item>
             <Button
               type="dashed"
+              onClick={deleteBtnClick}
+            >
+              사진 삭제
+            </Button>
+            <Button
+              type="dashed"
               onClick={uploadBtnClick}
               style={styles.uploadBtn}
             >
-              {' '}
-              프로필 사진 변경
+              사진 변경
             </Button>
             <input
               type="file"
@@ -161,7 +181,7 @@ const ProfileModifyModal = observer(
           </Form.Item>
 
           <Form.Item>
-            <Input defaultValue={user.user?.nickname} ref={inputRef} />
+            <Input style={styles.inputWidth} defaultValue={user.user?.nickname} ref={inputRef} />
           </Form.Item>
 
           <Form.Item
@@ -185,12 +205,12 @@ const ProfileModifyModal = observer(
               initialValue={moment(user.user?.birthday, dateFormat)}
               rules={[{ required: true, message: '생년월일을 선택해주세요!' }]}
             >
-              <DatePicker />
+              <DatePicker style={styles.inputWidth} />
             </Form.Item>
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" size="large">
               수정
             </Button>
           </Form.Item>
