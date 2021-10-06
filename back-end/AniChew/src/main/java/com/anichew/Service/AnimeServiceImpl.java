@@ -97,9 +97,8 @@ public class AnimeServiceImpl implements AnimeService {
 	@Override
 	public ScoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);		
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -117,7 +116,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		ScoreResponse response = new ScoreResponse();
 		response.setId(animeid);
-		response.setUserId(Long.parseLong(userid));
+		response.setUserId(userid);
 		response.setType("ANIME");
 		response.setScore(score);
 		
@@ -130,9 +129,8 @@ public class AnimeServiceImpl implements AnimeService {
 	@Override
 	public boolean deleteRate(HttpServletRequest httpServletReq, long animeid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);			
 		Anime anime = animeRepo.findById(animeid);
 		
 		animerateRepo.deleteByUserAndAnime(user, anime);
@@ -145,9 +143,8 @@ public class AnimeServiceImpl implements AnimeService {
 	@Override
 	public boolean existsAnimerate(HttpServletRequest httpServletReq, long animeid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);		
 		
 		Anime anime = animeRepo.findById(animeid);
 				
@@ -170,12 +167,9 @@ public class AnimeServiceImpl implements AnimeService {
 	@Override
 	public AnimeDetailResponse animeDetail(HttpServletRequest httpServletReq, long animeid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		
 		boolean isFavorite = false;
-		String accessor = null;
-		if (requestTokenHeader != null) {
-			accessor = jwtUtil.getUserid(requestTokenHeader);
-		}		
+	
 	
 		
 
@@ -183,12 +177,13 @@ public class AnimeServiceImpl implements AnimeService {
 		AnimeDetailResponse response = new AnimeDetailResponse(anime);
 		
 		
-		long accessor_id = -1;
-		User user = null;
-		if(accessor!=null) {
-			accessor_id = Long.parseLong(accessor);
-			 user = userRepo.findById(accessor_id);
-			
+		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
+		
+		
+		
+		if(user!=null) {			
 			isFavorite = favoriteAnimeRepo.existsByUserAndAnime(user, anime);
 		}
 		
@@ -264,9 +259,8 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	public boolean existsReview(HttpServletRequest httpServletReq, long animeid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));			
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);			
 		Anime anime = animeRepo.findById(animeid);
 		
 		return animeReviewRepo.existsByUserAndAnime(user, anime);
@@ -281,9 +275,8 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	public ReviewResponse getMyReview(HttpServletRequest httpServletReq, long animeid) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		Anime anime = animeRepo.findById(animeid);
 		
 		AnimeReview review = animeReviewRepo.findByUserAndAnime(user, anime);
@@ -304,9 +297,8 @@ public class AnimeServiceImpl implements AnimeService {
 		ReviewResponse response = null;
 		
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -339,10 +331,8 @@ public class AnimeServiceImpl implements AnimeService {
 		AnimeReview review = null;
 		
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		
-		User user = userRepo.findById(Long.parseLong(userid));			
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		Anime anime = animeRepo.findById(anime_id);
 		
 		if(!animeReviewRepo.existsByUserAndAnime(user, anime)) 
@@ -386,10 +376,8 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		AnimeReview review = null;
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		
-		User user = userRepo.findById(Long.parseLong(userid));			
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);				
 		Anime anime = animeRepo.findById(anime_id);
 		
 		if(!animeReviewRepo.existsByUserAndAnime(user, anime)) 
@@ -416,9 +404,8 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 	
 	public boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		AnimeReview review = animeReviewRepo.findById(reviewid);
 		
 		
@@ -428,9 +415,8 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 	
 	public void reviewLove(HttpServletRequest httpServletReq, long reviewid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		AnimeReview review = animeReviewRepo.findById(reviewid);
 		
 		AnimeReviewLove reviewLove = AnimeReviewLove.builder().user(user).review(review).build();
@@ -442,9 +428,8 @@ public class AnimeServiceImpl implements AnimeService {
 	
 
 	public boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		AnimeReview review = animeReviewRepo.findById(reviewid);		
 		
 		animeReviewLoveRepo.deleteByUserAndReview(user,review);
@@ -454,9 +439,8 @@ public class AnimeServiceImpl implements AnimeService {
 
 
 	public boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -473,9 +457,8 @@ public class AnimeServiceImpl implements AnimeService {
 	}
 	
 	public boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);		
-		User user = userRepo.findById(Long.parseLong(userid));	
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -496,26 +479,18 @@ public class AnimeServiceImpl implements AnimeService {
 	public List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long animeid) {
 		
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 		boolean isFavorite = false;
-		String accessor = null;
-		if (requestTokenHeader != null) {
-			accessor = jwtUtil.getUserid(requestTokenHeader);
-		}		
-	
+		
+		
 		
 
 		Anime anime = animeRepo.findById(animeid);
 		AnimeDetailResponse response = new AnimeDetailResponse(anime);
 		
 		
-		long accessor_id = -1;
-		User user = null;
-		if(accessor!=null) {
-			accessor_id = Long.parseLong(accessor);
-			 user = userRepo.findById(accessor_id);
-		}
-				
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
+						
 		
 		List<AnimeReview> reviews = animeReviewRepo.findAllByAnime(anime);
 		
@@ -523,7 +498,7 @@ public class AnimeServiceImpl implements AnimeService {
 		for(AnimeReview review : reviews) {
 			ReviewResponse reviewRes = new ReviewResponse(review);
 			
-			if(review.getUser().getId() == accessor_id)
+			if(review.getUser().getId() == userid)
 				reviewRes.setMine(true);
 			
 			
@@ -593,10 +568,8 @@ public class AnimeServiceImpl implements AnimeService {
 		AnimeSeries animeSeries = animeSeriesRepo.findByAnime(anime);
 		Series series = animeSeries.getSeries();
 		
-		final Cookie jwtToken = cookieUtil.getCookie(httpServletReq, JwtUtil.ACCESS_TOKEN_NAME);
-		long userid = Long.parseLong(jwtUtil.getUserid(jwtToken.getValue()));
-		
-		User user = userRepo.findById(userid);
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
 		
 		if(alarmSeriesRepo.findByUserAndSeries(user, series)==null) {
 			AlarmSeries alarmSeries = AlarmSeries.builder().user(user).series(series).build();
