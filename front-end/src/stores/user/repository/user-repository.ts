@@ -1,28 +1,29 @@
+import { AxiosInstance } from 'axios';
 import { mainAxios } from 'libs/axios';
 import User from '../model/user';
 
 class UserRepository {
-  constructor(private readonly url: string) {}
+  constructor(private readonly instance: AxiosInstance) {}
 
   me() {
-    return mainAxios.get(`${this.url}/user/me`);
+    return this.instance.get('/user/me');
   }
 
   update(user: User) {
-    return mainAxios.put(`${this.url}/user`, user);
+    return this.instance.put('/user', user);
   }
 
   updateAvatar(newAvatar: FormData) {
-    return mainAxios.post(`${this.url}/user/avatar`, newAvatar);
+    return this.instance.post('/user/avatar', newAvatar);
   }
 
   updateCover(newCover: FormData) {
-    return mainAxios.post(`${this.url}/user/cover`, newCover);
+    return this.instance.post('/user/cover', newCover);
   }
 
   coverModify(user: User) {
-    return mainAxios.put(`${this.url}/user/cover`, user);
+    return this.instance.put('/user/cover', user);
   }
 }
 
-export default new UserRepository(process.env.REACT_APP_API_DOMAIN_URL!);
+export default new UserRepository(mainAxios);

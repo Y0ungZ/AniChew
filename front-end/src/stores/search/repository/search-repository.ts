@@ -1,19 +1,20 @@
+import { AxiosInstance } from 'axios';
 import { mainAxios } from '../../../libs/axios';
 
 class SearchRepository {
-  constructor(private readonly url: string) {}
+  constructor(private readonly instance: AxiosInstance) {}
 
   searchAnime(keyword: string) {
-    return mainAxios.get(`/search/anime/${keyword}`);
+    return this.instance.get(`/search/anime/${keyword}`);
   }
 
   searchChara(keyword: string) {
-    return mainAxios.get(`/search/chara/${keyword}`);
+    return this.instance.get(`/search/chara/${keyword}`);
   }
 
   searchUser(keyword: string) {
-    return mainAxios.get(`/search/user/${keyword}`);
+    return this.instance.get(`/search/user/${keyword}`);
   }
 }
 
-export default new SearchRepository(process.env.REACT_APP_API_DOMAIN_URL!);
+export default new SearchRepository(mainAxios);

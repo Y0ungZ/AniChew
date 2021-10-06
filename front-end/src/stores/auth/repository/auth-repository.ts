@@ -1,15 +1,16 @@
+import { AxiosInstance } from 'axios';
 import { mainAxios } from 'libs/axios';
 
 class AuthRepository {
-  constructor(private readonly url: string) {}
+  constructor(private readonly instance: AxiosInstance) {}
 
   login(code: string) {
-    return mainAxios.get(`${this.url}/oauth/login?code=${code}`);
+    return this.instance.get(`/oauth/login?code=${code}`);
   }
 
   logout() {
-    return mainAxios.get(`${this.url}/oauth/logout`);
+    return this.instance.get('/oauth/logout');
   }
 }
 
-export default new AuthRepository(process.env.REACT_APP_API_DOMAIN_URL!);
+export default new AuthRepository(mainAxios);
