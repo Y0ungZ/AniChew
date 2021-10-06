@@ -1,11 +1,12 @@
+import { AxiosInstance } from 'axios';
 import { mainAxios } from 'libs/axios';
 
 class HomeRepository {
-  constructor(private readonly url: string) {}
+  constructor(private readonly instance: AxiosInstance) {}
 
   getPromotion() {
-    return mainAxios.get(`${this.url}/anime/promotion`);
+    return this.instance.get('/anime/promotion');
   }
 }
 
-export default new HomeRepository(process.env.REACT_APP_API_DOMAIN_URL!);
+export default new HomeRepository(mainAxios);

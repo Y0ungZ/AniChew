@@ -1,18 +1,19 @@
+import { AxiosInstance } from 'axios';
 import { UNKNOWN_REVIEW_TARGET } from 'common/string-template/string-template';
 import { mainAxios } from 'libs/axios';
 import { ReviewTarget } from 'stores/review/model/review';
 
 class ReviewRepository {
-  constructor(private readonly url: string) {}
+  constructor(private readonly instance: AxiosInstance) {}
 
   write(target: ReviewTarget, id: string, content: string) {
     if (target === 'Animation') {
-      return mainAxios.post(`${this.url}/anime/${id}/review`, {
+      return this.instance.post(`/anime/${id}/review`, {
         content,
       });
     }
     if (target === 'Character') {
-      return mainAxios.post(`${this.url}/chara/${id}/review`, {
+      return this.instance.post(`/chara/${id}/review`, {
         content,
       });
     }
@@ -21,12 +22,12 @@ class ReviewRepository {
 
   update(target: ReviewTarget, targetId: string, content: string) {
     if (target === 'Animation') {
-      return mainAxios.put(`${this.url}/anime/${targetId}/review`, {
+      return this.instance.put(`/anime/${targetId}/review`, {
         content,
       });
     }
     if (target === 'Character') {
-      return mainAxios.put(`${this.url}/chara/${targetId}/review`, {
+      return this.instance.put(`/chara/${targetId}/review`, {
         content,
       });
     }
@@ -35,30 +36,30 @@ class ReviewRepository {
 
   delete(target: ReviewTarget, targetId: string) {
     if (target === 'Animation') {
-      return mainAxios.delete(`${this.url}/anime/${targetId}/review`);
+      return this.instance.delete(`/anime/${targetId}/review`);
     }
     if (target === 'Character') {
-      return mainAxios.delete(`${this.url}/chara/${targetId}/review`);
+      return this.instance.delete(`/chara/${targetId}/review`);
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
   getAll(target: ReviewTarget, id: string) {
     if (target === 'Animation') {
-      return mainAxios.get(`${this.url}/anime/${id}/reviews`);
+      return this.instance.get(`/anime/${id}/reviews`);
     }
     if (target === 'Character') {
-      return mainAxios.get(`${this.url}/chara/${id}/reviews`);
+      return this.instance.get(`/chara/${id}/reviews`);
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
   getMy(target: ReviewTarget, id: string) {
     if (target === 'Animation') {
-      return mainAxios.get(`${this.url}/anime/${id}/review`);
+      return this.instance.get(`/anime/${id}/review`);
     }
     if (target === 'Character') {
-      return mainAxios.get(`${this.url}/chara/${id}/review`);
+      return this.instance.get(`/chara/${id}/review`);
     }
 
     throw new Error(UNKNOWN_REVIEW_TARGET);
@@ -66,27 +67,23 @@ class ReviewRepository {
 
   like(target: ReviewTarget, id: string, targetId: string) {
     if (target === 'Animation') {
-      return mainAxios.post(`${this.url}/anime/${targetId}/review/${id}/love`);
+      return this.instance.post(`/anime/${targetId}/review/${id}/love`);
     }
     if (target === 'Character') {
-      return mainAxios.post(`${this.url}/chara/${targetId}/review/${id}/love`);
+      return this.instance.post(`/chara/${targetId}/review/${id}/love`);
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 
   cancelLike(target: ReviewTarget, id: string, targetId: string) {
     if (target === 'Animation') {
-      return mainAxios.delete(
-        `${this.url}/anime/${targetId}/review/${id}/love`,
-      );
+      return this.instance.delete(`/anime/${targetId}/review/${id}/love`);
     }
     if (target === 'Character') {
-      return mainAxios.delete(
-        `${this.url}/chara/${targetId}/review/${id}/love`,
-      );
+      return this.instance.delete(`/chara/${targetId}/review/${id}/love`);
     }
     throw new Error(UNKNOWN_REVIEW_TARGET);
   }
 }
 
-export default new ReviewRepository(process.env.REACT_APP_API_DOMAIN_URL!);
+export default new ReviewRepository(mainAxios);
