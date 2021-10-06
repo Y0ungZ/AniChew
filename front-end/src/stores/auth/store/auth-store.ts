@@ -6,33 +6,41 @@ import {
 import { mainAxios } from 'config/axios';
 import authRepository from '../repository/auth-repository';
 
-export default class AuthStore {
+interface AuthStore {
+  isLoggedIn: boolean;
+  login: (code: string) => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+export default class AuthStoreImpl implements AuthStore {
   isLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  async login(authCode: string) {
-    const res = await authRepository.login(authCode);
-    if (res.status === 200) {
+  async login(code: string) {
+    try {
+      const res = await authRepository.login(code);
+      mainAxios.defaults.headers.common.Authorization = res.data.token;
+      localStorage.setItem('token', res.data.token);
       runInAction(() => {
         this.isLoggedIn = true;
       });
-      mainAxios.defaults.headers.common.Authorization = res.data.token;
-      localStorage.setItem('token', res.data.token);
-    } else {
+    } catch (error) {
+      console.log(error);
       throw new Error(FAIL_LOGIN);
     }
   }
 
   async logout() {
-    const res = await authRepository.logout();
-    if (res.status === 200) {
+    try {
+      await authRepository.logout();
       runInAction(() => {
         this.isLoggedIn = false;
       });
-    } else {
+    } catch (error) {
+      console.log(error);
       throw new Error(FAIL_LOGOUT);
     }
   }

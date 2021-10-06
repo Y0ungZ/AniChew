@@ -1,6 +1,8 @@
 export const INTERNAL_SERVER_ERROR =
   '서버 요청에 실패했습니다. 잠시 후에 다시 시도해주세요';
 export const FAIL_GET_USER_INFO = '회원 정보 조회에 실패하셨습니다.';
+export const FAIL_GET_ME = '나의 정보 조회에 실패하셨습니다.';
+export const FAIL_UPDATE_USER_INFO = '회원 정보 수정에 실패하셨습니다.';
 
 export const FAIL_LOGIN = '로그인에 실패하셨습니다.';
 export const FAIL_LOGOUT = '로그아웃에 실패하셨습니다.';

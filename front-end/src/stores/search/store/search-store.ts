@@ -5,10 +5,18 @@ import {
   FAIL_SEARCH_ANI,
 } from 'common/string-template/string-template';
 import { ResultUser, ResultChara, ResultAni } from '../model/search';
-
 import searchRepository from '../repository/search-repository';
 
-export default class SearchStore {
+interface SearchStore {
+  searchAniResult: ResultAni[] | undefined;
+  searchCharaResult: ResultChara[] | undefined;
+  searchUserResult: ResultUser[] | undefined;
+  getSearchAnimeResult: (keyword: string) => Promise<void>;
+  getSearchCharaResult: (keyword: string) => Promise<void>;
+  getSearchUserResult: (keyword: string) => Promise<void>;
+}
+
+export default class SearchStoreImpl implements SearchStore {
   searchAniResult: ResultAni[] | undefined = undefined;
 
   searchCharaResult: ResultChara[] | undefined = undefined;
