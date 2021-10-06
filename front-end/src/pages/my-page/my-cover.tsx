@@ -14,10 +14,8 @@ const styles: CssKeyObject = {
     position: 'absolute',
     top: '21em',
     right: '2em',
-    opacity: '0.7',
+    opacity: '0.8',
     color: 'white',
-    backgroundColor: 'transparent',
-    backdropFilter: 'blur(5px)',
   },
   headerMargin: {
     backgroundColor: 'white',
@@ -38,6 +36,7 @@ const MyCover = ({ info }: { info: MyPageType }) => {
       >
         {info.mine && (
           <Button
+            type="primary"
             style={styles.editHeaderBtn}
             icon={<EditFilled />}
             shape="round"
