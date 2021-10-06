@@ -57,7 +57,9 @@ const PromotionCarouselItem = ({ data }: { data: Ani }) => {
           {data.genres.map((genre) => (
             <span key={genre.id}>
               {AniGenreDict[genre.id]}
+              {' '}
               |
+              {' '}
             </span>
           ))}
           <span>{data.type}</span>
