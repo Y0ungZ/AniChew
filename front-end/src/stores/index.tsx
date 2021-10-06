@@ -5,6 +5,7 @@ import { ani, AniProvider } from './ani';
 import { review, ReviewProvider } from './review';
 import { mypage, MyPageProvider } from './mypage';
 import { search, SearchProvider } from './search';
+import { home, HomeProvider } from './home';
 
 const nest = (
   children: React.ReactNode,
@@ -30,6 +31,7 @@ const GlobalProvider = ({ children } : {children: React.ReactNode }) => (
       <ReviewProvider value={review} />,
       <MyPageProvider value={mypage} />,
       <SearchProvider value={search} />,
+      <HomeProvider value={home} />,
     ]}
   >
     {children}
