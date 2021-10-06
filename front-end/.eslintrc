@@ -53,7 +53,8 @@
     "no-alert":"off",
     "no-new":"off",
     "jsx-a11y/no-noninteractive-element-interactions":"off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "react/jsx-wrap-multilines": "off"
   },
   "settings": {
     "import/resolver": {
