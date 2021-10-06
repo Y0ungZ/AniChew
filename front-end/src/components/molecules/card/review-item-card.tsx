@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CssKeyObject } from 'types/css-basic-type';
 import { Review } from 'stores/review/model/review';
 import { ReviewLikeBtn } from 'components';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   card: {
@@ -29,10 +30,10 @@ const ReviewItemCard = ({ review }: { review: Review }) => (
             <Image
               src={
                 review.userAvatar &&
-                `${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${review.userId}/${review.userAvatar}`
+                `${config.img}/user_imgs/${review.userId}/${review.userAvatar}`
               }
             />
-          )}
+            )}
         >
           {review.nickname[0]}
         </Avatar>

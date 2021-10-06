@@ -4,6 +4,7 @@ import { CssKeyObject } from 'types/css-basic-type';
 import 'assets/css/color.css';
 import { useAni } from 'hooks';
 import { msg } from 'util/message';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   card: {
@@ -42,7 +43,13 @@ const AnimeCardWithRate = ({ id }: {id: string}) => {
       bordered={false}
       style={styles.card}
       bodyStyle={styles.cardBody}
-      cover={<img alt="example" src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${id}.jpg`} style={styles.thumbnail} />}
+      cover={
+        <img
+          alt="example"
+          src={`${config.img}/anime_imgs/${id}.jpg`}
+          style={styles.thumbnail}
+        />
+      }
     >
       <Rate onChange={checkRate} value={rate} />
     </Card>

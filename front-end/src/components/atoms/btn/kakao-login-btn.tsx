@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import kakaoLogo from 'assets/img/kakao-logo.jpg';
 import { CssKeyObject } from 'types/css-basic-type';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   btn: {
@@ -18,7 +19,7 @@ const styles: CssKeyObject = {
 
 const KakaoLoginBtn = () => {
   const handleKakaoLogin = () => {
-    window.location.href = `${process.env.REACT_APP_KAKAO_AUTH_URL}`;
+    window.location.href = `${config.kakaoAuth}`;
   };
 
   return (

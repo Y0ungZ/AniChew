@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ResultAni } from 'stores/search/model/search';
 import { CssKeyObject } from 'types/css-basic-type';
+import { config } from 'config/config';
 
 type ResultItemProps = {
-    data: ResultAni
+  data: ResultAni
 };
 
 const styles: CssKeyObject = {
@@ -61,7 +62,7 @@ const SearchAniItem = ({ data }: ResultItemProps) => {
       >
         <img
           style={styles.img}
-          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${data.image}.jpg`}
+          src={`${config.img}/anime_imgs/${data.image}.jpg`}
           alt="search result anime"
         />
         <span style={styles.name}>

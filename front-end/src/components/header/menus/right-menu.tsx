@@ -5,10 +5,11 @@ import { Avatar, Button, Dropdown, Menu } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useAuth, useUser } from 'hooks';
 import { LoginModal } from 'components';
+import { config } from 'config/config';
 
 type toggleSearchProps = {
-  toggleSearchHeader: ()=>void;
-}
+  toggleSearchHeader: () => void;
+};
 
 const RightMenu = observer((props: toggleSearchProps) => {
   const history = useHistory();
@@ -44,7 +45,7 @@ const RightMenu = observer((props: toggleSearchProps) => {
         <Dropdown overlay={menu} trigger={['click']}>
           <Avatar
             src={(user.user?.avatar && (
-              `${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${user.user.userId}/${user.user.avatar}`
+              `${config.img}/user_imgs/${user.user.userId}/${user.user.avatar}`
             ))}
           >
             {user.user?.nickname[0]}

@@ -3,9 +3,10 @@ import { Avatar } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { ResultUser } from 'stores/search/model/search';
 import { CssKeyObject } from 'types/css-basic-type';
+import { config } from 'config/config';
 
 type ResultItemProps = {
-    data: ResultUser
+  data: ResultUser
 };
 
 const styles: CssKeyObject = {
@@ -73,14 +74,13 @@ const SearchUserItem = ({ data }: ResultItemProps) => {
         size={100}
         style={styles.avatar}
         src={(
-            data.image && (
-              <img
-                src={`${process.env.REACT_APP_IMAGE_BASE_URL
-                }/user_imgs/${data.id}/${data.image}`}
-                alt="search result user"
-              />
-            )
-          )}
+          data.image && (
+            <img
+              src={`${config.img}/user_imgs/${data.id}/${data.image}`}
+              alt="search result user"
+            />
+          )
+        )}
       >
         {data.name[0]}
       </Avatar>

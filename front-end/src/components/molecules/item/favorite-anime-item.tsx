@@ -2,10 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { FavoriteAnimeType } from 'stores/mypage/model/mypage';
 import { CssKeyObject } from 'types/css-basic-type';
+import { config } from 'config/config';
 
 type MyFavoriteAnimeProps = {
-    title: string;
-    datas: FavoriteAnimeType[] | undefined;
+  title: string;
+  datas: FavoriteAnimeType[] | undefined;
 }
 
 const styles: CssKeyObject = {
@@ -64,7 +65,7 @@ const FavoriteAnimeItem = ({ title, datas }: MyFavoriteAnimeProps) => {
             <div key={data.id} style={styles.content}>
               <img
                 style={styles.img}
-                src={`${process.env.REACT_APP_IMAGE_BASE_URL}/anime_imgs/${data.id}.jpg`}
+                src={`${config.img}/anime_imgs/${data.id}.jpg`}
                 alt="favorite anime"
                 onClick={() => goToAniDetail(data.id)}
                 onKeyDown={() => goToAniDetail(data.id)}
