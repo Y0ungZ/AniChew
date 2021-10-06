@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid } from 'antd';
-import { AnimeList } from '../../../../types/anime-list-type';
-import { CssKeyObject } from '../../../../types/css-basic-type';
+import { AnimeList } from 'types/anime-list-type';
+import { CssKeyObject } from 'types/css-basic-type';
 
 const { useBreakpoint } = Grid;
 

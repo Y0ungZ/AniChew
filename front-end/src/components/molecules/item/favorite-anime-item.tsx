@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { FavoriteAnimeType } from '../../../stores/mypage/model/mypage';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { FavoriteAnimeType } from 'stores/mypage/model/mypage';
+import { CssKeyObject } from 'types/css-basic-type';
 
 type MyFavoriteAnimeProps = {
     title: string;

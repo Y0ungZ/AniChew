@@ -1,4 +1,4 @@
-import { mainAxios } from '../../../libs/axios';
+import { mainAxios } from 'libs/axios';
 
 class AniRepository {
   constructor(private readonly url: string) {}

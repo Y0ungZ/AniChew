@@ -2,8 +2,8 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
+import { useAuth } from 'hooks';
 import { RouteType } from './config';
-import { useAuth } from '../hooks';
 
 const RouteWithSubRoutes = observer((route: RouteType) => {
   const auth = useAuth();

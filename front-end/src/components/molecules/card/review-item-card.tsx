@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, Card, Image } from 'antd';
 import { Link } from 'react-router-dom';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { Review } from '../../../stores/review/model/review';
-import { ReviewLikeBtn } from '../..';
+import { CssKeyObject } from 'types/css-basic-type';
+import { Review } from 'stores/review/model/review';
+import { ReviewLikeBtn } from 'components';
 
 const styles: CssKeyObject = {
   card: {

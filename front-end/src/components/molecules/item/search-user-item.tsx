@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Avatar } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { ResultUser } from '../../../stores/search/model/search';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { ResultUser } from 'stores/search/model/search';
+import { CssKeyObject } from 'types/css-basic-type';
 
 type ResultItemProps = {
     data: ResultUser

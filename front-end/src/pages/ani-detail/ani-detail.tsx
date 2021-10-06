@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
-import { useAni, useAuth, useReview } from '../../hooks';
-import AniDetailTemplate from './template';
-import AniMetaSection from '../../components/organisms/ani-meta-section/ani-meta-section';
 import {
+  AniMetaSection,
   AnimeSeriesCard,
   AnimeInfoCard,
   SynopsisCard,
@@ -12,9 +10,11 @@ import {
   ReviewSliderCard,
   RateChartCard,
   ReviewFormCard,
-} from '../../components';
-import NotFound from '../error/not-found';
-import { msg } from '../../util/message';
+} from 'components';
+import { useAni, useAuth, useReview } from 'hooks';
+import NotFound from 'pages/error/not-found';
+import AniDetailTemplate from 'pages/ani-detail/template';
+import { msg } from 'util/message';
 
 const AniDetail = observer(() => {
   const param = useParams<{ id: string }>();

@@ -1,10 +1,10 @@
-import { mainAxios } from '../../../libs/axios';
+import { mainAxios } from 'libs/axios';
 
 class AuthRepository {
   constructor(private readonly url: string) {}
 
-  login(authCode: string) {
-    return mainAxios.get(`${this.url}/oauth/login?code=${authCode}`);
+  login(code: string) {
+    return mainAxios.get(`${this.url}/oauth/login?code=${code}`);
   }
 
   logout() {

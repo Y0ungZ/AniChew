@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { RouteType } from '../../routes/config';
-import Router from '../../routes/router';
+import { RouteType } from 'routes/config';
+import Router from 'routes/router';
 
 type ColdStartProps = {
     routes: RouteType[]

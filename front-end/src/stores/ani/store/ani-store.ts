@@ -6,7 +6,7 @@ import {
   FAIL_GET_PROMOTION_ANIME,
   FAIL_GIVE_ANI_SCORE,
   FAIL_LIKE_ANI,
-} from '../../../common/string-template/string-template';
+} from 'common/string-template/string-template';
 import { Ani, CharacterInfo } from '../model/ani';
 import aniRepository from '../repository/ani-repository';
 

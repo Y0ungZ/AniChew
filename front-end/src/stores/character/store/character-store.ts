@@ -3,7 +3,7 @@ import {
   FAIL_CANCEL_LIKE_ANI,
   FAIL_GET_CHARACTER_INFO,
   FAIL_LIKE_ANI,
-} from '../../../common/string-template/string-template';
+} from 'common/string-template/string-template';
 import { Character } from '../model/character';
 import characterRepository from '../repository/character-repository';
 

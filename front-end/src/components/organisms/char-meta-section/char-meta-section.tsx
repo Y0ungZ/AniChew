@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography, Grid } from 'antd';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { ReviewFormCard, ReviewSliderCard, ThumbnailCard } from '../..';
-import { Store } from '../../../types/common';
-import { Character } from '../../../stores/character/model/character';
+import { CssKeyObject } from 'types/css-basic-type';
+import { ReviewFormCard, ReviewSliderCard, ThumbnailCard } from 'components';
+import { Store } from 'types/common';
+import { Character } from 'stores/character/model/character';
 
 const { useBreakpoint } = Grid;
 

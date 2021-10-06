@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ResultAni } from '../../../stores/search/model/search';
-import { CssKeyObject } from '../../../types/css-basic-type';
+import { ResultAni } from 'stores/search/model/search';
+import { CssKeyObject } from 'types/css-basic-type';
 
 type ResultItemProps = {
     data: ResultAni

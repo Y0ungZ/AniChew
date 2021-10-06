@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
-import { useAuth, useCharacter, useReview } from '../../hooks';
-import CharMetaSection from '../../components/organisms/char-meta-section/char-meta-section';
-import { msg } from '../../util/message';
-import NotFound from '../error/not-found';
-import CharacterDetailTemplate from './template';
+import { CharMetaSection } from 'components';
+import { useAuth, useCharacter, useReview } from 'hooks';
+import NotFound from 'pages/error/not-found';
+import { msg } from 'util/message';
+import CharacterDetailTemplate from 'pages/character-detail/template';
 
 const CharacterDetail = observer(() => {
   const param = useParams<{ id: string }>();
@@ -17,7 +17,7 @@ const CharacterDetail = observer(() => {
     review.type = 'Character';
     char
       .getInfo(param.id)
-      .then(() => console.log(char.info))
+      .then()
       .catch((error) => msg('Error', error.message));
     window.scroll(0, 0);
   }, [char, param.id, review]);

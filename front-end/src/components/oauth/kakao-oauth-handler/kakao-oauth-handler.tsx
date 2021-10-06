@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth, useUser } from '../../../hooks';
-import { msg } from '../../../util/message';
-import FullLoading from '../../atoms/loading/full-loading';
+import { FAIL_LOGIN } from 'common/string-template/string-template';
+import { useAuth, useUser } from 'hooks';
+import { msg } from 'util/message';
+import { FullLoading } from 'components';
 
 const KakaoOauthHandler = () => {
   const user = useUser();
@@ -12,7 +13,7 @@ const KakaoOauthHandler = () => {
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code == null) {
-      msg('Error', '다시 시도해주세요.');
+      msg('Error', FAIL_LOGIN);
       history.push('/');
     } else {
       auth
@@ -21,10 +22,7 @@ const KakaoOauthHandler = () => {
           user.me();
           history.push('/');
         })
-        .catch((error) => {
-          console.log(error);
-          msg('Error', '다시 시도해주세요.');
-        });
+        .catch((error) => msg('Error', error));
     }
   }, [auth, user, history]);
   return <FullLoading />;

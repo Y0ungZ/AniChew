@@ -37,3 +37,4 @@ export { default as SearchUserItem } from './molecules/item/search-user-item';
 
 /* organisms */
 export { default as AniMetaSection } from './organisms/ani-meta-section/ani-meta-section';
+export { default as CharMetaSection } from './organisms/char-meta-section/char-meta-section';

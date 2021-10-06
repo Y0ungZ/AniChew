@@ -1,7 +1,7 @@
 import React from 'react';
-import { FavoriteAnimeItem, FavoriteCharaItem } from '../../components';
-import { CssKeyObject } from '../../types/css-basic-type';
-import MyPageType from '../../stores/mypage/model/mypage';
+import { FavoriteAnimeItem, FavoriteCharaItem } from 'components';
+import { CssKeyObject } from 'types/css-basic-type';
+import MyPageType from 'stores/mypage/model/mypage';
 
 const styles: CssKeyObject = {
   container: {

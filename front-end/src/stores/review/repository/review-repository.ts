@@ -1,6 +1,6 @@
-import { UNKNOWN_REVIEW_TARGET } from '../../../common/string-template/string-template';
-import { mainAxios } from '../../../libs/axios';
-import { ReviewTarget } from '../model/review';
+import { UNKNOWN_REVIEW_TARGET } from 'common/string-template/string-template';
+import { mainAxios } from 'libs/axios';
+import { ReviewTarget } from 'stores/review/model/review';
 
 class ReviewRepository {
   constructor(private readonly url: string) {}

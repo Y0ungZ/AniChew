@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Card } from 'antd';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { useReview } from '../../../hooks';
-import { ReviewForm, ReviewReadForm } from '../..';
+import { CssKeyObject } from 'types/css-basic-type';
+import { useReview } from 'hooks';
+import { ReviewForm, ReviewReadForm } from 'components';
 
 const styles: CssKeyObject = {
   card: {

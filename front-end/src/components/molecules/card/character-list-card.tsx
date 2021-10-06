@@ -2,8 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { Card, Col, Row, Avatar, List, Image } from 'antd';
-import { CssKeyObject } from '../../../types/css-basic-type';
-import { useAni } from '../../../hooks';
+import { CssKeyObject } from 'types/css-basic-type';
+import { useAni } from 'hooks';
 
 const styles: CssKeyObject = {
   card: {

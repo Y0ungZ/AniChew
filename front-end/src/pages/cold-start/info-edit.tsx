@@ -2,9 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Select, Button, DatePicker } from 'antd';
 import moment from 'moment';
-import { useUser } from '../../hooks';
-import User from '../../stores/user/model/user';
-import { CssKeyObject } from '../../types/css-basic-type';
+import { useUser } from 'hooks';
+import User from 'stores/user/model/user';
+import { CssKeyObject } from 'types/css-basic-type';
 
 const { Option } = Select;
 

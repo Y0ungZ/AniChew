@@ -7,7 +7,7 @@ import {
   FAIL_LIKE_REVIEW,
   FAIL_UPDATE_REVIEW,
   FAIL_WRITE_REVIEW,
-} from '../../../common/string-template/string-template';
+} from 'common/string-template/string-template';
 import { Review, ReviewFormMode, Reviews, ReviewTarget } from '../model/review';
 import reviewRepository from '../repository/review-repository';
 
