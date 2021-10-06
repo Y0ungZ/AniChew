@@ -34,4 +34,7 @@ export const FAIL_SEARCH_ANI = '애니메이션 검색에 실패하셨습니다.
 export const FAIL_SEARCH_CHARA = '캐릭터 검색에 실패하셨습니다.';
 export const FAIL_SEARCH_USER = '유저 검색에 실패하셨습니다.';
 
+export const FAIL_GET_PROMOTION_ANIME =
+  '프로모션 데이터를 받아오지 못했습니다.';
+
 export const UNKNOWN_REVIEW_TARGET = '알 수 없는 리뷰 타겟입니다.';
