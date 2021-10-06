@@ -26,5 +26,7 @@ public interface UserService {
 	String uploadPhoto(MultipartFile file, HttpServletRequest httpServletReq);
 	boolean setAvatar(String avatar, HttpServletRequest httpServletReq);
 	boolean setCover(HttpServletRequest httpServletReq, CoverRequest req);
+	boolean deleteCover(HttpServletRequest httpServletReq);
+	boolean deleteAvatar(HttpServletRequest httpServletReq);
 	
 }

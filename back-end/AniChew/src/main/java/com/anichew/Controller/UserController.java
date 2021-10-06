@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -112,6 +113,24 @@ public class UserController {
 		
 	}
 	
+	@DeleteMapping("/avatar")
+	public ResponseEntity<MyInfoResponse> deleteAvatar (HttpServletRequest httpServletReq){
+		
+		MyInfoResponse response = null;
+		
+		
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<MyInfoResponse>(response, HttpStatus.UNAUTHORIZED);
+		
+		
+		if(userService.deleteAvatar(httpServletReq))
+			response = userService.getMyInfo(httpServletReq);
+		
+	
+		return new ResponseEntity<MyInfoResponse>(response,HttpStatus.OK);
+	}
+	
+	
 	@PostMapping("/cover")
 	public ResponseEntity<String> coverUpload (HttpServletRequest httpServletReq, @RequestPart MultipartFile file){
 				
@@ -143,5 +162,26 @@ public class UserController {
 	
 		return new ResponseEntity<MyInfoResponse>(response,HttpStatus.OK);
 	}
+	
+	
+	@DeleteMapping("/cover")
+	public ResponseEntity<MyInfoResponse> deleteCover (HttpServletRequest httpServletReq){
+		
+		MyInfoResponse response = null;
+		
+		
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<MyInfoResponse>(response, HttpStatus.UNAUTHORIZED);
+		
+		
+		if(userService.deleteCover(httpServletReq))
+			response = userService.getMyInfo(httpServletReq);
+		
+	
+		return new ResponseEntity<MyInfoResponse>(response,HttpStatus.OK);
+	}
+	
+	
+	
 	
 }
