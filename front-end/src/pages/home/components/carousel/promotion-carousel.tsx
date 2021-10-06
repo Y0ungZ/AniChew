@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
-import { useAni } from 'hooks';
+import { useAni, useHome } from 'hooks';
 import { Ani } from 'stores/ani/model/ani';
 import PromotionCarouselItem from './promotion-carousel-item';
 import 'assets/css/color.css';
@@ -16,14 +16,14 @@ const styles: CssKeyObject = {
 };
 
 const PromotionCarousel = () => {
-  const ani = useAni();
+  const home = useHome();
   const [datas, setDatas] = useState<Ani[]|null>([]);
 
   useEffect(() => {
-    ani.getPromotion().then(() => {
-      setDatas(ani.promotionData);
+    home.getPromotion().then(() => {
+      setDatas(home.promotionData);
     });
-  }, [ani]);
+  }, [home]);
 
   return (
     <div>

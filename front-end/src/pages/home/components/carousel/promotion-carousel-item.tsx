@@ -35,28 +35,24 @@ const PromotionCarouselItem = ({ data }: { data: Ani }) => {
   };
 
   return (
-    <div style={{
-      background: `linear-gradient(
+    <div
+      style={{
+        background: `linear-gradient(
         rgba(20, 20, 20, 0.8) 0%,
         rgba(20, 20, 20, 0.2) 50%,
         rgba(20, 20, 20, 0.8) 100%
         ),
-        url(${process.env.REACT_APP_IMAGE_BASE_URL
-        }/promo_imgs/${data.id}.jpg) center/cover`,
-      backgroundSize: 'cover',
-      height: '30em',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
+        url(${process.env.REACT_APP_IMAGE_BASE_URL}/promo_imgs/${data.id}.jpg) center/cover`,
+        backgroundSize: 'cover',
+        height: '30em',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
       <div>
-        <span style={styles.title}>
-          {data.koreanName}
-        </span>
-        <p style={styles.synopsis}>
-          {data.synopsis}
-        </p>
+        <span style={styles.title}>{data.koreanName}</span>
+        <p style={styles.synopsis}>{data.synopsis}</p>
         <p style={styles.detail}>
           {data.genres.map((genre) => (
             <span key={genre.id}>
@@ -64,9 +60,7 @@ const PromotionCarouselItem = ({ data }: { data: Ani }) => {
               |
             </span>
           ))}
-          <span>
-            {data.type}
-          </span>
+          <span>{data.type}</span>
         </p>
         <Button type="primary" ghost onClick={goToAnimeDetail}>
           자세히보기
