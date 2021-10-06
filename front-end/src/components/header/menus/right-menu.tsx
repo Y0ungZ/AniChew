@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Avatar, Button, Dropdown, Menu } from 'antd';
-import { BellFilled, SearchOutlined } from '@ant-design/icons';
-import { useAuth, useUser } from '../../../hooks';
-import LoginModal from '../../molecules/modal/login-modal';
+import { SearchOutlined } from '@ant-design/icons';
+import { useAuth, useUser } from 'hooks';
+import { LoginModal } from 'components';
 
 type toggleSearchProps = {
   toggleSearchHeader: ()=>void;
@@ -40,7 +40,6 @@ const RightMenu = observer((props: toggleSearchProps) => {
   return (
     <>
       <Button icon={<SearchOutlined />} type="link" onClick={toggleSearchHeader} />
-      <Button icon={<BellFilled />} type="link" />
       {login.isLoggedIn ? (
         <Dropdown overlay={menu} trigger={['click']}>
           <Avatar
