@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { toJS } from 'mobx';
 import { Carousel } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
 import { useAni } from 'hooks';
@@ -21,8 +20,9 @@ const PromotionCarousel = () => {
   const [datas, setDatas] = useState<Ani[]|null>([]);
 
   useEffect(() => {
-    ani.getPromotion();
-    setDatas(toJS(ani.promotionData));
+    ani.getPromotion().then(() => {
+      setDatas(ani.promotionData);
+    });
   }, [ani]);
 
   return (
