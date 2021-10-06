@@ -6,12 +6,22 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useAuth, useUser } from 'hooks';
 import { LoginModal } from 'components';
 import { config } from 'config/config';
+import { CssKeyObject } from 'types/css-basic-type';
 
 type toggleSearchProps = {
   toggleSearchHeader: () => void;
 };
 
-const RightMenu = observer((props: toggleSearchProps) => {
+const styles: CssKeyObject = {
+  icon: {
+    marginRight: '1em',
+  },
+  pointer: {
+    cursor: 'pointer',
+  },
+};
+
+const HeaderMenu = observer((props: toggleSearchProps) => {
   const history = useHistory();
   const login = useAuth();
   const user = useUser();
@@ -41,6 +51,7 @@ const RightMenu = observer((props: toggleSearchProps) => {
   return (
     <>
       <Button
+        style={styles.icon}
         icon={<SearchOutlined />}
         type="link"
         onClick={toggleSearchHeader}
@@ -48,6 +59,7 @@ const RightMenu = observer((props: toggleSearchProps) => {
       {login.isLoggedIn ? (
         <Dropdown overlay={menu} trigger={['click']}>
           <Avatar
+            style={styles.pointer}
             src={
               user.user?.avatar &&
               `${config.img}/user_imgs/${user.user.userId}/${user.user.avatar}`
@@ -66,4 +78,4 @@ const RightMenu = observer((props: toggleSearchProps) => {
   );
 });
 
-export default RightMenu;
+export default HeaderMenu;
