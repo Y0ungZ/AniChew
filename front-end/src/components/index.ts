@@ -31,7 +31,9 @@ export { default as Rating } from './molecules/rating/rating';
 
 export { default as FavoriteAnimeItem } from './molecules/item/favorite-anime-item';
 export { default as FavoriteCharaItem } from './molecules/item/favorite-chara-item';
-export { default as FavoriteSeiyuItem } from './molecules/item/favorite-seiyu-item';
+export { default as SearchAniItem } from './molecules/item/search-ani-item';
+export { default as SearchCharaItem } from './molecules/item/search-chara-item';
+export { default as SearchUserItem } from './molecules/item/search-user-item';
 
 /* organisms */
 export { default as AniMetaSection } from './organisms/ani-meta-section/ani-meta-section';

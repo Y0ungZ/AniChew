@@ -30,4 +30,8 @@ export const FAIL_GET_CHARACTER_INFO = '캐릭터 조회에 실패하셨습니�
 export const FAIL_GET_ANI_CHARACTER_INFO =
   '애니메이션 등장인물 조회에 실패하셨습니다.';
 
+export const FAIL_SEARCH_ANI = '애니메이션 검색에 실패하셨습니다.';
+export const FAIL_SEARCH_CHARA = '캐릭터 검색에 실패하셨습니다.';
+export const FAIL_SEARCH_USER = '유저 검색에 실패하셨습니다.';
+
 export const UNKNOWN_REVIEW_TARGET = '알 수 없는 리뷰 타겟입니다.';

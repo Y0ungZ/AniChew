@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Input } from 'antd';
 import { CssKeyObject } from '../../types/css-basic-type';
 import '../../assets/css/color.css';
@@ -29,8 +30,10 @@ const styles: CssKeyObject = {
 };
 
 const SearchHeader = ({ open }: searchOpen) => {
-  const onSearch = (value: string) => {
-    console.log(value);
+  const history = useHistory();
+
+  const onSearch = (keyword: string) => {
+    history.push(`/search/${keyword}`);
   };
 
   return (

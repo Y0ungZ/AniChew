@@ -4,6 +4,7 @@ import { user, UserProvider } from './user';
 import { ani, AniProvider } from './ani';
 import { review, ReviewProvider } from './review';
 import { mypage, MyPageProvider } from './mypage';
+import { search, SearchProvider } from './search';
 
 const nest = (
   children: React.ReactNode,
@@ -28,6 +29,7 @@ const GlobalProvider = ({ children } : {children: React.ReactNode }) => (
       <AuthProvider value={auth} />,
       <ReviewProvider value={review} />,
       <MyPageProvider value={mypage} />,
+      <SearchProvider value={search} />,
     ]}
   >
     {children}
