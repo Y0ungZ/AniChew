@@ -14,13 +14,16 @@ const KakaoOauthHandler = () => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code == null) {
       msg('Error', FAIL_LOGIN);
-      history.push('/');
+      history.push(history.location.pathname);
     } else {
       auth
         .login(code)
-        .then(() => {
-          user.me();
-          history.push('/');
+        .then((newUser) => {
+          if (newUser) {
+            history.push('/cold-start');
+          } else {
+            user.me().then(() => history.push(history.location.pathname));
+          }
         })
         .catch((error) => msg('Error', error));
     }
