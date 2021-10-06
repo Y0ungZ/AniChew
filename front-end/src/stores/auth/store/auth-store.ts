@@ -21,6 +21,7 @@ export default class AuthStoreImpl implements AuthStore {
   async login(code: string) {
     try {
       const res = await authRepository.login(code);
+      await authRepository.refresh();
       localStorage.setItem('user', 'user');
       runInAction(() => {
         this.isLoggedIn = true;
