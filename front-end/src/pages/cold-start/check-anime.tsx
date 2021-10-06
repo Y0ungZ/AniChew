@@ -4,6 +4,7 @@ import { Button, Col, Row, Typography } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import { mainAxios } from 'config/axios';
 import { CssKeyObject } from 'types/css-basic-type';
+import { config } from 'config/config';
 import AnimeCardWithRate from './components/anime-card-with-rate/anime-card-with-rate';
 import 'assets/css/color.css';
 
@@ -55,7 +56,8 @@ const CheckAnime = () => {
   };
 
   useEffect(() => {
-    mainAxios.get(`${process.env.REACT_APP_API_DOMAIN_URL}/recommend/start`) //
+    mainAxios
+      .get(`${config.api}/recommend/start`) //
       .then((res) => {
         setRecommendAniList(res.data.slice(0, 20));
       });

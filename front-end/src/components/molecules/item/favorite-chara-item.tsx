@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { config } from 'config/config';
 import { FavoriteCharaType } from 'stores/mypage/model/mypage';
 import { CssKeyObject } from 'types/css-basic-type';
 
 type MyFavoriteCharaProps = {
-    title: string;
-    datas: FavoriteCharaType[] | undefined;
+  title: string;
+  datas: FavoriteCharaType[] | undefined;
 }
 
 const styles: CssKeyObject = {
@@ -62,7 +63,7 @@ const FavoriteCharaItem = ({ title, datas }: MyFavoriteCharaProps) => {
             <div key={data.id} style={styles.content}>
               <img
                 style={styles.img}
-                src={`${process.env.REACT_APP_IMAGE_BASE_URL}/chara_imgs/${data.id}.jpg`}
+                src={`${config.img}/chara_imgs/${data.id}.jpg`}
                 alt="favorite chara"
                 onClick={() => goToCharaDetail(data.id)}
                 onKeyDown={() => goToCharaDetail(data.id)}

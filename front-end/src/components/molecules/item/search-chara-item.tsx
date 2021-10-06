@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ResultChara } from 'stores/search/model/search';
 import { CssKeyObject } from 'types/css-basic-type';
+import { config } from 'config/config';
 
 type ResultItemProps = {
-    data: ResultChara
+  data: ResultChara
 };
 
 const styles: CssKeyObject = {
@@ -69,7 +70,7 @@ const SearchCharaItem = ({ data }: ResultItemProps) => {
     >
       <img
         style={styles.img}
-        src={`${process.env.REACT_APP_IMAGE_BASE_URL}/chara_imgs/${data.image}.jpg`}
+        src={`${config.img}/chara_imgs/${data.image}.jpg`}
         alt="search result chara"
       />
       <div style={styles.divider} />

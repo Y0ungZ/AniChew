@@ -8,12 +8,13 @@ import { CssKeyObject } from 'types/css-basic-type';
 import InputValidator from 'util/input-validator';
 import User from 'stores/user/model/user';
 import { msg } from 'util/message';
+import { config } from 'config/config';
 
 const { Option } = Select;
 
 type ProfileModifyProps = {
-    visible: boolean;
-    setVisible: (isShow: boolean) => void;
+  visible: boolean;
+  setVisible: (isShow: boolean) => void;
 }
 
 const styles: CssKeyObject = {
@@ -93,13 +94,13 @@ const ProfileModifyModal = observer(({ visible, setVisible }:ProfileModifyProps)
 
     user.update(
       new User(
-        user.user!.userId,
-        nickname,
-        user.user!.email,
-        avatar!,
-        user.user!.cover,
-        gender,
-        moment(birthday).format('YYYY-MM-DD'),
+          user.user!.userId,
+          nickname,
+          user.user!.email,
+          avatar!,
+          user.user!.cover,
+          gender,
+          moment(birthday).format('YYYY-MM-DD'),
       ),
     );
 
@@ -124,13 +125,13 @@ const ProfileModifyModal = observer(({ visible, setVisible }:ProfileModifyProps)
       >
         <Avatar
           size={120}
-          src={(
-            avatar && (
-            <Image src={`${process.env.REACT_APP_IMAGE_BASE_URL
-            }/user_imgs/${user.user!.userId}/${avatar}`}
-            />
-            )
-          )}
+          src={
+              avatar && (
+                <Image
+                  src={`${config.img}/user_imgs/${user.user!.userId}/${avatar}`}
+                />
+              )
+            }
         >
           {user.user?.nickname[0]}
         </Avatar>

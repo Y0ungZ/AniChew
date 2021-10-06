@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card, Col, Row, Avatar, List, Image } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
 import { useAni } from 'hooks';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   card: {
@@ -27,11 +28,9 @@ const CharacterInfo = ({ id, name }: { id: string; name: string }) => (
     <Avatar
       shape="square"
       size="large"
-      src={(
-        <Image
-          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/chara_imgs/${id}.jpg`}
-        />
-      )}
+      src={<Image
+        src={`${config.img}/chara_imgs/${id}.jpg`}
+      />}
     />
     <div style={styles.metaData}>
       <Link to={`/character/${id}`}>{name}</Link>
