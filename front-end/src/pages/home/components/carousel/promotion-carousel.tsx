@@ -3,6 +3,7 @@ import { Carousel } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
 import { useHome } from 'hooks';
 import { Ani } from 'stores/ani/model/ani';
+import { msg } from 'util/message';
 import PromotionCarouselItem from './promotion-carousel-item';
 import 'assets/css/color.css';
 
@@ -20,9 +21,12 @@ const PromotionCarousel = () => {
   const [datas, setDatas] = useState<Ani[] | null>([]);
 
   useEffect(() => {
-    home.getPromotion().then(() => {
-      setDatas(home.promotionData);
-    });
+    home
+      .getPromotion()
+      .then(() => {
+        setDatas(home.promotionData);
+      })
+      .catch((error) => msg('Error', error.message));
   }, [home]);
 
   return (
