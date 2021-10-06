@@ -38,7 +38,7 @@ const AnimeInfoCard = ({ info } : { info: Ani }) => (
       :
       <br />
       {moment(info.airedStart).format('YYYY-MM-DD')}
-      {info.airedEnd && ` ~ ${moment(info.airedEnd).format('YYYY-MM-DD')}` }
+      {info.airedEnd === new Date(0) && ` ~ ${moment(info.airedEnd).format('YYYY-MM-DD')}` }
     </p>
   </Card>
 );
