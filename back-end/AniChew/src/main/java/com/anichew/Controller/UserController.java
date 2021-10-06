@@ -33,7 +33,13 @@ public class UserController {
 	@GetMapping(value="/me")
 	public ResponseEntity<MyInfoResponse> myInfo (HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
-		MyInfoResponse myInfoRes = userService.getMyInfo(httpServletReq);		
+		MyInfoResponse myInfoRes = null;
+		
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<MyInfoResponse>(myInfoRes, HttpStatus.UNAUTHORIZED);
+		
+		
+		myInfoRes = userService.getMyInfo(httpServletReq);		
 		
 		return new ResponseEntity<MyInfoResponse>(myInfoRes,HttpStatus.OK);
 	}
@@ -65,7 +71,7 @@ public class UserController {
 		}		
 
 		
-		String jwt = userService.generateToken(httpServletRes, Long.toString(userid));
+		String jwt = userService.generateToken(httpServletReq, httpServletRes, Long.toString(userid));
 		
 		response.setToken(jwt);
 		

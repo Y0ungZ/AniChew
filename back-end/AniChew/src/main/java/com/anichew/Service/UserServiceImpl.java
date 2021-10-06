@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -56,7 +57,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private JwtUtil jwtUtil;
-
+		
+	
 	public boolean isExistUser(long userid) {
 		return userRepo.existsById(userid);
 	}
@@ -89,29 +91,29 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
-	public String generateToken(HttpServletResponse httpServletResponse, String userid) {
+	public String generateToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletResponse, String userid) {
 
 		final String accessToken = jwtUtil.generateToken(userid);
 		final String refreshToken = jwtUtil.generateRefreshToken(userid);
 		Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, accessToken);
+		Cookie refreshTokenCookie = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME,refreshToken);
 		redisUtil.setDataExpire(userid + "jwt", refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+		httpServletResponse.addCookie(refreshTokenCookie);
+		HttpSession session = httpServletReq.getSession();
+		session.setAttribute("key",refreshToken);		
 		httpServletResponse.addCookie(accessTokenCookie);
-
 		Collection<String> headers = httpServletResponse.getHeaders(HttpHeaders.SET_COOKIE);
 		for (String header : headers) {
 			httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, header + "; " + "SameSite=None; Secure");
 		}
 
-		System.out.println(accessToken);
 
 		return accessToken;
 	}
 
 	public MyInfoResponse getMyInfo(HttpServletRequest httpServletReq) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String accessor = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(accessor));
-		
+		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(accessor);	
 		
 		
 		
@@ -130,15 +132,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserPageResponse userPage(HttpServletRequest httpServletReq, long userid) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
 
 		User user = userRepo.findById(userid);
 		UserPageResponse response = new UserPageResponse();
-		String accessor = null;
-		if (requestTokenHeader != null) {
-			accessor = jwtUtil.getUserid(requestTokenHeader);
-		}
-		if (accessor != null && userid == Long.parseLong(accessor))
+		
+		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		
+		if (userid == accessor)
 			response.setMine(true);
 
 		response.setEmail(user.getEmail());
@@ -192,8 +192,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void logout(HttpServletRequest httpServletReq) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
+		String userid = Long.toString(cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME));
 		String data = userid.concat("jwt");
 		boolean deleted = redisUtil.deleteData(data);
 	}
@@ -201,12 +200,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public MyInfoResponse setUserInfo(HttpServletRequest httpServletReq, UserRequest req) {
 
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 
-		String userid = null;
-		userid = jwtUtil.getUserid(requestTokenHeader);
-
-		User user = userRepo.findById(Long.parseLong(userid));
+		User user = userRepo.findById(userid);
 
 		User fixedUser = User.builder()
 				.id(user.getId())
@@ -242,9 +238,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean checkToken(HttpServletRequest httpServletReq) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 
-		if (requestTokenHeader == null)
+		if (userid == cookieUtil.USER_NULL)
 			return false;
 
 		return true;
@@ -257,13 +253,9 @@ public class UserServiceImpl implements UserService {
 		UUID uid = UUID.randomUUID();
 		String absolutePath = new File("").getAbsolutePath() + File.separator;
 		
-		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-
-		String userid = null;
-		userid = jwtUtil.getUserid(requestTokenHeader);
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 				
-		User user = userRepo.findById(Long.parseLong(userid));
+		User user = userRepo.findById(userid);
 		
 		String path = "src" +  File.separator + "main" +  File.separator + "resources" +  File.separator + "anichew-image" + File.separator + "user_imgs" + File.separator + userid;
 		File file = new File(path);
@@ -318,9 +310,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean setAvatar(String avatar, HttpServletRequest httpServletReq) {
 		
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-		String userid = jwtUtil.getUserid(requestTokenHeader);
-		User user = userRepo.findById(Long.parseLong(userid));
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 		
 		
 		User fixedUser = User.builder()
@@ -343,12 +334,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean setCover(HttpServletRequest httpServletReq, CoverRequest req) {
-		final String requestTokenHeader = httpServletReq.getHeader("Authorization");
-
-		String userid = null;
-		userid = jwtUtil.getUserid(requestTokenHeader);
-
-		User user = userRepo.findById(Long.parseLong(userid));
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
 
 		User fixedUser = User.builder()
 				.id(user.getId())

@@ -32,7 +32,7 @@ public class OAuthController {
 	
 	@ApiOperation("로그인")
 	@GetMapping(value="/login")
-	public ResponseEntity<LoginResponse> login (@RequestParam("code") String code, HttpServletResponse httpServletRes) {
+	public ResponseEntity<LoginResponse> login (@RequestParam("code") String code, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
 		String access_token = kakao.getAccessToken(code);		
 		Map<String,Object> userInfo = kakao.getUserInfo(access_token);
@@ -44,7 +44,7 @@ public class OAuthController {
 			response.setNewUser(true);
 		}
 		
-		String jwt = userService.generateToken(httpServletRes, (String)userInfo.get("id"));
+		String jwt = userService.generateToken(httpServletReq, httpServletRes, (String)userInfo.get("id"));
 		response.setToken(jwt);
 		
 		
