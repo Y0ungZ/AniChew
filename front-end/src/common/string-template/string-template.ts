@@ -8,7 +8,12 @@ export const FAIL_LOGIN = '로그인에 실패하셨습니다.';
 export const FAIL_LOGOUT = '로그아웃에 실패하셨습니다.';
 
 export const FAIL_PROFILE_AVATAR_UPDATE = '프로필 사진 변경에 실패하셨습니다.';
+export const SUCCESS_PROFILE_AVATAR_DELETE = '프로필 사진이 삭제되었습니다.';
+export const FAIL_PROFILE_AVATAR_DELETE = '프로필 사진 삭제에 실패하셨습니다.';
+
 export const FAIL_PROFILE_COVER_UPDATE = '프로필 커버 변경에 실패하셨습니다.';
+export const SUCCESS_PROFILE_COVER_DELETE = '프로필 커버가 삭제되었습니다.';
+export const FAIL_PROFILE_COVER_DELETE = '프로필 커버 삭제에 실패하셨습니다.';
 
 export const FAIL_WRITE_REVIEW = '리뷰 작성에 실패하셨습니다.';
 export const FAIL_UPDATE_REVIEW = '리뷰 수정에 실패하셨습니다.';
