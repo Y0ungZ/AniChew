@@ -8,6 +8,7 @@ import MyPageType from '../../stores/mypage/model/mypage';
 const styles: CssKeyObject = {
   container: {
     height: '30em',
+    backgroundColor: 'var(--background-light)',
   },
   editHeaderBtn: {
     position: 'absolute',

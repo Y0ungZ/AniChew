@@ -34,6 +34,7 @@ const styles: CssKeyObject = {
   },
   content: {
     width: '7em',
+    cursor: 'pointer',
   },
   name: {
     width: '7em',

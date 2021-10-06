@@ -6,6 +6,13 @@ import MyCover from './my-cover';
 import MyProfile from './my-profile';
 import { useMyPage } from '../../hooks';
 import NotFound from '../error/not-found';
+import { CssKeyObject } from '../../types/css-basic-type';
+
+const styles: CssKeyObject = {
+  container: {
+    backgroundColor: 'white',
+  },
+};
 
 const MyPage = observer(() => {
   const param = useParams<{ id: string }>();
@@ -16,7 +23,7 @@ const MyPage = observer(() => {
   }, [param.id, myPage]);
 
   return (
-    <div>
+    <div style={styles.container}>
       {myPage.user ? (
         <>
           <MyCover info={myPage.user} />

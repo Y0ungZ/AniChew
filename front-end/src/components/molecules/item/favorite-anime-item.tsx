@@ -31,6 +31,7 @@ const styles: CssKeyObject = {
   },
   img: {
     width: '7em',
+    height: '9em',
   },
   content: {
     width: '10em',
