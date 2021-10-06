@@ -3,6 +3,7 @@ import {
   FAIL_CANCEL_LIKE_ANI,
   FAIL_DELETE_ANI_SCORE,
   FAIL_GET_ANI_CHARACTER_INFO,
+  FAIL_GET_PROMOTION_ANIME,
   FAIL_GIVE_ANI_SCORE,
   FAIL_LIKE_ANI,
 } from '../../../common/string-template/string-template';
@@ -28,6 +29,8 @@ export default class AniStoreImpl implements AniStore {
   characterInfo: CharacterInfo[] | null = null;
 
   favorite = false;
+
+  promotionData: Ani[] | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -151,6 +154,18 @@ export default class AniStoreImpl implements AniStore {
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_CANCEL_LIKE_ANI);
+    }
+  }
+
+  async getPromotion() {
+    try {
+      const res = await aniRepository.getPromotion();
+      runInAction(() => {
+        this.promotionData = res.data;
+      });
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_GET_PROMOTION_ANIME);
     }
   }
 
