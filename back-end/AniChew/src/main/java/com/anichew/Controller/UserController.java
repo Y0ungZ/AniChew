@@ -72,9 +72,9 @@ public class UserController {
 		}		
 
 		
-		String jwt = userService.generateToken(httpServletReq, httpServletRes, Long.toString(userid));
+		userService.generateToken(httpServletReq, httpServletRes, Long.toString(userid));
 		
-		response.setToken(jwt);
+
 		
 		return new ResponseEntity<LoginResponse>(response,HttpStatus.OK);
 	}
