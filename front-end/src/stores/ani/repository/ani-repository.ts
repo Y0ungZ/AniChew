@@ -28,6 +28,10 @@ class AniRepository {
   cancelLike(id: string) {
     return mainAxios.delete(`${this.url}/anime/${id}/favorite`);
   }
+
+  getPromotion() {
+    return mainAxios.get(`${this.url}/anime/promotion`);
+  }
 }
 
 export default new AniRepository(process.env.REACT_APP_API_DOMAIN_URL!);
