@@ -17,8 +17,16 @@ class UserRepository {
     return this.instance.post('/user/avatar', newAvatar);
   }
 
+  deleteAvater() {
+    return this.instance.delete('/user/avatar');
+  }
+
   updateCover(newCover: FormData) {
     return this.instance.post('/user/cover', newCover);
+  }
+
+  deleteCover() {
+    return this.instance.delete('/user/cover');
   }
 
   coverModify(user: User) {

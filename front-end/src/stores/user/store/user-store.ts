@@ -4,6 +4,8 @@ import {
   FAIL_PROFILE_COVER_UPDATE,
   FAIL_GET_ME,
   FAIL_UPDATE_USER_INFO,
+  FAIL_PROFILE_AVATAR_DELETE,
+  FAIL_PROFILE_COVER_DELETE,
 } from 'common/string-template/string-template';
 
 import User from '../model/user';
@@ -79,6 +81,16 @@ export default class UserStoreImpl implements UserStore {
     }
   }
 
+  async deleteAvatar() {
+    try {
+      const res = await userRepository.deleteAvater();
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_PROFILE_AVATAR_DELETE);
+    }
+  }
+
   async updateCover(newCover: FormData) {
     try {
       const res = await userRepository.updateCover(newCover);
@@ -86,6 +98,16 @@ export default class UserStoreImpl implements UserStore {
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_PROFILE_COVER_UPDATE);
+    }
+  }
+
+  async deleteCover() {
+    try {
+      const res = await userRepository.deleteCover();
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_PROFILE_COVER_DELETE);
     }
   }
 
