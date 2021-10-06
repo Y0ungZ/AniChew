@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { toJS } from 'mobx';
 import { ResultChara } from 'stores/search/model/search';
-import { FullLoading, SearchCharaItem } from 'components';
+import { SearchCharaItem } from 'components';
 import { CssKeyObject } from 'types/css-basic-type';
 import NotFound from '../error/not-found';
 
@@ -20,7 +20,6 @@ const SearchResultChara = ({
 }) => {
   const [result, setResult] = useState<ResultChara[]>([]);
   const [datas, setDatas] = useState<ResultChara[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -29,7 +28,6 @@ const SearchResultChara = ({
       setResult(resultData.slice(0, 20));
       resultData = resultData?.slice(20);
       setDatas(resultData);
-      setLoading(false);
     } else {
       setResult([]);
       setDatas([]);
@@ -49,13 +47,11 @@ const SearchResultChara = ({
     const { clientHeight } = document.documentElement;
     scrollHeight -= 100;
 
-    if (scrollTop + clientHeight >= scrollHeight && !loading) {
-      setLoading(true);
+    if (scrollTop + clientHeight >= scrollHeight) {
       setResult(result.concat(datas.slice(0, 20)));
       setDatas(datas.slice(20));
-      setLoading(false);
     }
-  }, [loading, result, datas]);
+  }, [result, datas]);
 
   useEffect(() => {
     window.addEventListener('scroll', infiniteScroll, true);
@@ -68,7 +64,6 @@ const SearchResultChara = ({
         result.map((data) => (
           <div key={data.id}>
             <SearchCharaItem data={data} />
-            {loading && <FullLoading />}
           </div>
         ))
       ) : (
