@@ -2,50 +2,54 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_PROFILE_AVATAR_UPDATE,
   FAIL_PROFILE_COVER_UPDATE,
+  FAIL_GET_ME,
+  FAIL_UPDATE_USER_INFO,
 } from 'common/string-template/string-template';
+
 import User from '../model/user';
 import userRepository from '../repository/user-repository';
 
-type Error = {
-  code: number;
-};
+interface UserStore {
+  user: User | null;
+  me: () => Promise<void>;
+  update: (user: User) => Promise<void>;
+  updateAvatar: (newAvatar: FormData) => Promise<void>;
+  updateCover: (newCover: FormData) => Promise<void>;
+  coverModify: (user: User) => Promise<void>;
+}
 
-type State = 'Pending' | 'Done';
-
-export default class UserStore {
+export default class UserStoreImpl implements UserStore {
   user: User | null = null;
-
-  error?: Error;
-
-  meState: State = 'Done';
-
-  updateState: State = 'Done';
 
   constructor() {
     makeAutoObservable(this);
   }
 
   async me() {
-    this.meState = 'Pending';
-    const res = await userRepository.me();
-    const { userId, nickname, email, avatar, cover, gender, birthday } =
-      res.data;
-    this.user = new User(
-      userId,
-      nickname,
-      email,
-      avatar,
-      cover,
-      gender,
-      birthday,
-    );
-    this.meState = 'Done';
+    try {
+      const res = await userRepository.me();
+      const { userId, nickname, email, avatar, cover, gender, birthday } =
+        res.data;
+      runInAction(() => {
+        this.user = new User(
+          userId,
+          nickname,
+          email,
+          avatar,
+          cover,
+          gender,
+          birthday,
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_GET_ME);
+    }
   }
 
   async update(user: User) {
-    this.updateState = 'Pending';
-    const res = await userRepository.update(user);
-    if (res.status === 200) {
+    try {
+      const res = await userRepository.update(user);
       const { userId, nickname, email, avatar, cover, gender, birthday } =
         res.data;
       runInAction(() => {
@@ -59,32 +63,35 @@ export default class UserStore {
           birthday,
         );
       });
-    } else {
-      this.error = { code: res.status };
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_UPDATE_USER_INFO);
     }
-    this.updateState = 'Done';
   }
 
   async updateAvatar(newAvatar: FormData) {
-    const res = await userRepository.updateAvatar(newAvatar);
-    if (res.status === 200) {
+    try {
+      const res = await userRepository.updateAvatar(newAvatar);
       return res.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_PROFILE_AVATAR_UPDATE);
     }
-    throw new Error(FAIL_PROFILE_AVATAR_UPDATE);
   }
 
   async updateCover(newCover: FormData) {
-    const res = await userRepository.updateCover(newCover);
-    if (res.status === 200) {
+    try {
+      const res = await userRepository.updateCover(newCover);
       return res.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_PROFILE_COVER_UPDATE);
     }
-    throw new Error(FAIL_PROFILE_COVER_UPDATE);
   }
 
   async coverModify(user: User) {
-    this.updateState = 'Pending';
-    const res = await userRepository.coverModify(user);
-    if (res.status === 200) {
+    try {
+      const res = await userRepository.coverModify(user);
       const { userId, nickname, email, avatar, cover, gender, birthday } =
         res.data;
       runInAction(() => {
@@ -98,9 +105,9 @@ export default class UserStore {
           birthday,
         );
       });
-    } else {
-      this.error = { code: res.status };
+    } catch (error) {
+      console.log(error);
+      throw new Error(FAIL_PROFILE_COVER_UPDATE);
     }
-    this.updateState = 'Done';
   }
 }
