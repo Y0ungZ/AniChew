@@ -21,18 +21,20 @@ const styles: CssKeyObject = {
   },
 };
 
-const AnimeCardWithRate = ({ id }: {id: string}) => {
+const AnimeCardWithRate = ({ id }: { id: string }) => {
   const ani = useAni();
   const [rate, setRate] = useState(0);
 
   const checkRate = (value: number) => {
     setRate(value);
     if (value === 0) {
-      ani.removeScore(id)
+      ani
+        .removeScore(id)
         .then()
         .catch((error) => msg('Error', error));
     } else {
-      ani.setScore(id, value)
+      ani
+        .setScore(id, value)
         .then()
         .catch((error) => msg('Error', error));
     }

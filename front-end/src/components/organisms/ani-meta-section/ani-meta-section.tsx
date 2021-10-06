@@ -3,7 +3,12 @@ import { Typography, Divider, Grid } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
 import { Rating, ThumbnailCard } from 'components';
 import { Store } from 'types/common';
-import { Ani, AniGenreDict, AniRateDict, AniStatusDict } from 'stores/ani/model/ani';
+import {
+  Ani,
+  AniGenreDict,
+  AniRateDict,
+  AniStatusDict,
+} from 'stores/ani/model/ani';
 
 const { Title, Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -71,10 +76,18 @@ const AniMetaSection = ({ info, store }: { info: Ani; store: Store }) => {
   return (
     <section style={styles.container}>
       <div style={xs ? styles.contentMobile : styles.content}>
-        <div style={xs ? styles.thumbnailContainerMobile : styles.thumbnailContainer}>
+        <div
+          style={
+            xs ? styles.thumbnailContainerMobile : styles.thumbnailContainer
+          }
+        >
           <ThumbnailCard id={info.id} store={store} />
         </div>
-        <div style={xs ? styles.animeInfoContainerMobile : styles.animeInfoContainer}>
+        <div
+          style={
+            xs ? styles.animeInfoContainerMobile : styles.animeInfoContainer
+          }
+        >
           <div>
             <Text style={styles.metaData}>
               {info.type}
@@ -101,7 +114,9 @@ const AniMetaSection = ({ info, store }: { info: Ani; store: Store }) => {
               <Text style={styles.realRating}>
                 평점 ☆
                 {' '}
-                {info.avgScore === 0 ? '점수가 없습니다.' : (info.avgScore / 2).toFixed(2)}
+                {info.avgScore === 0
+                  ? '점수가 없습니다.'
+                  : (info.avgScore / 2).toFixed(2)}
               </Text>
             </section>
           </div>

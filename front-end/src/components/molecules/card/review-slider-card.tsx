@@ -39,7 +39,9 @@ const ReviewSliderCard = observer(() => {
     >
       {Object.keys(reviews).length > 0 ? (
         <Slider {...settings}>
-          { Object.keys(reviews).map((key) => <ReviewItemCard key={key} review={reviews[key]} />)}
+          {Object.keys(reviews).map((key) => (
+            <ReviewItemCard key={key} review={reviews[key]} />
+          ))}
         </Slider>
       ) : (
         <List />

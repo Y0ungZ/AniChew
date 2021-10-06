@@ -45,7 +45,7 @@ const styles: CssKeyObject = {
 type AniType = {
   id: string;
   title: string;
-}
+};
 
 const CheckAnime = () => {
   const history = useHistory();
@@ -66,15 +66,18 @@ const CheckAnime = () => {
   return (
     <section style={styles.container}>
       <Header style={styles.header}>
-        <Text style={styles.title}>시청한 애니메이션을 평가해주실 수 있나요~!?</Text>
+        <Text style={styles.title}>
+          시청한 애니메이션을 평가해주실 수 있나요~!?
+        </Text>
       </Header>
       <div style={styles.animeContainer}>
         <Row gutter={[16, 32]}>
-          {recommendAniList && recommendAniList.map(({ id }) => (
-            <Col span={6} key={id}>
-              <AnimeCardWithRate id={id} />
-            </Col>
-          ))}
+          {recommendAniList &&
+            recommendAniList.map(({ id }) => (
+              <Col span={6} key={id}>
+                <AnimeCardWithRate id={id} />
+              </Col>
+            ))}
         </Row>
       </div>
       <footer style={styles.footer}>

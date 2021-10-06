@@ -4,12 +4,7 @@ import { UpOutlined } from '@ant-design/icons';
 
 const BackTopBtn = () => (
   <BackTop>
-    <Button
-      type="primary"
-      shape="circle"
-      icon={<UpOutlined />}
-      size="large"
-    />
+    <Button type="primary" shape="circle" icon={<UpOutlined />} size="large" />
   </BackTop>
 );
 

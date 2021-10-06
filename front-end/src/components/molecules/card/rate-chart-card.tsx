@@ -12,7 +12,7 @@ const styles: CssKeyObject = {
   },
 };
 
-const RateChartCard = ({ scores } : { scores: Score[] }) => {
+const RateChartCard = ({ scores }: { scores: Score[] }) => {
   const paletteSemanticRed = '#F4664A';
   const brandColor = '#5B8FF9';
   const config = {

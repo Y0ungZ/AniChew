@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { FAIL_GET_USER_INFO } from '../../../common/string-template/string-template';
+import { FAIL_GET_USER_INFO } from 'common/string-template/string-template';
 import MyPageType from '../model/mypage';
 import userRepository from '../repository/my-page-repository';
 

@@ -7,7 +7,7 @@ import { CssKeyObject } from 'types/css-basic-type';
 type MyFavoriteCharaProps = {
   title: string;
   datas: FavoriteCharaType[] | undefined;
-}
+};
 
 const styles: CssKeyObject = {
   section: {
@@ -76,8 +76,11 @@ const FavoriteCharaItem = ({ title, datas }: MyFavoriteCharaProps) => {
             </div>
           ))}
         </div>
-      ) :
-        (<div style={styles.favoriteEmptyItem}>아직 좋아하는 컨텐츠가 없습니다.</div>)}
+      ) : (
+        <div style={styles.favoriteEmptyItem}>
+          아직 좋아하는 컨텐츠가 없습니다.
+        </div>
+      )}
     </div>
   );
 };

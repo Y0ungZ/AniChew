@@ -30,29 +30,36 @@ const RightMenu = observer((props: toggleSearchProps) => {
   const menu = (
     <Menu>
       <Menu.Item key="mypage">
-        <Link to={`/user/${user.user?.userId}`}>
-          마이페이지
-        </Link>
+        <Link to={`/user/${user.user?.userId}`}>마이페이지</Link>
       </Menu.Item>
-      <Menu.Item key="logout" onClick={logout}>로그아웃</Menu.Item>
+      <Menu.Item key="logout" onClick={logout}>
+        로그아웃
+      </Menu.Item>
     </Menu>
   );
 
   return (
     <>
-      <Button icon={<SearchOutlined />} type="link" onClick={toggleSearchHeader} />
+      <Button
+        icon={<SearchOutlined />}
+        type="link"
+        onClick={toggleSearchHeader}
+      />
       {login.isLoggedIn ? (
         <Dropdown overlay={menu} trigger={['click']}>
           <Avatar
-            src={(user.user?.avatar && (
+            src={
+              user.user?.avatar &&
               `${config.img}/user_imgs/${user.user.userId}/${user.user.avatar}`
-            ))}
+            }
           >
             {user.user?.nickname[0]}
           </Avatar>
         </Dropdown>
       ) : (
-        <Button type="link" onClick={() => setVisible(true)}>로그인</Button>
+        <Button type="link" onClick={() => setVisible(true)}>
+          로그인
+        </Button>
       )}
       <LoginModal visible={visible} setVisible={setVisible} />
     </>

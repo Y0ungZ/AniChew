@@ -17,7 +17,7 @@ const styles: CssKeyObject = {
 
 const PromotionCarousel = () => {
   const home = useHome();
-  const [datas, setDatas] = useState<Ani[]|null>([]);
+  const [datas, setDatas] = useState<Ani[] | null>([]);
 
   useEffect(() => {
     home.getPromotion().then(() => {

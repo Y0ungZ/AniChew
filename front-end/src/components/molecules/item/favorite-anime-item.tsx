@@ -7,7 +7,7 @@ import { config } from 'config/config';
 type MyFavoriteAnimeProps = {
   title: string;
   datas: FavoriteAnimeType[] | undefined;
-}
+};
 
 const styles: CssKeyObject = {
   section: {
@@ -52,7 +52,7 @@ const styles: CssKeyObject = {
 const FavoriteAnimeItem = ({ title, datas }: MyFavoriteAnimeProps) => {
   const history = useHistory();
 
-  const goToAniDetail = (id:number) => {
+  const goToAniDetail = (id: number) => {
     history.push(`/anime/${id}`);
   };
 
@@ -70,13 +70,15 @@ const FavoriteAnimeItem = ({ title, datas }: MyFavoriteAnimeProps) => {
                 onClick={() => goToAniDetail(data.id)}
                 onKeyDown={() => goToAniDetail(data.id)}
               />
-              <p style={styles.name}>
-                {data.koreanName}
-              </p>
+              <p style={styles.name}>{data.koreanName}</p>
             </div>
           ))}
         </div>
-      ) : (<div style={styles.favoriteEmptyItem}>아직 좋아하는 컨텐츠가 없습니다.</div>)}
+      ) : (
+        <div style={styles.favoriteEmptyItem}>
+          아직 좋아하는 컨텐츠가 없습니다.
+        </div>
+      )}
     </div>
   );
 };

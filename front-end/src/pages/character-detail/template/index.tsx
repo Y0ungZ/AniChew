@@ -5,9 +5,7 @@ type Props = {
   meta: ReactNode;
 };
 
-const CharacterDetailTemplate = ({
-  meta,
-}: Props) => (
+const CharacterDetailTemplate = ({ meta }: Props) => (
   <div>
     <Row>
       <Col span={24}>{meta}</Col>

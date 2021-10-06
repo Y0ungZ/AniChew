@@ -16,12 +16,7 @@ const SynopsisCard = observer(() => {
   const { info } = useAni();
   return (
     <Card title="줄거리" bordered={false} style={styles.card}>
-      {info?.synopsis ? (
-        <p>
-          {info.synopsis}
-        </p>
-      ) : <List />}
-
+      {info?.synopsis ? <p>{info.synopsis}</p> : <List />}
     </Card>
   );
 });

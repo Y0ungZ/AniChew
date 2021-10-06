@@ -15,7 +15,7 @@ const styles: CssKeyObject = {
   likeBtn: { backgroundColor: 'inherit', border: 'none', fontSize: '1rem' },
 };
 
-const TextLikeBtn = observer(({ store }: {store: Store}) => {
+const TextLikeBtn = observer(({ store }: { store: Store }) => {
   const auth = useAuth();
   const handleLike = () => {
     if (!auth.isLoggedIn) {
@@ -23,11 +23,13 @@ const TextLikeBtn = observer(({ store }: {store: Store}) => {
       return;
     }
     if (store.favorite) {
-      store.cancelLike(store.info!.id)
+      store
+        .cancelLike(store.info!.id)
         .then()
         .catch((error) => msg('Error', error.message));
     } else {
-      store.like(store.info!.id)
+      store
+        .like(store.info!.id)
         .then()
         .catch((error) => msg('Error', error.message));
     }
@@ -37,7 +39,13 @@ const TextLikeBtn = observer(({ store }: {store: Store}) => {
     <Button
       onClick={handleLike}
       style={styles.likeBtn}
-      icon={store.favorite ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />}
+      icon={
+        store.favorite ? (
+          <HeartFilled style={{ color: 'red' }} />
+        ) : (
+          <HeartOutlined />
+        )
+      }
     >
       좋아요
     </Button>

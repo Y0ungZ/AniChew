@@ -7,18 +7,22 @@ import { msg } from 'util/message';
 
 const styles: CssKeyObject = {
   submitBtn: {
-    float: 'right', marginTop: '1em',
+    float: 'right',
+    marginTop: '1em',
   },
   cancelBtn: {
-    float: 'right', marginTop: '1em', marginRight: '1em',
+    float: 'right',
+    marginTop: '1em',
+    marginRight: '1em',
   },
 };
 
-const ReviewForm = observer(({ id }: {id: string}) => {
+const ReviewForm = observer(({ id }: { id: string }) => {
   const review = useReview();
 
-  const submitReview = ({ content }: {content: string}) => {
-    review.submit(id, content)
+  const submitReview = ({ content }: { content: string }) => {
+    review
+      .submit(id, content)
       .then()
       .catch((error) => msg('Error', error.message));
   };
@@ -50,9 +54,9 @@ const ReviewForm = observer(({ id }: {id: string}) => {
           작성
         </Button>
         {review.formMode === 'Update' && (
-        <Button onClick={cancelUpdate} style={styles.cancelBtn}>
-          취소
-        </Button>
+          <Button onClick={cancelUpdate} style={styles.cancelBtn}>
+            취소
+          </Button>
         )}
       </Form.Item>
     </Form>

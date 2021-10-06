@@ -13,16 +13,10 @@ const styles: CssKeyObject = {
     borderRadius: '0.5em',
     opacity: '0.9',
   },
-
 };
 
-const PrevArrow = ({ className, onClick }:any) => (
-  <div
-    aria-hidden
-    className={className}
-    onClick={onClick}
-    onKeyDown={onClick}
-  >
+const PrevArrow = ({ className, onClick }: any) => (
+  <div aria-hidden className={className} onClick={onClick} onKeyDown={onClick}>
     <Button
       type="primary"
       size="large"

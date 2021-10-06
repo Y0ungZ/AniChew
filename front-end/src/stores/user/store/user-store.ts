@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_PROFILE_AVATAR_UPDATE,
   FAIL_PROFILE_COVER_UPDATE,
-} from '../../../common/string-template/string-template';
+} from 'common/string-template/string-template';
 import User from '../model/user';
 import userRepository from '../repository/user-repository';
 

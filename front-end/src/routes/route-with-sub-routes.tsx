@@ -12,11 +12,21 @@ const RouteWithSubRoutes = observer((route: RouteType) => {
     <Suspense fallback={route.fallback}>
       <Route
         path={route.path}
-        render={(props) => (route.redirect ? <Redirect to={route.redirect} /> :
-          route.private ? (
-            isLoggedIn ? route.component &&
-            <route.component {...props} routes={route.routes} /> : <Redirect to='/' />
-          ) : route.component && <route.component {...props} routes={route.routes} />)}
+        render={(props) => (route.redirect ? (
+          <Redirect to={route.redirect} />
+        ) : route.private ? (
+          isLoggedIn ? (
+            route.component && (
+            <route.component {...props} routes={route.routes} />
+            )
+          ) : (
+            <Redirect to="/" />
+          )
+        ) : (
+          route.component && (
+          <route.component {...props} routes={route.routes} />
+          )
+        ))}
       />
     </Suspense>
   );

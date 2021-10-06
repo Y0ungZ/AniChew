@@ -23,20 +23,18 @@ function getImgSrc(store: Store, id: string) {
   return '/public/assets/kakao-logo.jpg';
 }
 
-const ThumbnailCard = observer(({ id, store } : { id: string, store: Store }) => (
-  <Card
-    style={styles.card}
-    bodyStyle={styles.cardBody}
-    cover={(
-      <img
-        style={styles.cardImg}
-        alt="example"
-        src={getImgSrc(store, id)}
-      />
-      )}
-  >
-    <TextLikeBtn store={store} />
-  </Card>
-));
+const ThumbnailCard = observer(
+  ({ id, store }: { id: string; store: Store }) => (
+    <Card
+      style={styles.card}
+      bodyStyle={styles.cardBody}
+      cover={
+        <img style={styles.cardImg} alt="example" src={getImgSrc(store, id)} />
+      }
+    >
+      <TextLikeBtn store={store} />
+    </Card>
+  ),
+);
 
 export default ThumbnailCard;

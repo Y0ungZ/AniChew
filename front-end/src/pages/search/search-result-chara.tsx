@@ -13,7 +13,11 @@ const styles: CssKeyObject = {
   },
 };
 
-const SearchResultChara = ({ results }: { results: ResultChara[] | undefined }) => {
+const SearchResultChara = ({
+  results,
+}: {
+  results: ResultChara[] | undefined;
+}) => {
   const [result, setResult] = useState<ResultChara[]>([]);
   const [datas, setDatas] = useState<ResultChara[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,8 +37,14 @@ const SearchResultChara = ({ results }: { results: ResultChara[] | undefined }) 
   }, [results]);
 
   const infiniteScroll = useCallback(() => {
-    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-    const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    let scrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight,
+    );
+    const scrollTop = Math.max(
+      document.documentElement.scrollTop,
+      document.body.scrollTop,
+    );
 
     const { clientHeight } = document.documentElement;
     scrollHeight -= 100;
@@ -61,7 +71,9 @@ const SearchResultChara = ({ results }: { results: ResultChara[] | undefined }) 
             {loading && <FullLoading />}
           </div>
         ))
-      ) : (<NotFound type="검색결과" />)}
+      ) : (
+        <NotFound type="검색결과" />
+      )}
     </div>
   );
 };

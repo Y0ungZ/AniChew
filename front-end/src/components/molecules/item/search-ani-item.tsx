@@ -5,7 +5,7 @@ import { CssKeyObject } from 'types/css-basic-type';
 import { config } from 'config/config';
 
 type ResultItemProps = {
-  data: ResultAni
+  data: ResultAni;
 };
 
 const styles: CssKeyObject = {
@@ -65,9 +65,7 @@ const SearchAniItem = ({ data }: ResultItemProps) => {
           src={`${config.img}/anime_imgs/${data.image}.jpg`}
           alt="search result anime"
         />
-        <span style={styles.name}>
-          {data.name}
-        </span>
+        <span style={styles.name}>{data.name}</span>
       </div>
     </div>
   );

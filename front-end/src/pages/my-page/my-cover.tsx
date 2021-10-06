@@ -30,13 +30,19 @@ const MyCover = ({ info }: { info: MyPageType }) => {
   const [visible, setVisible] = useState(false);
   return (
     <div style={styles.container}>
-      <div style={{
-        background: `url(${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${info.userid}/${info.cover}) center/cover`,
-        height: '20em',
-      }}
+      <div
+        style={{
+          background: `url(${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${info.userid}/${info.cover}) center/cover`,
+          height: '20em',
+        }}
       >
         {info.mine && (
-          <Button style={styles.editHeaderBtn} icon={<EditFilled />} shape="round" onClick={() => setVisible(true)} />
+          <Button
+            style={styles.editHeaderBtn}
+            icon={<EditFilled />}
+            shape="round"
+            onClick={() => setVisible(true)}
+          />
         )}
       </div>
       <div style={styles.headerMargin} />

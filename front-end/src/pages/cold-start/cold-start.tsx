@@ -4,8 +4,8 @@ import { RouteType } from 'routes/config';
 import Router from 'routes/router';
 
 type ColdStartProps = {
-    routes: RouteType[]
-}
+  routes: RouteType[];
+};
 
 const ColdStart = ({ routes }: ColdStartProps) => {
   const history = useHistory();

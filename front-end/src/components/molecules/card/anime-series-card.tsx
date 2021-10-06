@@ -12,7 +12,7 @@ const styles: CssKeyObject = {
   },
 };
 
-const AnimeSeriesCard = ({ series } : { series: RelatedAni[] }) => (
+const AnimeSeriesCard = ({ series }: { series: RelatedAni[] }) => (
   <Card title="시리즈" bordered={false} style={styles.card}>
     <List
       dataSource={series}
