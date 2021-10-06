@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
-import { useAni, useHome } from 'hooks';
+import { useHome } from 'hooks';
 import { Ani } from 'stores/ani/model/ani';
 import PromotionCarouselItem from './promotion-carousel-item';
 import 'assets/css/color.css';
