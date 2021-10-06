@@ -3,7 +3,6 @@ import {
   FAIL_LOGIN,
   FAIL_LOGOUT,
 } from 'common/string-template/string-template';
-import { mainAxios } from 'config/axios';
 import authRepository from '../repository/auth-repository';
 
 interface AuthStore {
@@ -22,11 +21,11 @@ export default class AuthStoreImpl implements AuthStore {
   async login(code: string) {
     try {
       const res = await authRepository.login(code);
-      mainAxios.defaults.headers.common.Authorization = res.data.token;
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', 'user');
       runInAction(() => {
         this.isLoggedIn = true;
       });
+      return res.data.newUser;
     } catch (error) {
       console.log(error);
       throw new Error(FAIL_LOGIN);
@@ -36,6 +35,7 @@ export default class AuthStoreImpl implements AuthStore {
   async logout() {
     try {
       await authRepository.logout();
+      localStorage.removeItem('user');
       runInAction(() => {
         this.isLoggedIn = false;
       });
