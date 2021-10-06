@@ -1,5 +1,5 @@
 import React from 'react';
-import { FavoriteAnimeItem, FavoriteCharaItem, FavoriteSeiyuItem } from '../../components';
+import { FavoriteAnimeItem, FavoriteCharaItem } from '../../components';
 import { CssKeyObject } from '../../types/css-basic-type';
 import MyPageType from '../../stores/mypage/model/mypage';
 
@@ -46,7 +46,6 @@ const MyFavorite = ({ info }:{info:MyPageType}) => (
       </p>
       <FavoriteAnimeItem title="애니" datas={info.favoriteAnimes} />
       <FavoriteCharaItem title="캐릭터" datas={info.favoriteCharas} />
-      <FavoriteSeiyuItem title="성우" datas={info.favoriteSeiyus} />
     </div>
   </div>
 );
