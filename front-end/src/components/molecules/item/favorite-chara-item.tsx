@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { List } from 'antd';
 import { config } from 'config/config';
 import { FavoriteCharaType } from 'stores/mypage/model/mypage';
 import { CssKeyObject } from 'types/css-basic-type';
@@ -24,18 +25,17 @@ const styles: CssKeyObject = {
     color: 'var(--main-color)',
     textAlign: 'left',
     marginLeft: '2em',
-    fontSize: '1.2em',
-  },
-  favoriteEmptyItem: {
-    height: '10em',
-    lineHeight: '10em',
+    fontSize: '1.5em',
   },
   img: {
-    width: '5em',
+    width: '7em',
+    height: '10em',
+    borderRadius: '1em',
   },
   content: {
-    width: '7em',
+    width: '9em',
     cursor: 'pointer',
+    margin: '1em 1em',
   },
   name: {
     width: '7em',
@@ -77,9 +77,7 @@ const FavoriteCharaItem = ({ title, datas }: MyFavoriteCharaProps) => {
           ))}
         </div>
       ) : (
-        <div style={styles.favoriteEmptyItem}>
-          아직 좋아하는 컨텐츠가 없습니다.
-        </div>
+        <List />
       )}
     </div>
   );
