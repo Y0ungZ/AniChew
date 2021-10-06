@@ -63,7 +63,6 @@ public class AnimeController {
 		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<ScoreResponse>(response, HttpStatus.UNAUTHORIZED);
 		
-		System.out.println(animeid);
 		
 		if(!animeService.existsAnime(animeid)) {
 			return new ResponseEntity<ScoreResponse>(response,HttpStatus.NOT_FOUND);
@@ -125,7 +124,7 @@ public class AnimeController {
 		
 		ReviewResponse response = null;
 		if(!userService.checkToken(httpServletReq))
-			return new ResponseEntity<ReviewResponse>(response, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<ReviewResponse>(response, HttpStatus.NO_CONTENT);
 		
 		if(!animeService.existsAnime(animeid)) 
 			return new ResponseEntity<ReviewResponse>(response,HttpStatus.NOT_ACCEPTABLE);		

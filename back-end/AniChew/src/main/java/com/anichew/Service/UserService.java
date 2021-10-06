@@ -17,10 +17,11 @@ public interface UserService {
 	void signUp(Map<String, Object> userInfo);
 	boolean existsUser(long id);
 	String generateToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletResponse, String userid);
+	boolean generateRefreshToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes);
 	MyInfoResponse getMyInfo(HttpServletRequest httpServletReq);
 	boolean isExistUser(long userid);
 	UserPageResponse userPage(HttpServletRequest httpServletReq, long userid);
-	void logout(HttpServletRequest httpServletReq);
+	void logout(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes);
 	MyInfoResponse setUserInfo(HttpServletRequest httpServletReq, UserRequest req);
 	boolean checkToken(HttpServletRequest httpServletReq);
 	String uploadPhoto(MultipartFile file, HttpServletRequest httpServletReq);
@@ -28,5 +29,6 @@ public interface UserService {
 	boolean setCover(HttpServletRequest httpServletReq, CoverRequest req);
 	boolean deleteCover(HttpServletRequest httpServletReq);
 	boolean deleteAvatar(HttpServletRequest httpServletReq);
+	
 	
 }
