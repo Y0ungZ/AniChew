@@ -2,8 +2,8 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import {
   FAIL_LOGIN,
   FAIL_LOGOUT,
-} from '../../../common/string-template/string-template';
-import { mainAxios } from '../../../libs/axios';
+} from 'common/string-template/string-template';
+import { mainAxios } from 'config/axios';
 import authRepository from '../repository/auth-repository';
 
 export default class AuthStore {

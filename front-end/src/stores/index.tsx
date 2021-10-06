@@ -7,22 +7,18 @@ import { mypage, MyPageProvider } from './mypage';
 import { search, SearchProvider } from './search';
 import { home, HomeProvider } from './home';
 
-const nest = (
-  children: React.ReactNode,
-  component: React.ReactElement,
-) => React.cloneElement(component, {}, children);
+const nest = (children: React.ReactNode, component: React.ReactElement) =>
+  React.cloneElement(component, {}, children);
 
 export type MultiProviderProps = React.PropsWithChildren<{
-  providers: React.ReactElement[]
-}>
+  providers: React.ReactElement[];
+}>;
 
-const MultiProvider = ({ children, providers } : MultiProviderProps) => (
-  <>
-    {providers.reduceRight(nest, children)}
-  </>
+const MultiProvider = ({ children, providers }: MultiProviderProps) => (
+  <>{providers.reduceRight(nest, children)}</>
 );
 
-const GlobalProvider = ({ children } : {children: React.ReactNode }) => (
+const GlobalProvider = ({ children }: { children: React.ReactNode }) => (
   <MultiProvider
     providers={[
       <AniProvider value={ani} />,

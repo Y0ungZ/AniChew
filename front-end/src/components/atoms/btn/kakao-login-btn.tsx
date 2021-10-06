@@ -29,12 +29,7 @@ const KakaoLoginBtn = () => {
       size="large"
       style={styles.btn}
     >
-      <img
-        src={kakaoLogo}
-        alt="kakao-logo"
-        width="27px"
-        height="27px"
-      />
+      <img src={kakaoLogo} alt="kakao-logo" width="27px" height="27px" />
       <Text style={styles.loginTitle}>Kakao</Text>
     </Button>
   );

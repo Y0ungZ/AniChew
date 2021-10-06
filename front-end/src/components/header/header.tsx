@@ -63,9 +63,7 @@ const MainHeader = () => {
     <div style={styles.position}>
       <Header style={styles.header}>
         <Link to="/">
-          <span style={styles.logo}>
-            애니츄
-          </span>
+          <span style={styles.logo}>애니츄</span>
         </Link>
         {screens.md ? (
           <div style={styles.leftMenu}>

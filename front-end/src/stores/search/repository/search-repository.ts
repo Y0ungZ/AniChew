@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { mainAxios } from '../../../config/axios';
+import { mainAxios } from 'config/axios';
 
 class SearchRepository {
   constructor(private readonly instance: AxiosInstance) {}

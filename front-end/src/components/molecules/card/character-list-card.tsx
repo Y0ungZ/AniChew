@@ -28,9 +28,7 @@ const CharacterInfo = ({ id, name }: { id: string; name: string }) => (
     <Avatar
       shape="square"
       size="large"
-      src={<Image
-        src={`${config.img}/chara_imgs/${id}.jpg`}
-      />}
+      src={<Image src={`${config.img}/chara_imgs/${id}.jpg`} />}
     />
     <div style={styles.metaData}>
       <Link to={`/character/${id}`}>{name}</Link>

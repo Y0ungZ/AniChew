@@ -8,7 +8,7 @@ import 'assets/css/color.css';
 const { Search } = Input;
 
 type searchOpen = {
-    open: boolean;
+  open: boolean;
 };
 
 const styles: CssKeyObject = {

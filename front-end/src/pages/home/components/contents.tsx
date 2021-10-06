@@ -10,7 +10,7 @@ const datas = [
     animeJapaneseName: 'モンスター',
     animeKoreanName: '몬스터',
     animeStudios: ['Madhouse'],
-    animeRating: 8.80,
+    animeRating: 8.8,
   },
   {
     animeId: 1,
@@ -36,7 +36,7 @@ const datas = [
     animeGenres: ['드라마', '일상물', '초능력'],
     animeJapaneseName: '夏目友人帳 参',
     animeKoreanName: '나츠메 우인장',
-    animeStudios: ['Brain\'s Base'],
+    animeStudios: ["Brain's Base"],
     animeRating: 8.58,
   },
   {

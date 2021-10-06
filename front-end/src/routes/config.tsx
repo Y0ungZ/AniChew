@@ -1,4 +1,9 @@
-import React, { ComponentType, LazyExoticComponent, ReactNode, lazy } from 'react';
+import React, {
+  ComponentType,
+  LazyExoticComponent,
+  ReactNode,
+  lazy,
+} from 'react';
 import { FullLoading } from '../components';
 
 export type RouteType = {
@@ -9,7 +14,7 @@ export type RouteType = {
   routes?: RouteType[];
   redirect?: string;
   private?: boolean;
-}
+};
 
 export const routes: RouteType[] = [
   {
@@ -23,7 +28,9 @@ export const routes: RouteType[] = [
     path: '/oauth/kakao',
     exact: false,
     private: false,
-    component: lazy(() => import('components/oauth/kakao-oauth-handler/kakao-oauth-handler')),
+    component: lazy(
+      () => import('components/oauth/kakao-oauth-handler/kakao-oauth-handler'),
+    ),
     fallback: <FullLoading />,
   },
   {
@@ -33,13 +40,15 @@ export const routes: RouteType[] = [
     component: lazy(() => import('pages/cold-start/cold-start')),
     fallback: <FullLoading />,
     routes: [
-      { path: '/cold-start/info-edit',
+      {
+        path: '/cold-start/info-edit',
         exact: false,
         private: false,
         component: lazy(() => import('pages/cold-start/info-edit')),
         fallback: <FullLoading />,
       },
-      { path: '/cold-start/check-anime',
+      {
+        path: '/cold-start/check-anime',
         exact: false,
         private: false,
         component: lazy(() => import('pages/cold-start/check-anime')),

@@ -4,7 +4,7 @@ import { ResultAni } from 'stores/search/model/search';
 import { FullLoading, SearchAniItem } from 'components';
 import NotFound from '../error/not-found';
 
-const SearchResultAni = ({ results }:{ results : ResultAni[] | undefined }) => {
+const SearchResultAni = ({ results }: { results: ResultAni[] | undefined }) => {
   const [result, setResult] = useState<ResultAni[]>([]);
   const [datas, setDatas] = useState<ResultAni[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -24,8 +24,14 @@ const SearchResultAni = ({ results }:{ results : ResultAni[] | undefined }) => {
   }, [results]);
 
   const infiniteScroll = useCallback(() => {
-    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-    const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    let scrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight,
+    );
+    const scrollTop = Math.max(
+      document.documentElement.scrollTop,
+      document.body.scrollTop,
+    );
 
     const { clientHeight } = document.documentElement;
     scrollHeight -= 100;
@@ -52,7 +58,9 @@ const SearchResultAni = ({ results }:{ results : ResultAni[] | undefined }) => {
             {loading && <FullLoading />}
           </div>
         ))
-      ) : (<NotFound type="검색결과" />)}
+      ) : (
+        <NotFound type="검색결과" />
+      )}
     </div>
   );
 };

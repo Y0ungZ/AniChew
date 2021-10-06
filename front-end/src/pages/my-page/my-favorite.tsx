@@ -35,13 +35,11 @@ const styles: CssKeyObject = {
   },
 };
 
-const MyFavorite = ({ info }:{info:MyPageType}) => (
+const MyFavorite = ({ info }: { info: MyPageType }) => (
   <div style={styles.container}>
     <div style={styles.contents}>
       <p style={styles.info}>
-        <span style={styles.nickname}>
-          {info.nickname}
-        </span>
+        <span style={styles.nickname}>{info.nickname}</span>
         님의 취향
       </p>
       <FavoriteAnimeItem title="애니" datas={info.favoriteAnimes} />

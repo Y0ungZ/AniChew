@@ -15,26 +15,32 @@ const styles: CssKeyObject = {
   },
 };
 
-const ReviewReadForm = observer(({ id }: {id: string}) => {
+const ReviewReadForm = observer(({ id }: { id: string }) => {
   const review = useReview();
   const changeUpdateMode = () => {
     review.formMode = 'Update';
   };
 
   const deleteReview = () => {
-    review.delete(id)
+    review
+      .delete(id)
       .then()
       .catch((error) => msg('Error', error.message));
   };
 
   return (
     <div style={styles.container}>
-      <p>
-        {review.myReview?.content}
-      </p>
+      <p>{review.myReview?.content}</p>
       <div>
         <Button onClick={changeUpdateMode}>수정</Button>
-        <Button onClick={deleteReview} type="primary" danger style={styles.deleteBtn}>삭제</Button>
+        <Button
+          onClick={deleteReview}
+          type="primary"
+          danger
+          style={styles.deleteBtn}
+        >
+          삭제
+        </Button>
       </div>
     </div>
   );

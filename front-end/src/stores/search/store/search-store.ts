@@ -3,7 +3,7 @@ import {
   FAIL_SEARCH_USER,
   FAIL_SEARCH_CHARA,
   FAIL_SEARCH_ANI,
-} from '../../../common/string-template/string-template';
+} from 'common/string-template/string-template';
 import { ResultUser, ResultChara, ResultAni } from '../model/search';
 
 import searchRepository from '../repository/search-repository';

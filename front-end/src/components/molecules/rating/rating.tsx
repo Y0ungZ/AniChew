@@ -25,7 +25,7 @@ const checkisLoggedIn = (isLoggedIn: boolean, callback: any) => {
   callback();
 };
 
-const Rating = ({ store, info } : {store: Store, info: Info}) => {
+const Rating = ({ store, info }: { store: Store; info: Info }) => {
   const [rate, setRate] = useState(info.myScore);
   const { isLoggedIn } = useAuth();
   const review = useReview();
@@ -48,28 +48,24 @@ const Rating = ({ store, info } : {store: Store, info: Info}) => {
     }
     setRate(value);
     if (value === 0) {
-      store.removeScore(info.id)
+      store
+        .removeScore(info.id)
         .then()
         .catch((error) => msg('Error', error.message));
     } else {
-      store.setScore(info.id, value)
-        .then(() => { review.showForm = true; })
+      store
+        .setScore(info.id, value)
+        .then(() => {
+          review.showForm = true;
+        })
         .catch((error) => msg('Error', error.message));
     }
   };
 
   return (
     <>
-      <Rate
-        allowHalf
-        allowClear
-        value={rate}
-        onChange={checkRate}
-      />
-      <Button
-        onClick={resetRate}
-        style={styles.resetBtn}
-      >
+      <Rate allowHalf allowClear value={rate} onChange={checkRate} />
+      <Button onClick={resetRate} style={styles.resetBtn}>
         &times;
       </Button>
     </>

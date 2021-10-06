@@ -6,7 +6,7 @@ import { CssKeyObject } from 'types/css-basic-type';
 import { config } from 'config/config';
 
 type ResultItemProps = {
-  data: ResultUser
+  data: ResultUser;
 };
 
 const styles: CssKeyObject = {
@@ -73,14 +73,14 @@ const SearchUserItem = ({ data }: ResultItemProps) => {
       <Avatar
         size={100}
         style={styles.avatar}
-        src={(
+        src={
           data.image && (
             <img
               src={`${config.img}/user_imgs/${data.id}/${data.image}`}
               alt="search result user"
             />
           )
-        )}
+        }
       >
         {data.name[0]}
       </Avatar>

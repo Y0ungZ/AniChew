@@ -28,19 +28,19 @@ const styles: CssKeyObject = {
   },
 };
 
-const MyProfile = ({ info }:{info:MyPageType}) => {
+const MyProfile = ({ info }: { info: MyPageType }) => {
   const [visible, setVisible] = useState(false);
   return (
     <div style={styles.container}>
       <Avatar
         size={120}
-        src={(
+        src={
           info.avatar && (
-            <Image src={`${process.env.REACT_APP_IMAGE_BASE_URL
-            }/user_imgs/${info.userid}/${info.avatar}`}
+            <Image
+              src={`${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${info.userid}/${info.avatar}`}
             />
           )
-        )}
+        }
       >
         {info.nickname[0]}
       </Avatar>
@@ -53,9 +53,7 @@ const MyProfile = ({ info }:{info:MyPageType}) => {
         />
       )}
       <div style={styles.profile}>
-        <span style={styles.nickname}>
-          {info.nickname}
-        </span>
+        <span style={styles.nickname}>{info.nickname}</span>
       </div>
       <ProfileModifyModal visible={visible} setVisible={setVisible} />
     </div>

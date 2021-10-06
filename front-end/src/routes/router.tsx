@@ -5,11 +5,14 @@ import { RouteType } from './config';
 
 type RouterProps = {
   routes: RouteType[];
-}
+};
 
 const Router = ({ routes }: RouterProps) => (
   <Switch>
-    {routes && routes.map((route: RouteType) => <RouteWithSubRoutes key={route.path} {...route} />)}
+    {routes &&
+      routes.map((route: RouteType) => (
+        <RouteWithSubRoutes key={route.path} {...route} />
+      ))}
   </Switch>
 );
 

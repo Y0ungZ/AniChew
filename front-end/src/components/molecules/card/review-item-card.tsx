@@ -21,25 +21,27 @@ const styles: CssKeyObject = {
 const ReviewItemCard = ({ review }: { review: Review }) => (
   <Card
     type="inner"
-    title={(
+    title={
       <>
         <Avatar
           shape="circle"
           size="large"
-          src={(
+          src={
             <Image
               src={
                 review.userAvatar &&
                 `${config.img}/user_imgs/${review.userId}/${review.userAvatar}`
               }
             />
-            )}
+          }
         >
           {review.nickname[0]}
         </Avatar>
-        <Link to={`/user/${review.userId}`} style={styles.nickname}>{review.nickname}</Link>
+        <Link to={`/user/${review.userId}`} style={styles.nickname}>
+          {review.nickname}
+        </Link>
       </>
-    )}
+    }
     extra={<ReviewLikeBtn review={review} />}
     style={styles.card}
     bodyStyle={styles.cardBody}

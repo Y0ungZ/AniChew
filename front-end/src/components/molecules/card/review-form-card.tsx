@@ -12,17 +12,17 @@ const styles: CssKeyObject = {
     backgroundColor: 'white',
     marginBottom: '2em',
     padding: '1em 0em',
-
   },
   cardBody: {
     paddingBottom: '0',
   },
   submitBtn: {
-    float: 'right', marginTop: '1em',
+    float: 'right',
+    marginTop: '1em',
   },
 };
 
-const ReviewFormCard = observer(({ id }: {id: string}) => {
+const ReviewFormCard = observer(({ id }: { id: string }) => {
   const review = useReview();
 
   return (

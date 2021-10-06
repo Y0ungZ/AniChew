@@ -5,7 +5,7 @@ import { CssKeyObject } from 'types/css-basic-type';
 import { config } from 'config/config';
 
 type ResultItemProps = {
-  data: ResultChara
+  data: ResultChara;
 };
 
 const styles: CssKeyObject = {
@@ -76,7 +76,6 @@ const SearchCharaItem = ({ data }: ResultItemProps) => {
       <div style={styles.divider} />
       <p style={styles.name}>{data.name}</p>
     </div>
-
   );
 };
 

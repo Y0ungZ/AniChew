@@ -12,7 +12,7 @@ const styles: CssKeyObject = {
   },
 };
 
-const AnimeInfoCard = ({ info } : { info: Ani }) => (
+const AnimeInfoCard = ({ info }: { info: Ani }) => (
   <Card title="기본 정보" bordered={false} style={styles.card}>
     <p>
       <strong>에피소드</strong>
@@ -32,13 +32,15 @@ const AnimeInfoCard = ({ info } : { info: Ani }) => (
       :
       {' '}
       {info.duration}
+
     </p>
     <p>
       <strong>방영</strong>
       :
       <br />
       {moment(info.airedStart).format('YYYY-MM-DD')}
-      {info.airedEnd === new Date(0) && ` ~ ${moment(info.airedEnd).format('YYYY-MM-DD')}` }
+      {info.airedEnd === new Date(0) &&
+        ` ~ ${moment(info.airedEnd).format('YYYY-MM-DD')}`}
     </p>
   </Card>
 );

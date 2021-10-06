@@ -7,7 +7,7 @@ import { REQUIRE_LOGIN } from 'common/string-template/string-template';
 import { Review } from 'stores/review/model/review';
 import { useAuth, useReview } from 'hooks';
 
-const ReviewLikeBtn = observer(({ review }: {review: Review}) => {
+const ReviewLikeBtn = observer(({ review }: { review: Review }) => {
   const [isLove, setIsLove] = useState<boolean>(review.love);
   const [loveCnt, setLoveCnt] = useState(review.loveCnt);
   const auth = useAuth();
@@ -19,14 +19,16 @@ const ReviewLikeBtn = observer(({ review }: {review: Review}) => {
       return;
     }
     if (isLove) {
-      reviewStore.cancelLike(review.reviewId, review.targetId)
+      reviewStore
+        .cancelLike(review.reviewId, review.targetId)
         .then(() => {
           setIsLove((prev) => !prev);
           setLoveCnt((prev) => prev - 1);
         })
         .catch((error) => msg('Error', error.message));
     } else {
-      reviewStore.like(review.reviewId, review.targetId)
+      reviewStore
+        .like(review.reviewId, review.targetId)
         .then(() => {
           setIsLove((prev) => !prev);
           setLoveCnt((prev) => prev + 1);
@@ -38,7 +40,9 @@ const ReviewLikeBtn = observer(({ review }: {review: Review}) => {
   return (
     <Button
       onClick={likeReview}
-      icon={isLove ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />}
+      icon={
+        isLove ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />
+      }
     >
       <span>{loveCnt}</span>
     </Button>

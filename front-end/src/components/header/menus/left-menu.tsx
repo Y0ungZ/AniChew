@@ -5,12 +5,8 @@ type MenuModeProps = {
   mode: 'horizontal' | 'vertical' | 'inline';
 };
 
-const LeftMenu = ({ mode }:MenuModeProps) => (
-  <Menu
-    theme="light"
-    mode={mode}
-    defaultSelectedKeys={['home']}
-  >
+const LeftMenu = ({ mode }: MenuModeProps) => (
+  <Menu theme="light" mode={mode} defaultSelectedKeys={['home']}>
     <Menu.Item key="home">홈</Menu.Item>
     <Menu.Item key="works">작품들</Menu.Item>
     <Menu.Item key="chara">캐릭터</Menu.Item>
