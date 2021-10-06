@@ -24,37 +24,38 @@
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any":"off",
-    "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "react/jsx-props-no-spreading": "off",
     "react/destructuring-assignment": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "jsx-quotes": "off",
     "no-console": "off",
-    "object-curly-newline":"off",
-    "operator-linebreak":"off",
+    "object-curly-newline": "off",
+    "operator-linebreak": "off",
     "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-            "ts": "never",
-            "tsx": "never",
-            "js": "never"
-        }
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never",
+        "js": "never"
+      }
     ],
     "@typescript-eslint/no-var-requires": 0,
     "linebreak-style": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
-    "no-useless-constructor":"off",
-    "generator-star-spacing":"off",
+    "no-useless-constructor": "off",
+    "generator-star-spacing": "off",
     "import/prefer-default-export": "off",
-    "class-methods-use-this":"off",
-    "no-alert":"off",
-    "no-new":"off",
-    "jsx-a11y/no-noninteractive-element-interactions":"off",
+    "class-methods-use-this": "off",
+    "no-alert": "off",
+    "no-new": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
     "no-underscore-dangle": "off",
-    "react/jsx-wrap-multilines": "off"
+    "react/jsx-wrap-multilines": "off",
+    "implicit-arrow-linebreak": "off"
   },
   "settings": {
     "import/resolver": {
