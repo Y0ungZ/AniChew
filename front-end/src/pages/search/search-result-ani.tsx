@@ -1,13 +1,12 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { toJS } from 'mobx';
 import { ResultAni } from 'stores/search/model/search';
-import { FullLoading, SearchAniItem } from 'components';
+import { SearchAniItem } from 'components';
 import NotFound from '../error/not-found';
 
 const SearchResultAni = ({ results }: { results: ResultAni[] | undefined }) => {
   const [result, setResult] = useState<ResultAni[]>([]);
   const [datas, setDatas] = useState<ResultAni[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -16,7 +15,6 @@ const SearchResultAni = ({ results }: { results: ResultAni[] | undefined }) => {
       setResult(resultData.slice(0, 20));
       resultData = resultData?.slice(20);
       setDatas(resultData);
-      setLoading(false);
     } else {
       setResult([]);
       setDatas([]);
@@ -36,13 +34,11 @@ const SearchResultAni = ({ results }: { results: ResultAni[] | undefined }) => {
     const { clientHeight } = document.documentElement;
     scrollHeight -= 100;
 
-    if (scrollTop + clientHeight >= scrollHeight && !loading) {
-      setLoading(true);
+    if (scrollTop + clientHeight >= scrollHeight) {
       setResult(result.concat(datas.slice(0, 20)));
       setDatas(datas.slice(20));
-      setLoading(false);
     }
-  }, [loading, result, datas]);
+  }, [result, datas]);
 
   useEffect(() => {
     window.addEventListener('scroll', infiniteScroll, true);
@@ -55,7 +51,6 @@ const SearchResultAni = ({ results }: { results: ResultAni[] | undefined }) => {
         result.map((data) => (
           <div key={data.id}>
             <SearchAniItem data={data} />
-            {loading && <FullLoading />}
           </div>
         ))
       ) : (

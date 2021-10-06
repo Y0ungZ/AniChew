@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { toJS } from 'mobx';
 import { ResultUser } from 'stores/search/model/search';
 import { CssKeyObject } from 'types/css-basic-type';
-import { FullLoading, SearchUserItem } from 'components';
+import { SearchUserItem } from 'components';
 import NotFound from '../error/not-found';
 
 const styles: CssKeyObject = {
@@ -20,7 +20,6 @@ const SearchResultUser = ({
 }) => {
   const [result, setResult] = useState<ResultUser[]>([]);
   const [datas, setDatas] = useState<ResultUser[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -29,7 +28,6 @@ const SearchResultUser = ({
       setResult(resultData.slice(0, 20));
       resultData = resultData?.slice(20);
       setDatas(resultData);
-      setLoading(false);
     } else {
       setResult([]);
       setDatas([]);
@@ -49,13 +47,11 @@ const SearchResultUser = ({
     const { clientHeight } = document.documentElement;
     scrollHeight -= 100;
 
-    if (scrollTop + clientHeight >= scrollHeight && !loading) {
-      setLoading(true);
+    if (scrollTop + clientHeight >= scrollHeight) {
       setResult(result.concat(datas.slice(0, 20)));
       setDatas(datas.slice(20));
-      setLoading(false);
     }
-  }, [loading, result, datas]);
+  }, [result, datas]);
 
   useEffect(() => {
     window.addEventListener('scroll', infiniteScroll, true);
@@ -68,7 +64,6 @@ const SearchResultUser = ({
         result.map((data) => (
           <div key={data.id}>
             <SearchUserItem data={data} />
-            {loading && <FullLoading />}
           </div>
         ))
       ) : (
