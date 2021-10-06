@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { UNKNOWN_REVIEW_TARGET } from 'common/string-template/string-template';
-import { mainAxios } from 'libs/axios';
+import { mainAxios } from 'config/axios';
 import { ReviewTarget } from 'stores/review/model/review';
 
 class ReviewRepository {

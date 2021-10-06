@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import { routes } from './routes/config';
 import Router from './routes/router';
 import MainHeader from './components/header/header';
-import { mainAxios } from './libs/axios';
+import { mainAxios } from './config/axios';
 import { useAuth, useUser } from './hooks';
 import { CssKeyObject } from './types/css-basic-type';
 import { BackTopBtn } from './components';

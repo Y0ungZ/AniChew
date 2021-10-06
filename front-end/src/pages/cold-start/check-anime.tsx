@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Row, Typography } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
-import { mainAxios } from 'libs/axios';
+import { mainAxios } from 'config/axios';
 import { CssKeyObject } from 'types/css-basic-type';
 import AnimeCardWithRate from './components/anime-card-with-rate/anime-card-with-rate';
 import 'assets/css/color.css';
