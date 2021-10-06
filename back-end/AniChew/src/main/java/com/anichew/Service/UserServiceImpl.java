@@ -365,6 +365,60 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 	
+	@Override
+	public boolean deleteCover(HttpServletRequest httpServletReq) {
+		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
+		
+		
+		if(user == null)
+			return false;
+		
+		
+		user = User.builder()
+				.id(user.getId())
+				.email(user.getEmail())
+				.status(user.getStatus())
+				.gender(user.getGender())
+				.nickname(user.getNickname())
+				.avatar(user.getAvatar())
+				.birthday(user.getBirthday())
+				.createdDate(user.getCreatedDate())
+				.cover(null)
+				.build();
+		
+		userRepo.save(user);
+		
+		return true;
+	}
+	
+	@Override
+	public boolean deleteAvatar(HttpServletRequest httpServletReq) {
+		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);
+		
+		if(user == null)
+			return false;
+		
+		user = User.builder()
+				.id(user.getId())
+				.email(user.getEmail())
+				.status(user.getStatus())
+				.gender(user.getGender())
+				.nickname(user.getNickname())
+				.avatar(null)
+				.birthday(user.getBirthday())
+				.createdDate(user.getCreatedDate())
+				.cover(user.getCover())
+				.build();
+		
+		userRepo.save(user);
+		
+		
+		return true;
+	}
 	
 
 }
