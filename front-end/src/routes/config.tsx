@@ -69,6 +69,13 @@ export const routes: RouteType[] = [
     fallback: <FullLoading />,
   },
   {
+    path: '/search/:keyword',
+    exact: false,
+    private: false,
+    component: lazy(() => import('../pages/search/search')),
+    fallback: <FullLoading />,
+  },
+  {
     path: '/hellomrmyyesterday',
     exact: false,
     private: false,
