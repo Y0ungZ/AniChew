@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { mainAxios } from '../../../libs/axios';
+import { mainAxios } from 'config/axios';
 
 class CharacterRepository {
   constructor(private readonly instance: AxiosInstance) {}

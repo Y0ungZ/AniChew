@@ -1,7 +1,7 @@
 import React, { FormEvent, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth, useUser } from 'hooks';
-import { mainAxios } from 'libs/axios';
+import { mainAxios } from 'config/axios';
 
 const Test = () => {
   console.log('TEst');
