@@ -4,6 +4,7 @@ import { EditFilled } from '@ant-design/icons';
 import { CssKeyObject } from 'types/css-basic-type';
 import { CoverModifyModal } from 'components';
 import MyPageType from 'stores/mypage/model/mypage';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   container: {
@@ -30,7 +31,7 @@ const MyCover = ({ info }: { info: MyPageType }) => {
     <div style={styles.container}>
       <div
         style={{
-          background: `url(${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${info.userid}/${info.cover}) center/cover`,
+          background: `url(${config.img}/user_imgs/${info.userid}/${info.cover}) center/cover`,
           height: '20em',
         }}
       >

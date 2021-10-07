@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
 import 'assets/css/color.css';
 import { Ani, AniGenreDict } from 'stores/ani/model/ani';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   title: {
@@ -42,7 +43,7 @@ const PromotionCarouselItem = ({ data }: { data: Ani }) => {
         rgba(20, 20, 20, 0.2) 50%,
         rgba(20, 20, 20, 0.8) 100%
         ),
-        url(${process.env.REACT_APP_IMAGE_BASE_URL}/promo_imgs/${data.id}.jpg) center/cover`,
+        url(${config.img}/promo_imgs/${data.id}.jpg) center/cover`,
         backgroundSize: 'cover',
         height: '30em',
         display: 'flex',
