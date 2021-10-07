@@ -1,14 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid } from 'antd';
-import { AnimeList } from 'types/anime-list-type';
 import { CssKeyObject } from 'types/css-basic-type';
+import { RelatedAni } from 'stores/ani/model/ani';
+import { config } from 'config/config';
 
 const { useBreakpoint } = Grid;
-
-type ContentItemProps = {
-    data: AnimeList,
-};
 
 const styles: CssKeyObject = {
   container: {
@@ -29,25 +26,22 @@ const styles: CssKeyObject = {
   },
 };
 
-const ContentSliderItem = (props: ContentItemProps) => {
+const ContentSliderItem = ({ data }: { data: RelatedAni }) => {
   const screens = useBreakpoint();
   const history = useHistory();
   const goToAniDetailPage = () => {
-    history.push(`/anime/${props.data.animeId}`);
+    history.push(`/anime/${data.id}`);
   };
   return (
     <div style={styles.container}>
       <img
         style={screens.lg ? styles.largeImage : styles.smallImage}
-        src={`${process.env.REACT_APP_IMAGE_BASE_URL
-        }/anime_imgs/${props.data.animeId}.jpg`}
+        src={`${config.img}/anime_imgs/${data.id}.jpg`}
         alt="슬라이드 이미지"
         onClick={goToAniDetailPage}
         onKeyDown={goToAniDetailPage}
       />
-      <p style={styles.title}>
-        {props.data.animeKoreanName}
-      </p>
+      <p style={styles.title}>{data.koreanName}</p>
     </div>
   );
 };
