@@ -36,6 +36,7 @@ export default class AuthStoreImpl implements AuthStore {
   async logout() {
     try {
       await authRepository.logout();
+      await authRepository.clearToken();
       localStorage.removeItem('user');
       runInAction(() => {
         this.isLoggedIn = false;

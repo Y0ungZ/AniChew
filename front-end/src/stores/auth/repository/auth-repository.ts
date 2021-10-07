@@ -15,6 +15,10 @@ class AuthRepository {
   logout() {
     return this.instance.get('/oauth/logout');
   }
+
+  clearToken() {
+    return this.instance.delete('/oauth/token');
+  }
 }
 
 export default new AuthRepository(mainAxios);
