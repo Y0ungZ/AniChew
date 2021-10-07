@@ -79,4 +79,15 @@ public class RecommendController {
 		return new ResponseEntity<List<AnimeResponse>>(response,HttpStatus.OK);
 	}
 	
+	@GetMapping("/anichew")
+	public ResponseEntity<List<AnimeResponse>> getFromAnichew (HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		List<AnimeResponse> response = null;
+		
+		response = recommendService.getFromAnichew();
+	
+		
+		return new ResponseEntity<List<AnimeResponse>>(response,HttpStatus.OK);
+	}
+	
 }
