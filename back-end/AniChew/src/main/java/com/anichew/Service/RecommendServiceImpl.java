@@ -1,5 +1,6 @@
 package com.anichew.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -205,7 +206,7 @@ public class RecommendServiceImpl implements RecommendService {
 	@Override
 	public List<AnimeResponse> getFromAnichew() {
 		
-		long anichew[] = {269, 1535, 2172, 1485, 386, 431, 123, 121, 38000, 270, 263};
+		long anichew[] = {269, 1535, 2172, 1485, 386, 431, 123, 121, 38000, 270, 263, 24439, 35815, 3785};
 		
 		
 		List<AnimeResponse> response = new ArrayList();
@@ -230,4 +231,29 @@ public class RecommendServiceImpl implements RecommendService {
 		
 		return response;
 	}
+
+	@Override
+	public List<AnimeResponse> getFromNew() {
+		
+		List<Anime> animes = animeRepo.findByAiredStartBeforeOrderByAiredStartDesc(LocalDate.now());
+		List<AnimeResponse> response = new ArrayList();
+		
+		for(int i=0;i<10;i++) {
+			Anime anime = animes.get(i);
+			AnimeResponse animeRes = new AnimeResponse();
+			animeRes.setId(anime.getId());
+			animeRes.setKoreanName(anime.getKoreanName());
+			animeRes.setName(anime.getName());
+			response.add(animeRes);
+		}
+		
+
+		return response;
+	}
+	
+	
+	
+	
+	
+	
 }

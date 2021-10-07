@@ -54,7 +54,7 @@ public class RecommendController {
 		
 		List<AnimeResponse> response = null;
 		
-		if(userService.checkToken(httpServletReq))
+		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<List<AnimeResponse>>(response,HttpStatus.UNAUTHORIZED);
 		
 		response = recommendService.getFromBaseOfUser(httpServletReq);
@@ -69,7 +69,7 @@ public class RecommendController {
 		
 		List<AnimeResponse> response = null;
 		
-		if(userService.checkToken(httpServletReq))
+		if(!userService.checkToken(httpServletReq))
 			return new ResponseEntity<List<AnimeResponse>>(response,HttpStatus.UNAUTHORIZED);
 		
 		
@@ -85,6 +85,18 @@ public class RecommendController {
 		List<AnimeResponse> response = null;
 		
 		response = recommendService.getFromAnichew();
+	
+		
+		return new ResponseEntity<List<AnimeResponse>>(response,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/new")
+	public ResponseEntity<List<AnimeResponse>> getFromNew (HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		List<AnimeResponse> response = null;
+		
+		response = recommendService.getFromNew();
 	
 		
 		return new ResponseEntity<List<AnimeResponse>>(response,HttpStatus.OK);
