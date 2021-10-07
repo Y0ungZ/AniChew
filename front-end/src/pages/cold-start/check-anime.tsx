@@ -5,6 +5,7 @@ import { Header } from 'antd/lib/layout/layout';
 import { mainAxios } from 'config/axios';
 import { CssKeyObject } from 'types/css-basic-type';
 import { config } from 'config/config';
+import { Series } from 'stores/ani/model/ani';
 import AnimeCardWithRate from './components/anime-card-with-rate/anime-card-with-rate';
 import 'assets/css/color.css';
 
@@ -42,14 +43,9 @@ const styles: CssKeyObject = {
   },
 };
 
-type AniType = {
-  id: string;
-  title: string;
-};
-
 const CheckAnime = () => {
   const history = useHistory();
-  const [recommendAniList, setRecommendAniList] = useState<AniType[]>();
+  const [recommendAniList, setRecommendAniList] = useState<Series[]>();
 
   const finishColdStartSetup = () => {
     history.push('/');
@@ -59,6 +55,7 @@ const CheckAnime = () => {
     mainAxios
       .get(`${config.api}/recommend/start`) //
       .then((res) => {
+        console.log(res.data);
         setRecommendAniList(res.data.slice(0, 20));
       });
   }, []);
@@ -73,15 +70,20 @@ const CheckAnime = () => {
       <div style={styles.animeContainer}>
         <Row gutter={[16, 32]}>
           {recommendAniList &&
-            recommendAniList.map(({ id }) => (
-              <Col span={6} key={id}>
-                <AnimeCardWithRate id={id} />
+            recommendAniList.map((aniMeta) => (
+              <Col span={6} key={aniMeta.id}>
+                <AnimeCardWithRate aniMeta={aniMeta} />
               </Col>
             ))}
         </Row>
       </div>
       <footer style={styles.footer}>
-        <Button onClick={finishColdStartSetup} style={styles.btn} size="large">
+        <Button
+          type="primary"
+          onClick={finishColdStartSetup}
+          style={styles.btn}
+          size="large"
+        >
           완료
         </Button>
       </footer>

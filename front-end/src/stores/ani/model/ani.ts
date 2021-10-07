@@ -16,7 +16,8 @@ export type CharacterInfo = {
   lastName: string;
 };
 export type Series = {
-  readonly id: number;
+  readonly id: string;
+  readonly name: string;
   readonly koreanName: string;
 };
 export type Score = {

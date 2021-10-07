@@ -38,6 +38,10 @@ const Rating = ({ store, info }: { store: Store; info: Info }) => {
     checkisLoggedIn(isLoggedIn, () => {
       setRate(0);
       review.showForm = true;
+      store
+        .removeScore(info.id)
+        .then()
+        .catch((error) => msg('Error', error.message));
     });
   };
 

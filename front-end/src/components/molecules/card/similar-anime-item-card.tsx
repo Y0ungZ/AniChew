@@ -18,7 +18,7 @@ const styles: CssKeyObject = {
   cardImg: { borderRadius: '1em' },
 };
 
-const SimilarAnimeItemCard = ({ id, name }: { id: number; name: string }) => {
+const SimilarAnimeItemCard = ({ id, name }: { id: string; name: string }) => {
   const { xs } = useBreakpoint();
   const history = useHistory();
 
