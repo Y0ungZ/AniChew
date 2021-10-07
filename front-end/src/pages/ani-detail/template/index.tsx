@@ -8,6 +8,7 @@ type Props = {
   meta: ReactNode;
   info: ReactNode;
   series: ReactNode;
+  goods: ReactNode;
   reviewForm: ReactNode;
   syno: ReactNode;
   char: ReactNode;
@@ -38,6 +39,7 @@ const AniDetailTemplate = ({
   meta,
   info,
   series,
+  goods,
   reviewForm,
   syno,
   char,
@@ -72,6 +74,9 @@ const AniDetailTemplate = ({
         <Row>
           <Col span={24}>{rateChart}</Col>
         </Row>
+        <Row>
+          <Col span={24}>{goods}</Col>
+        </Row>
       </div>
     );
   }
@@ -87,6 +92,9 @@ const AniDetailTemplate = ({
           </Row>
           <Row>
             <Col span={24}>{series}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{goods}</Col>
           </Row>
         </Col>
         <Col span={15} style={styles.right}>

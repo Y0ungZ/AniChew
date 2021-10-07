@@ -8,6 +8,7 @@ import { ResultUser, ResultChara, ResultAni } from '../model/search';
 import searchRepository from '../repository/search-repository';
 
 interface SearchStore {
+  searchOpen: boolean;
   searchAniResult: ResultAni[] | undefined;
   searchCharaResult: ResultChara[] | undefined;
   searchUserResult: ResultUser[] | undefined;
@@ -17,6 +18,8 @@ interface SearchStore {
 }
 
 export default class SearchStoreImpl implements SearchStore {
+  searchOpen = false;
+
   searchAniResult: ResultAni[] | undefined = undefined;
 
   searchCharaResult: ResultChara[] | undefined = undefined;

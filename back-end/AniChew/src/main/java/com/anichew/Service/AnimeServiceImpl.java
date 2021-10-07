@@ -20,7 +20,9 @@ import com.anichew.Entity.AnimeSeries;
 import com.anichew.Entity.Animescore;
 import com.anichew.Entity.Chara;
 import com.anichew.Entity.FavoriteAnime;
+import com.anichew.Entity.RaitingPredictedraiting;
 import com.anichew.Entity.Series;
+import com.anichew.Entity.SimilarAnime;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AlarmSeriesRepository;
 import com.anichew.Repository.AnimeCharaRepository;
@@ -32,7 +34,9 @@ import com.anichew.Repository.AnimeReviewRepository;
 import com.anichew.Repository.AnimeSeriesRepository;
 import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.FavoriteAnimeRepository;
+import com.anichew.Repository.RaitingPredictedraitingRepository;
 import com.anichew.Repository.SeriesRepository;
+import com.anichew.Repository.SimilarAnimeRepository;
 import com.anichew.Repository.UserRepository;
 import com.anichew.Request.ReviewRequest;
 import com.anichew.Response.AnimeDetailResponse;
@@ -85,13 +89,21 @@ public class AnimeServiceImpl implements AnimeService {
 	private SeriesRepository seriesRepo;
 	
 	@Autowired
-	private AlarmSeriesRepository alarmSeriesRepo;	
+	private SimilarAnimeRepository similarAnimeRepo;
+	
+	@Autowired
+	private AlarmSeriesRepository alarmSeriesRepo;
+	
+	@Autowired
+	private RaitingPredictedraitingRepository raitingPredictedRepo;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
 	
 	@Autowired
 	private CookieUtil cookieUtil;
+	
+	
 	
 	@Override
 	public ScoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
@@ -169,7 +181,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		boolean isFavorite = false;
 		boolean alarm = false;
-	
+		float predictedScore = 0;
 		
 
 		Anime anime = animeRepo.findById(animeid);
@@ -184,6 +196,12 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		if(user!=null) {			
 			isFavorite = favoriteAnimeRepo.existsByUserAndAnime(user, anime);
+			
+			RaitingPredictedraiting predicted = raitingPredictedRepo.findByUserAndAnime(user, anime);
+			
+			if(predicted != null)
+				predictedScore = predicted.getAdustedPredictedScore();
+			
 		}
 		
 		
@@ -250,6 +268,27 @@ public class AnimeServiceImpl implements AnimeService {
 			avgScore = sum / cntSum;   
 		
 		
+		
+		List<SimilarAnime> similars = similarAnimeRepo.findAllByAnime(anime);
+		List<AnimeResponse> similarAnimes = new ArrayList();
+		
+		for(SimilarAnime similarAnime : similars) {
+			
+			Anime similar = animeRepo.findById(similarAnime.getSimilarAnimeId());
+			
+			AnimeResponse animeRes = new AnimeResponse();
+			animeRes.setId(similar.getId());
+			animeRes.setKoreanName(similar.getKoreanName());
+			animeRes.setName(similar.getName());
+			
+			similarAnimes.add(animeRes);
+			
+		}
+		
+		
+		
+		
+		
 		response.setGenres(genres);
 		response.setSeries(series);
 		response.setAvgScore(avgScore);
@@ -258,6 +297,8 @@ public class AnimeServiceImpl implements AnimeService {
 		response.setFavorite(isFavorite);
 		response.setMyScore(myScore);
 		response.setAlarm(alarm);
+		response.setPredictedScore(predictedScore);
+		response.setSimilarAnimes(similarAnimes);
 		
 		return response;
 	}

@@ -11,20 +11,21 @@ const KakaoOauthHandler = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const code = new URL(window.location.href).searchParams.get('code');
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+    const prevUrl = url.searchParams.get('state');
+
     if (code == null) {
       msg('Error', FAIL_LOGIN);
-      history.push(history.location.pathname);
+      history.push(`${prevUrl}`);
     } else {
       auth
         .login(code)
         .then((newUser) => {
-          console.log(newUser);
           if (newUser) {
             history.push('/cold-start');
           } else {
-            console.log(history.location.pathname);
-            user.me().then(() => history.push('/'));
+            user.me().then(() => history.push(`${prevUrl}`));
           }
         })
         .catch((error) => msg('Error', error));

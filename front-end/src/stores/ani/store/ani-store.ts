@@ -13,6 +13,7 @@ export interface AniStore {
   info: Ani | null;
   characterInfo: CharacterInfo[] | null;
   favorite: boolean;
+  goodsSubscribe: boolean;
   getInfo: (id: string) => Promise<void>;
   getCharacterInfo: (id: string) => Promise<void>;
   setScore: (id: string, score: number) => Promise<void>;
@@ -29,6 +30,8 @@ export default class AniStoreImpl implements AniStore {
 
   favorite = false;
 
+  goodsSubscribe = false;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -36,6 +39,7 @@ export default class AniStoreImpl implements AniStore {
   async getInfo(id: string) {
     try {
       const res = await aniRepository.getInfo(id);
+      console.log(res.data);
       const {
         name,
         koreanName,
@@ -55,6 +59,7 @@ export default class AniStoreImpl implements AniStore {
         favorite,
         myScore,
         synopsis,
+        alarm,
       } = res.data;
 
       const scoreList = scores.map((score: number, i: number) => ({
@@ -85,6 +90,7 @@ export default class AniStoreImpl implements AniStore {
           synopsis,
         );
         this.favorite = favorite;
+        this.goodsSubscribe = alarm;
       });
     } catch (error) {
       console.log(error);

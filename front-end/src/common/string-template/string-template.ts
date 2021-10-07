@@ -45,3 +45,4 @@ export const FAIL_GET_PROMOTION_ANIME =
   '프로모션 데이터를 받아오지 못했습니다.';
 
 export const UNKNOWN_REVIEW_TARGET = '알 수 없는 리뷰 타겟입니다.';
+export const ALERT_LOGOUT = '장시간이 지나 로그아웃되었습니다.';

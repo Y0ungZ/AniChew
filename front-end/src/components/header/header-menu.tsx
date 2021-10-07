@@ -3,14 +3,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Avatar, Button, Dropdown, Menu } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { useAuth, useUser } from 'hooks';
+import { useAuth, useSearch, useUser } from 'hooks';
 import { LoginModal } from 'components';
 import { config } from 'config/config';
 import { CssKeyObject } from 'types/css-basic-type';
-
-type toggleSearchProps = {
-  toggleSearchHeader: () => void;
-};
+import { msg } from 'util/message';
 
 const styles: CssKeyObject = {
   icon: {
@@ -21,20 +18,22 @@ const styles: CssKeyObject = {
   },
 };
 
-const HeaderMenu = observer((props: toggleSearchProps) => {
+const HeaderMenu = observer(() => {
   const history = useHistory();
-  const login = useAuth();
+  const auth = useAuth();
   const user = useUser();
+  const search = useSearch();
   const [visible, setVisible] = useState(false);
 
   const toggleSearchHeader = () => {
-    props.toggleSearchHeader();
+    search.searchOpen = !search.searchOpen;
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    login.logout();
-    history.push('/');
+    auth
+      .logout()
+      .then(() => history.push('/'))
+      .catch((error) => msg('Error', error.message));
   };
 
   const menu = (
@@ -56,7 +55,7 @@ const HeaderMenu = observer((props: toggleSearchProps) => {
         type="link"
         onClick={toggleSearchHeader}
       />
-      {login.isLoggedIn ? (
+      {auth.isLoggedIn ? (
         <Dropdown overlay={menu} trigger={['click']}>
           <Avatar
             style={styles.pointer}

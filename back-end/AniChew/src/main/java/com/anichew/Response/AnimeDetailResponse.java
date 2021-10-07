@@ -36,7 +36,8 @@ public class AnimeDetailResponse {
 	private boolean isFavorite;
 	private float myScore;
 	private boolean alarm;
-	
+	private float predictedScore;
+	private List<AnimeResponse> similarAnimes;
 	
 	public AnimeDetailResponse() {}
 	public AnimeDetailResponse(Anime anime) {
