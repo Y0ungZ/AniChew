@@ -4,6 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ProfileModifyModal } from 'components';
 import { CssKeyObject } from 'types/css-basic-type';
 import MyPageType from 'stores/mypage/model/mypage';
+import { config } from 'config/config';
 
 const styles: CssKeyObject = {
   container: {
@@ -37,7 +38,7 @@ const MyProfile = ({ info }: { info: MyPageType }) => {
         src={
           info.avatar && (
             <Image
-              src={`${process.env.REACT_APP_IMAGE_BASE_URL}/user_imgs/${info.userid}/${info.avatar}`}
+              src={`${config.img}/user_imgs/${info.userid}/${info.avatar}`}
             />
           )
         }
