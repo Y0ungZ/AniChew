@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Grid } from 'antd';
+import { Card, Grid } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
-import { RelatedAni } from 'stores/ani/model/ani';
+import { Series } from 'stores/ani/model/ani';
 import { config } from 'config/config';
 
 const { useBreakpoint } = Grid;
@@ -11,38 +11,52 @@ const styles: CssKeyObject = {
   container: {
     textAlign: 'center',
   },
-  largeImage: {
-    width: '13em',
-    height: '15em',
-    cursor: 'pointer',
-  },
-  smallImage: {
-    width: '9em',
-    height: '11em',
-    cursor: 'pointer',
-  },
   title: {
     marginTop: '1em',
   },
+  card: {
+    width: '14em',
+    textAlign: 'center',
+    borderRadius: '1em',
+    cursor: 'pointer',
+  },
+  cardMobile: { width: '10.5em', textAlign: 'center', borderRadius: '1em' },
+  cardHead: { borderRadius: '1em' },
+  cardBody: { padding: '0' },
+  cardImg: {
+    borderRadius: '0em 0em 1em 1em',
+    height: '19em',
+    objectFit: 'cover',
+  },
+  cardImgMobile: {
+    borderRadius: '0em 0em 1em 1em',
+    height: '15em',
+    objectFit: 'cover',
+  },
 };
 
-const ContentSliderItem = ({ data }: { data: RelatedAni }) => {
-  const screens = useBreakpoint();
+const ContentSliderItem = ({ data }: { data: Series }) => {
+  const { xs } = useBreakpoint();
   const history = useHistory();
   const goToAniDetailPage = () => {
     history.push(`/anime/${data.id}`);
   };
   return (
-    <div style={styles.container}>
-      <img
-        style={screens.lg ? styles.largeImage : styles.smallImage}
-        src={`${config.img}/anime_imgs/${data.id}.jpg`}
-        alt="슬라이드 이미지"
-        onClick={goToAniDetailPage}
-        onKeyDown={goToAniDetailPage}
-      />
-      <p style={styles.title}>{data.koreanName}</p>
-    </div>
+    <Card
+      type="inner"
+      title={<strong>{data.koreanName}</strong>}
+      cover={
+        <img
+          style={xs ? styles.cardImgMobile : styles.cardImg}
+          alt="example"
+          src={`${config.img}/anime_imgs/${data.id}.jpg`}
+        />
+      }
+      style={xs ? styles.cardMobile : styles.card}
+      headStyle={styles.cardHead}
+      bodyStyle={styles.cardBody}
+      onClick={goToAniDetailPage}
+    />
   );
 };
 

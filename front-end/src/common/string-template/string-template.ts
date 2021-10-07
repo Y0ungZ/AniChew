@@ -46,3 +46,5 @@ export const FAIL_GET_PROMOTION_ANIME =
 
 export const UNKNOWN_REVIEW_TARGET = '알 수 없는 리뷰 타겟입니다.';
 export const ALERT_LOGOUT = '장시간이 지나 로그아웃되었습니다.';
+
+export const FAIL_GET_RECOMMENDATIONS = '애니메이션 추천 실패';
