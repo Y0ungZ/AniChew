@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react';
-import { Card, List } from 'antd';
 import Slider, { Settings } from 'react-slick';
-import { ReviewItemCard, PrevArrow, NextArrow } from 'components';
+import { Button, Card, List, Modal } from 'antd';
+import {
+  ReviewItemCard,
+  PrevArrow,
+  NextArrow,
+  ReviewAllListItem,
+} from 'components';
 import { CssKeyObject } from 'types/css-basic-type';
 import { useReview } from 'hooks';
 
@@ -29,24 +34,63 @@ const settings: Settings = {
 };
 
 const ReviewSliderCard = observer(() => {
-  const { reviews } = useReview();
+  const reviewStore = useReview();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <Card
-      title="리뷰 목록"
-      bordered={false}
-      style={styles.card}
-      bodyStyle={styles.cardBody}
-    >
-      {Object.keys(reviews).length > 0 ? (
-        <Slider {...settings}>
-          {Object.keys(reviews).map((key) => (
-            <ReviewItemCard key={key} review={reviews[key]} />
-          ))}
-        </Slider>
-      ) : (
-        <List />
-      )}
-    </Card>
+    <>
+      <Card
+        title="리뷰 목록"
+        bordered={false}
+        style={styles.card}
+        bodyStyle={styles.cardBody}
+        extra={
+          <Button type="primary" onClick={showModal}>
+            전체보기
+          </Button>
+        }
+      >
+        {reviewStore.reviews.length ? (
+          <Slider {...settings}>
+            {reviewStore.reviews.map((item) => (
+              <ReviewItemCard key={item.reviewId} review={item} />
+            ))}
+          </Slider>
+        ) : (
+          <List />
+        )}
+      </Card>
+
+      <Modal
+        title="리뷰 전체보기"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={700}
+        footer={null}
+      >
+        <List
+          size="large"
+          pagination={{
+            pageSize: 10,
+          }}
+          dataSource={reviewStore.reviews}
+          renderItem={(review) => <ReviewAllListItem review={review} />}
+        />
+      </Modal>
+    </>
   );
 });
 

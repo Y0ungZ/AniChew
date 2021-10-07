@@ -9,6 +9,8 @@ export { default as FullLoading } from './atoms/loading/full-loading';
 export { default as NextArrow } from './atoms/slick-arrow/next-arrow';
 export { default as PrevArrow } from './atoms/slick-arrow/prev-arrow';
 
+export { default as ReviewAllListItem } from './atoms/list-item/review-all-list-item';
+
 /* molecules */
 export { default as AnimeInfoCard } from './molecules/card/anime-info-card';
 export { default as AnimeSeriesCard } from './molecules/card/anime-series-card';
