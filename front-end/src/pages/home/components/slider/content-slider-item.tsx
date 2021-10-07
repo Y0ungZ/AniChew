@@ -22,14 +22,22 @@ const styles: CssKeyObject = {
   },
   cardMobile: { width: '10.5em', textAlign: 'center', borderRadius: '1em' },
   cardHead: { borderRadius: '1em' },
-  cardBody: { padding: '0' },
+  cardBody: { padding: '1em', height: '3.5em' },
+  cardBodyTitle: {
+    fontWeight: 'bold',
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical',
+  },
   cardImg: {
-    borderRadius: '0em 0em 1em 1em',
+    borderRadius: '1em 1em 0em 0em',
     height: '19em',
     objectFit: 'cover',
   },
   cardImgMobile: {
-    borderRadius: '0em 0em 1em 1em',
+    borderRadius: '1em 1em 0em 0em',
     height: '15em',
     objectFit: 'cover',
   },
@@ -44,7 +52,6 @@ const ContentSliderItem = ({ data }: { data: Series }) => {
   return (
     <Card
       type="inner"
-      title={<strong>{data.koreanName}</strong>}
       cover={
         <img
           style={xs ? styles.cardImgMobile : styles.cardImg}
@@ -56,7 +63,9 @@ const ContentSliderItem = ({ data }: { data: Series }) => {
       headStyle={styles.cardHead}
       bodyStyle={styles.cardBody}
       onClick={goToAniDetailPage}
-    />
+    >
+      <p style={styles.cardBodyTitle}>{data.koreanName}</p>
+    </Card>
   );
 };
 
