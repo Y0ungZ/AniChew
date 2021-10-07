@@ -69,9 +69,9 @@ const FavoriteCharaItem = ({ title, datas }: MyFavoriteCharaProps) => {
                 onKeyDown={() => goToCharaDetail(data.id)}
               />
               <p style={styles.name}>
-                {data.firstName}
-                {' '}
                 {data.lastName}
+                {' '}
+                {data.firstName}
               </p>
             </div>
           ))}
