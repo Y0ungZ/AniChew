@@ -4,6 +4,7 @@ import Text from 'antd/lib/typography/Text';
 import kakaoLogo from 'assets/img/kakao-logo.jpg';
 import { CssKeyObject } from 'types/css-basic-type';
 import { config } from 'config/config';
+import { useHistory } from 'react-router-dom';
 
 const styles: CssKeyObject = {
   btn: {
@@ -18,8 +19,9 @@ const styles: CssKeyObject = {
 };
 
 const KakaoLoginBtn = () => {
+  const history = useHistory();
   const handleKakaoLogin = () => {
-    window.location.href = `${config.kakaoAuth}`;
+    window.location.href = `${config.kakaoAuth}&state=${history.location.pathname}`;
   };
 
   return (
