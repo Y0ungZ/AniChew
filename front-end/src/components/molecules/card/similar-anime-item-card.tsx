@@ -6,25 +6,34 @@ import { config } from 'config/config';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
 const styles: CssKeyObject = {
-  card: { width: 150, textAlign: 'center', borderRadius: '1em', cursor: 'pointer' },
+  card: {
+    width: 150,
+    textAlign: 'center',
+    borderRadius: '1em',
+    cursor: 'pointer',
+  },
   cardMobile: { width: 110, textAlign: 'center', borderRadius: '1em' },
   cardHead: { borderRadius: '1em' },
   cardBody: { padding: '0', borderRadius: '1em' },
   cardImg: { borderRadius: '1em' },
-  likeBtn: { backgroundColor: 'inherit', border: 'none', fontSize: '1rem' },
 };
 
-const SimilarAnimeItemCard = ({ id, name }: { id: number, name: string }) => {
+const SimilarAnimeItemCard = ({ id, name }: { id: number; name: string }) => {
   const { xs } = useBreakpoint();
   const history = useHistory();
 
   return (
     <Card
+      hoverable
       type="inner"
       title={<strong>{name}</strong>}
       cover={
-        <img style={styles.cardImg} alt="example" src={`${config.img}/anime_imgs/${id}.jpg`} />
-    }
+        <img
+          style={styles.cardImg}
+          alt="example"
+          src={`${config.img}/anime_imgs/${id}.jpg`}
+        />
+      }
       style={xs ? styles.cardMobile : styles.card}
       headStyle={styles.cardHead}
       bodyStyle={styles.cardBody}
