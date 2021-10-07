@@ -23,7 +23,7 @@ const styles: CssKeyObject = {
 
 const HeaderMenu = observer((props: toggleSearchProps) => {
   const history = useHistory();
-  const login = useAuth();
+  const auth = useAuth();
   const user = useUser();
   const [visible, setVisible] = useState(false);
 
@@ -33,7 +33,7 @@ const HeaderMenu = observer((props: toggleSearchProps) => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    login.logout();
+    auth.logout();
     history.push('/');
   };
 
@@ -56,7 +56,7 @@ const HeaderMenu = observer((props: toggleSearchProps) => {
         type="link"
         onClick={toggleSearchHeader}
       />
-      {login.isLoggedIn ? (
+      {auth.isLoggedIn ? (
         <Dropdown overlay={menu} trigger={['click']}>
           <Avatar
             style={styles.pointer}
