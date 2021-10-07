@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
@@ -31,26 +31,18 @@ const styles: CssKeyObject = {
   },
 };
 
-const MainHeader = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
-
-  const toggleSearchHeader = () => {
-    setSearchOpen((open) => !open);
-  };
-
-  return (
-    <div style={styles.position}>
-      <Header style={styles.header}>
-        <Link to="/">
-          <span style={styles.logo}>애니츄</span>
-        </Link>
-        <div style={styles.menu}>
-          <HeaderMenu toggleSearchHeader={toggleSearchHeader} />
-        </div>
-      </Header>
-      <SearchHeader open={searchOpen} />
-    </div>
-  );
-};
+const MainHeader = () => (
+  <div style={styles.position}>
+    <Header style={styles.header}>
+      <Link to="/">
+        <span style={styles.logo}>애니츄</span>
+      </Link>
+      <div style={styles.menu}>
+        <HeaderMenu />
+      </div>
+    </Header>
+    <SearchHeader />
+  </div>
+);
 
 export default MainHeader;

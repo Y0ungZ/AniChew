@@ -4,12 +4,10 @@ import { Input } from 'antd';
 import { CssKeyObject } from 'types/css-basic-type';
 import { SEARCH_INPUT } from 'common/string-template/string-template';
 import 'assets/css/color.css';
+import { observer } from 'mobx-react';
+import { useSearch } from 'hooks';
 
 const { Search } = Input;
-
-type searchOpen = {
-  open: boolean;
-};
 
 const styles: CssKeyObject = {
   displayBlock: {
@@ -29,16 +27,18 @@ const styles: CssKeyObject = {
   },
 };
 
-const SearchHeader = ({ open }: searchOpen) => {
+const SearchHeader = observer(() => {
   const history = useHistory();
+  const search = useSearch();
 
   const onSearch = (keyword: string) => {
+    search.searchOpen = !search.searchOpen;
     history.push(`/search/${keyword}`);
   };
 
   return (
-    <div style={open ? styles.displayBlock : styles.displayNone}>
-      {open && (
+    <div style={search.searchOpen ? styles.displayBlock : styles.displayNone}>
+      {search.searchOpen && (
         <div style={styles.header}>
           <Search
             placeholder={SEARCH_INPUT}
@@ -51,6 +51,6 @@ const SearchHeader = ({ open }: searchOpen) => {
       )}
     </div>
   );
-};
+});
 
 export default SearchHeader;
