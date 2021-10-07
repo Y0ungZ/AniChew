@@ -24,6 +24,7 @@ import com.anichew.Response.CharaResponse;
 import com.anichew.Response.FavoriteResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
+import com.anichew.Response.SeriesResponse;
 import com.anichew.Service.AnimeService;
 import com.anichew.Service.UserService;
 
@@ -330,6 +331,46 @@ public class AnimeController {
 		return new ResponseEntity<List<AnimeDetailResponse>>(response,HttpStatus.OK);
 	}
 	
+	
+	@PostMapping(value="{animeid}/alarm")
+	public ResponseEntity<SeriesResponse> setAnimeAlarm(@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+		SeriesResponse response = new SeriesResponse();
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<SeriesResponse>(response, HttpStatus.UNAUTHORIZED);
+
+
+		if(!animeService.existsAnime(animeid)) {
+			response.setId(-1);
+			return new ResponseEntity<SeriesResponse>(response,HttpStatus.NOT_FOUND);
+		}
+
+		response = animeService.setAlarm(httpServletReq, animeid);
+
+		
+		return new ResponseEntity<SeriesResponse>(response,HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/{animeid}/alarm")
+	public ResponseEntity<String> deleteAnimeAlarm (@PathVariable("animeid") long animeid, HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		
+
+		if(!userService.checkToken(httpServletReq))
+			return new ResponseEntity<String>("NOT FOUND TOKEN", HttpStatus.UNAUTHORIZED);
+
+
+		if(!animeService.existsAnime(animeid)) {
+			return new ResponseEntity<String>("NOT FOUND ANIME",HttpStatus.NOT_FOUND);
+		}
+		
+		if(!animeService.deleteAlarm(httpServletReq, animeid))
+			return new ResponseEntity<String>("NOT ACCEPTABLE",HttpStatus.NOT_ACCEPTABLE);		
+		
+
+		return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+	}
 	
 	
 }

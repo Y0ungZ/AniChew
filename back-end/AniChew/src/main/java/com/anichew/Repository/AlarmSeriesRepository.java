@@ -2,6 +2,8 @@ package com.anichew.Repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.anichew.Entity.AlarmSeries;
@@ -12,5 +14,7 @@ public interface AlarmSeriesRepository extends JpaRepository<AlarmSeries, Long> 
 	List<AlarmSeries> findAllBySeries(Series series);
 
 	AlarmSeries findByUserAndSeries(User user, Series series);
-
+	
+	@Transactional
+	void delete(AlarmSeries alarmSeries);
 }

@@ -9,6 +9,7 @@ import com.anichew.Response.AnimeDetailResponse;
 import com.anichew.Response.CharaResponse;
 import com.anichew.Response.ReviewResponse;
 import com.anichew.Response.ScoreResponse;
+import com.anichew.Response.SeriesResponse;
 
 public interface AnimeService {
 	ScoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score);
@@ -31,5 +32,7 @@ public interface AnimeService {
 	List<ReviewResponse> getReviews(HttpServletRequest httpServletReq, long animeid);
 	List<CharaResponse> getCharas(long animeid);	
 	List<AnimeDetailResponse> getPromotion(HttpServletRequest httpServletReq);
+	SeriesResponse setAlarm (HttpServletRequest httpServletReq, long animeid);
+	boolean deleteAlarm(HttpServletRequest httpServletReq, long animeid);
 	
 }

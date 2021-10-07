@@ -168,7 +168,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		boolean isFavorite = false;
-	
+		boolean alarm = false;
 	
 		
 
@@ -210,6 +210,12 @@ public class AnimeServiceImpl implements AnimeService {
 			seriesAnimes = animeSeriesRepo.findAllBySeries(seriesAnime.getSeries());
 			series.setId(seriesAnime.getSeries().getId());
 			series.setName(seriesAnime.getSeries().getName());
+			if(alarmSeriesRepo.findByUserAndSeries(user, seriesAnime.getSeries())!=null) {
+				alarm = true;
+			}
+			
+			
+			
 			for(AnimeSeries aSeries : seriesAnimes) {
 				AnimeResponse relatedAnime = new AnimeResponse();
 				relatedAnime.setId(aSeries.getAnime().getId());
@@ -251,6 +257,7 @@ public class AnimeServiceImpl implements AnimeService {
 		response.setRelatedAnimes(relatedAnimes);
 		response.setFavorite(isFavorite);
 		response.setMyScore(myScore);
+		response.setAlarm(alarm);
 		
 		return response;
 	}
@@ -581,6 +588,28 @@ public class AnimeServiceImpl implements AnimeService {
 		response.setName(series.getName());
 		
 		return response;
+	}
+	
+	public boolean deleteAlarm(HttpServletRequest httpServletReq, long animeid) {
+		Anime anime = animeRepo.findById(animeid);
+		AnimeSeries animeSeries = animeSeriesRepo.findByAnime(anime);
+		Series series = animeSeries.getSeries();
+		
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
+		
+		AlarmSeries alarmSeries = alarmSeriesRepo.findByUserAndSeries(user, series);
+		
+		if(alarmSeries==null) {
+			return false;
+		}
+		
+		
+		alarmSeriesRepo.delete(alarmSeries);
+	
+		
+		return true;
+		
 	}
 	
 	
