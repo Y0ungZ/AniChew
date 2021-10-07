@@ -115,7 +115,7 @@ const AniMetaSection = ({ info, store }: { info: Ani; store: Store }) => {
                 {' '}
                 {info.predictedScore === 0
                   ? '점수가 없습니다.'
-                  : (info.avgScore / 2).toFixed(1)}
+                  : (info.predictedScore / 2).toFixed(1)}
               </Text>
               <Text style={styles.realRating}>
                 평점 ☆
