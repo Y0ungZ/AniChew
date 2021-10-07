@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import './app.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Layout } from 'antd';
+import { msg } from 'util/message';
+import { mainAxios } from 'config/axios';
+import axios from 'axios';
 import { routes } from './routes/config';
 import Router from './routes/router';
 import MainHeader from './components/header/header';
@@ -21,9 +24,34 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('user')) {
       auth.isLoggedIn = true;
-      user.me();
+      user
+        .me()
+        .then()
+        .catch((error) => msg('Error', error.message));
     }
   });
+
+  mainAxios.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const {
+        config,
+        response: { status, data },
+      } = error;
+
+      if (status === 401) {
+        auth
+          .logout()
+          .then()
+          .catch((err) => msg('Error', err.message));
+      } else if (status === 403 && data === 'access token refresh') {
+        const originalRequest = config;
+        return axios(originalRequest);
+      }
+
+      return Promise.reject(error);
+    },
+  );
 
   return (
     <Layout>
