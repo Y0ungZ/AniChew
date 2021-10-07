@@ -13,13 +13,16 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="alram_series")
+@Table(name="alarm_series")
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class AlarmSeries {
 	

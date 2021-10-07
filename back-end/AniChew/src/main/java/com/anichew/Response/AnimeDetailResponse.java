@@ -35,6 +35,7 @@ public class AnimeDetailResponse {
 	private SeriesResponse series;
 	private boolean isFavorite;
 	private float myScore;
+	private boolean alarm;
 	
 	
 	public AnimeDetailResponse() {}
