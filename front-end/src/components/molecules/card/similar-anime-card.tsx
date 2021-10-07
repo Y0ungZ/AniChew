@@ -17,7 +17,7 @@ const styles: CssKeyObject = {
 
 const settings: Settings = {
   className: 'center',
-  centerMode: true,
+  centerMode: false,
   infinite: false,
   centerPadding: '1em',
   slidesToShow: 2.5,
