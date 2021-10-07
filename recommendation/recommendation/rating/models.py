@@ -19,6 +19,17 @@ class RecommendataionCF(models.Model):
     user_id = models.IntegerField()
     anime_id = models.IntegerField()
 
+class PredictedRating(models.Model):
+    user_id = models.IntegerField()
+    anime_id = models.IntegerField()
+    predicted_score = models.FloatField()
+    adusted_predicted_score = models.FloatField()
+
+class User_favorite_genre(models.Model):
+    user_id = models.IntegerField()
+    genre_id = models.IntegerField()
+    genre_name = models.TextField()
+
 class AlramSeries(models.Model):
     alram_series_id = models.BigAutoField(primary_key=True)
     anime_series = models.ForeignKey('AnimeSeries', models.DO_NOTHING)
