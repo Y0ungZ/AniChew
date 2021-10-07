@@ -201,4 +201,33 @@ public class RecommendServiceImpl implements RecommendService {
 				
 		return response;
 	}
+
+	@Override
+	public List<AnimeResponse> getFromAnichew() {
+		
+		long anichew[] = {269, 1535, 2172, 1485, 386, 431, 123, 121, 38000, 270, 263};
+		
+		
+		List<AnimeResponse> response = new ArrayList();
+		Set<Anime> recommendSet = new HashSet();
+		Random random = new Random();
+		
+		while(recommendSet.size()<10 || recommendSet.size() < anichew.length) {
+			int idx = random.nextInt(anichew.length);
+			Anime anime = animeRepo.findById(anichew[idx]);
+			
+			if(anime == null) continue;
+			
+			if(!recommendSet.contains(anime)) {
+				recommendSet.add(anime);
+				AnimeResponse animeRes = new AnimeResponse();
+				animeRes.setId(anime.getId());
+				animeRes.setKoreanName(anime.getKoreanName());
+				animeRes.setName(anime.getName());
+				response.add(animeRes);
+			}
+		}
+		
+		return response;
+	}
 }

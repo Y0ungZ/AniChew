@@ -11,4 +11,5 @@ public interface RecommendService {
 	List<AnimeResponse> getFromMasterpieces();
 	List<AnimeResponse> getFromBaseOfUser(HttpServletRequest httpServletReq);
 	List<AnimeResponse> getFromBaseOfFavorite(HttpServletRequest httpServletReq);
+	List<AnimeResponse> getFromAnichew();
 }
