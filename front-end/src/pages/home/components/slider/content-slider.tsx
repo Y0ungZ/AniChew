@@ -2,17 +2,12 @@ import React from 'react';
 import { Typography } from 'antd';
 import Slider, { Settings } from 'react-slick';
 import { NextArrow, PrevArrow } from 'components';
-import { AnimeList } from 'types/anime-list-type';
 import { CssKeyObject } from 'types/css-basic-type';
+import { RelatedAni } from 'stores/ani/model/ani';
 import ContentSliderItem from './content-slider-item';
 import 'assets/css/color.css';
 
 const { Title } = Typography;
-
-type ContentItemProps = {
-  datas: AnimeList[],
-  title: string
-};
 
 const styles: CssKeyObject = {
   position: {
@@ -53,15 +48,20 @@ const settings: Settings = {
   ],
 };
 
-const ContentSlider = (props:ContentItemProps) => (
-
+const ContentSlider = ({
+  title,
+  datas,
+}: {
+  title: string;
+  datas: RelatedAni[];
+}) => (
   <div style={styles.position}>
     <Title style={styles.title} level={3}>
-      {props.title}
+      {title}
     </Title>
     <Slider {...settings}>
-      {props.datas.map((data) => (
-        <ContentSliderItem key={data.animeId} data={data} />
+      {datas.map((data) => (
+        <ContentSliderItem key={data.id} data={data} />
       ))}
     </Slider>
   </div>
