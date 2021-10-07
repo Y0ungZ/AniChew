@@ -13,6 +13,7 @@ export interface AniStore {
   info: Ani | null;
   characterInfo: CharacterInfo[] | null;
   favorite: boolean;
+  goodsSubscribe: boolean;
   getInfo: (id: string) => Promise<void>;
   getCharacterInfo: (id: string) => Promise<void>;
   setScore: (id: string, score: number) => Promise<void>;
@@ -28,6 +29,8 @@ export default class AniStoreImpl implements AniStore {
   characterInfo: CharacterInfo[] | null = null;
 
   favorite = false;
+
+  goodsSubscribe = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -55,6 +58,7 @@ export default class AniStoreImpl implements AniStore {
         favorite,
         myScore,
         synopsis,
+        alram,
       } = res.data;
 
       const scoreList = scores.map((score: number, i: number) => ({
@@ -85,6 +89,7 @@ export default class AniStoreImpl implements AniStore {
           synopsis,
         );
         this.favorite = favorite;
+        this.goodsSubscribe = alram;
       });
     } catch (error) {
       console.log(error);

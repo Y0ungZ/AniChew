@@ -15,6 +15,7 @@ import { useAni, useAuth, useReview } from 'hooks';
 import NotFound from 'pages/error/not-found';
 import AniDetailTemplate from 'pages/ani-detail/template';
 import { msg } from 'util/message';
+import GoodsCard from 'components/molecules/card/goods-card';
 
 const AniDetail = observer(() => {
   const param = useParams<{ id: string }>();
@@ -63,6 +64,7 @@ const AniDetail = observer(() => {
           meta={<AniMetaSection info={ani.info} store={ani} />}
           info={<AnimeInfoCard info={ani.info} />}
           series={<AnimeSeriesCard series={ani.info.relatedAnis} />}
+          goods={<GoodsCard />}
           reviewForm={review.showForm && <ReviewFormCard id={ani.info.id} />}
           syno={<SynopsisCard />}
           char={<CharacterListCard />}
