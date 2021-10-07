@@ -275,6 +275,7 @@ public class AnimeServiceImpl implements AnimeService {
 		for(SimilarAnime similarAnime : similars) {
 			
 			Anime similar = animeRepo.findById(similarAnime.getSimilarAnimeId());
+			if(similar == null) continue;
 			
 			AnimeResponse animeRes = new AnimeResponse();
 			animeRes.setId(similar.getId());
