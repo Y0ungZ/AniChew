@@ -98,12 +98,8 @@ public class UserServiceImpl implements UserService {
 
 		final String accessToken = jwtUtil.generateToken(userid);
 		final String refreshToken = jwtUtil.generateRefreshToken(userid);
-		Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, accessToken);
-		Cookie refreshTokenCookie = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME,refreshToken);
-		redisUtil.setDataExpire(userid + "jwt", refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
-		httpServletResponse.addCookie(refreshTokenCookie);
-		HttpSession session = httpServletReq.getSession();
-		session.setAttribute("key",refreshToken);		
+		Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, accessToken,(int)jwtUtil.TOKEN_VALIDATION_SECOND);
+		
 		httpServletResponse.addCookie(accessTokenCookie);
 		Collection<String> headers = httpServletResponse.getHeaders(HttpHeaders.SET_COOKIE);
 		for (String header : headers) {
@@ -119,14 +115,17 @@ public class UserServiceImpl implements UserService {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);		
 		final String refreshToken = jwtUtil.generateRefreshToken(Long.toString(userid));
 		
-		HttpSession session = httpServletReq.getSession();
-		session.setAttribute("refreshToken",refreshToken);
-		redisUtil.setData(session.getId(), refreshToken);
-		redisUtil.setData(Long.toString(userid), session.getId());
+			
+		Cookie refreshTokenCookie = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME,refreshToken,(int)jwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+		redisUtil.setDataExpire(userid + "jwt", refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);	
+		httpServletRes.addCookie(refreshTokenCookie);
 		Collection<String> headers = httpServletRes.getHeaders(HttpHeaders.SET_COOKIE);
 		for (String header : headers) {
 			httpServletRes.setHeader(HttpHeaders.SET_COOKIE, header + "; " + "SameSite=None; Secure");
 		}
+		
+		redisUtil.setData(Long.toString(userid),refreshToken);
+
 		return true;
 	}
 	

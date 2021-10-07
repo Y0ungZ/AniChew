@@ -12,12 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CookieUtil {
 	 public final static long USER_NULL = -1;
-	 public final static int COOKIE_MAX_AGE = 60 * 180;	
 		
-    public Cookie createCookie(String cookieName, String value){
+    public Cookie createCookie(String cookieName, String value, int time){
         Cookie token = new Cookie(cookieName,value);
         token.setHttpOnly(true);
-        token.setMaxAge(COOKIE_MAX_AGE);
+        token.setMaxAge(time);
         token.setPath("/");
         return token;
     }
