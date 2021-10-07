@@ -30,7 +30,7 @@ export default class AniStoreImpl implements AniStore {
 
   favorite = false;
 
-  goodsSubscribe = true;
+  goodsSubscribe = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -39,6 +39,7 @@ export default class AniStoreImpl implements AniStore {
   async getInfo(id: string) {
     try {
       const res = await aniRepository.getInfo(id);
+      console.log(res.data);
       const {
         name,
         koreanName,
@@ -58,7 +59,7 @@ export default class AniStoreImpl implements AniStore {
         favorite,
         myScore,
         synopsis,
-        alram,
+        alarm,
       } = res.data;
 
       const scoreList = scores.map((score: number, i: number) => ({
@@ -89,7 +90,7 @@ export default class AniStoreImpl implements AniStore {
           synopsis,
         );
         this.favorite = favorite;
-        this.goodsSubscribe = alram;
+        this.goodsSubscribe = alarm;
       });
     } catch (error) {
       console.log(error);
