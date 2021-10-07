@@ -3,7 +3,9 @@ autopep8
 cycler
 Django
 django-cors-headers
+django-crontab
 djangorestframework
+greenlet
 joblib
 kiwisolver
 matplotlib
@@ -11,6 +13,7 @@ mysqlclient
 numpy
 pandas
 Pillow
+psycopg2
 pycodestyle
 pyparsing
 python-dateutil
@@ -18,7 +21,8 @@ pytz
 scikit-learn
 scipy
 seaborn
-sqlparse
 six
-toml
+SQLAlchemy
+sqlparse
 threadpoolctl
+toml
