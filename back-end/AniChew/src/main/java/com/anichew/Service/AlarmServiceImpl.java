@@ -71,7 +71,7 @@ public class AlarmServiceImpl {
 			NewFigure doneFigure = NewFigure.builder()
 					.id(figure.getId())
 					.title(figure.getTitle())
-					.url(figure.getTitle())
+					.url(figure.getUrl())
 					.alarm(true)
 					.build();
 			newFigureRepo.save(doneFigure);
