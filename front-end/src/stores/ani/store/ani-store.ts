@@ -6,7 +6,7 @@ import {
   FAIL_GIVE_ANI_SCORE,
   FAIL_LIKE_ANI,
 } from 'common/string-template/string-template';
-import { Ani, CharacterInfo } from '../model/ani';
+import { Ani, CharacterInfo, Series } from '../model/ani';
 import aniRepository from '../repository/ani-repository';
 
 export interface AniStore {
@@ -27,6 +27,8 @@ export default class AniStoreImpl implements AniStore {
   info: Ani | null = null;
 
   characterInfo: CharacterInfo[] | null = null;
+
+  similarAnimes: Series[] | null = null;
 
   favorite = false;
 
@@ -60,6 +62,8 @@ export default class AniStoreImpl implements AniStore {
         myScore,
         synopsis,
         alarm,
+        predictedScore,
+        similarAnimes,
       } = res.data;
 
       const scoreList = scores.map((score: number, i: number) => ({
@@ -88,7 +92,9 @@ export default class AniStoreImpl implements AniStore {
           series,
           favorite,
           synopsis,
+          predictedScore,
         );
+        this.similarAnimes = similarAnimes;
         this.favorite = favorite;
         this.goodsSubscribe = alarm;
       });

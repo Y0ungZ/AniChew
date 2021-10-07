@@ -21,6 +21,8 @@ export { default as ReviewItemCard } from './molecules/card/review-item-card';
 export { default as ReviewSliderCard } from './molecules/card/review-slider-card';
 export { default as SynopsisCard } from './molecules/card/synopsis-card';
 export { default as ThumbnailCard } from './molecules/card/thumbnail-card';
+export { default as GoodsCard } from './molecules/card/goods-card';
+export { default as SimilarAnimeCard } from './molecules/card/similar-anime-card';
 
 export { default as ReviewForm } from './molecules/form/review-form';
 export { default as ReviewReadForm } from './molecules/form/review-read-form';

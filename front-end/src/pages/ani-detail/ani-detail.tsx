@@ -10,12 +10,14 @@ import {
   ReviewSliderCard,
   RateChartCard,
   ReviewFormCard,
+  GoodsCard,
+  SimilarAnimeCard,
+
 } from 'components';
 import { useAni, useAuth, useReview } from 'hooks';
 import NotFound from 'pages/error/not-found';
 import AniDetailTemplate from 'pages/ani-detail/template';
 import { msg } from 'util/message';
-import GoodsCard from 'components/molecules/card/goods-card';
 
 const AniDetail = observer(() => {
   const param = useParams<{ id: string }>();
@@ -70,6 +72,7 @@ const AniDetail = observer(() => {
           char={<CharacterListCard />}
           reviewList={<ReviewSliderCard />}
           rateChart={<RateChartCard scores={ani.info.scoreList} />}
+          similar={<SimilarAnimeCard />}
         />
       ) : (
         <NotFound type="애니메이션 정보" />
