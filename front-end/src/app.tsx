@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import { msg } from 'util/message';
 import { mainAxios } from 'config/axios';
 import axios from 'axios';
+import { ALERT_LOGOUT } from 'common/string-template/string-template';
 import { routes } from './routes/config';
 import Router from './routes/router';
 import MainHeader from './components/header/header';
@@ -42,7 +43,9 @@ const App = () => {
       if (status === 401) {
         auth
           .logout()
-          .then()
+          .then(() => {
+            msg('Info', ALERT_LOGOUT);
+          })
           .catch((err) => msg('Error', err.message));
       } else if (status === 403 && data === 'access token refresh') {
         const originalRequest = config;
