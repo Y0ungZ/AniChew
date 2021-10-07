@@ -18,6 +18,7 @@ import com.anichew.Entity.RaitingPredictedraiting;
 import com.anichew.Entity.RecommendStart;
 import com.anichew.Entity.SimilarAnime;
 import com.anichew.Entity.User;
+import com.anichew.Repository.AnimeRepository;
 import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.FavoriteAnimeRepository;
 import com.anichew.Repository.RaitingPredictedraitingRepository;
@@ -37,6 +38,9 @@ public class RecommendServiceImpl implements RecommendService {
 	
 	@Autowired
 	FavoriteAnimeRepository favoriteAnimeRepo;
+	
+	@Autowired
+	AnimeRepository animeRepo;
 	
 	@Autowired
 	AnimescoreRepository animescoreRepo;
@@ -119,7 +123,6 @@ public class RecommendServiceImpl implements RecommendService {
 		List<Animescore> myWatched = animescoreRepo.findAllByUser(user);
 		
 		Set<Anime> myWatchedSet = new HashSet();
-		Set<Anime> similarSet = new HashSet();
 		Set<Anime> recommendSet = new HashSet();
 		
 				
@@ -171,8 +174,9 @@ public class RecommendServiceImpl implements RecommendService {
 			Anime anime = favoriteAnime.getAnime();
 			List<SimilarAnime> similars = similarAnimeRepo.findAllByAnime(anime);
 			for(SimilarAnime similarAnime : similars) {
-				if(!myWatchedSet.contains(similarAnime.getAnime())) {
-					similarSet.add(similarAnime.getAnime());
+				Anime similar = animeRepo.findById(similarAnime.getSimilarAnimeId());
+				if(similar != null && !myWatchedSet.contains(similar)) {
+					similarSet.add(similar);
 				}
 			}
 		}
