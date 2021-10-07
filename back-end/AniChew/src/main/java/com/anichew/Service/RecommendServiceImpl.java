@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 import com.anichew.Entity.Anime;
 import com.anichew.Entity.Animescore;
 import com.anichew.Entity.FavoriteAnime;
+import com.anichew.Entity.RaitingPredictedraiting;
 import com.anichew.Entity.RecommendStart;
 import com.anichew.Entity.SimilarAnime;
 import com.anichew.Entity.User;
 import com.anichew.Repository.AnimescoreRepository;
 import com.anichew.Repository.FavoriteAnimeRepository;
+import com.anichew.Repository.RaitingPredictedraitingRepository;
 import com.anichew.Repository.RecommendStartRepository;
 import com.anichew.Repository.SimilarAnimeRepository;
 import com.anichew.Repository.UserRepository;
@@ -41,6 +43,9 @@ public class RecommendServiceImpl implements RecommendService {
 	
 	@Autowired
 	SimilarAnimeRepository similarAnimeRepo;
+	
+	@Autowired
+	RaitingPredictedraitingRepository raitingPredictedRepo;
 	
 	@Autowired
 	UserRepository userRepo;
@@ -107,31 +112,39 @@ public class RecommendServiceImpl implements RecommendService {
 
 	@Override
 	public List<AnimeResponse> getFromBaseOfUser(HttpServletRequest httpServletReq) {
-		List<RecommendStart> recommends = recommendStartRepo.findAll();
-		Set<RecommendStart> set = new HashSet();
+		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
+		User user = userRepo.findById(userid);	
+		float score = 8;
+		List<RaitingPredictedraiting> predictedRaitings = raitingPredictedRepo.findByUserAndAdustedPredictedScoreGreaterThanOrderByAdustedPredictedScore(user, score);
+		List<Animescore> myWatched = animescoreRepo.findAllByUser(user);
+		
+		Set<Anime> myWatchedSet = new HashSet();
+		Set<Anime> similarSet = new HashSet();
+		Set<Anime> recommendSet = new HashSet();
+		
+				
+		for(Animescore animescore : myWatched) {
+			Anime anime = animescore.getAnime();
+			myWatchedSet.add(anime);
+		}
 		
 		List<AnimeResponse> response = new ArrayList();
-		
 		Random random = new Random();
 		
-		while(set.size() < 10) {
-			int idx = random.nextInt(305);
-			RecommendStart recommend = recommends.get(idx);
-			
-			
-			if(!set.contains(recommend)) {
-				set.add(recommend);
+		while(recommendSet.size()<10 || recommendSet.size() < predictedRaitings.size()) {
+			int idx = random.nextInt(predictedRaitings.size());
+			Anime anime = predictedRaitings.get(idx).getAnime();
+			if(!recommendSet.contains(anime)) {
+				recommendSet.add(anime);
 				AnimeResponse animeRes = new AnimeResponse();
-				Anime anime = recommend.getAnime();
 				animeRes.setId(anime.getId());
 				animeRes.setKoreanName(anime.getKoreanName());
 				animeRes.setName(anime.getName());
 				response.add(animeRes);
 			}
-			
 		}
 		
-		
+				
 		return response;
 	}
 
