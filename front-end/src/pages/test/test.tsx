@@ -16,6 +16,7 @@ const Test = () => {
     mainAxios.get(`/user/test/${inputRef.current!.value}`).then((res) => {
       if (res.status === 200) {
         auth.isLoggedIn = true;
+        localStorage.setItem('user', 'user');
         if (!res.data.newUser) {
           user.me();
           history.push('/cold-start');
