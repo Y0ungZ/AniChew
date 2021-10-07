@@ -14,6 +14,7 @@ type Props = {
   char: ReactNode;
   reviewList: ReactNode;
   rateChart: ReactNode;
+  similar: ReactNode
 };
 
 const styles: CssKeyObject = {
@@ -33,6 +34,9 @@ const styles: CssKeyObject = {
   right: {
     padding: '1em',
   },
+  goods: {
+    margin: '1em 0em',
+  },
 };
 
 const AniDetailTemplate = ({
@@ -45,6 +49,7 @@ const AniDetailTemplate = ({
   char,
   reviewList,
   rateChart,
+  similar,
 }: Props) => {
   const { xs } = useBreakpoint();
   if (xs) {
@@ -52,6 +57,9 @@ const AniDetailTemplate = ({
       <div style={styles.container}>
         <Row>
           <Col span={24}>{meta}</Col>
+        </Row>
+        <Row style={styles.goods}>
+          <Col span={24}>{goods}</Col>
         </Row>
         <Row>
           <Col span={24}>{reviewForm}</Col>
@@ -75,7 +83,7 @@ const AniDetailTemplate = ({
           <Col span={24}>{rateChart}</Col>
         </Row>
         <Row>
-          <Col span={24}>{goods}</Col>
+          <Col span={24}>{similar}</Col>
         </Row>
       </div>
     );
@@ -112,6 +120,9 @@ const AniDetailTemplate = ({
           </Row>
           <Row>
             <Col span={24}>{rateChart}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{similar}</Col>
           </Row>
         </Col>
       </Row>

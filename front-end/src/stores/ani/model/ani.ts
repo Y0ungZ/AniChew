@@ -17,7 +17,7 @@ export type CharacterInfo = {
 };
 export type Series = {
   readonly id: number;
-  readonly name: string;
+  readonly koreanName: string;
 };
 export type Score = {
   readonly type: string;
@@ -102,5 +102,6 @@ export class Ani {
     readonly seriesList: Series[],
     readonly favorite: boolean,
     readonly synopsis: string | null,
+    readonly predictedScore: number,
   ) {}
 }
