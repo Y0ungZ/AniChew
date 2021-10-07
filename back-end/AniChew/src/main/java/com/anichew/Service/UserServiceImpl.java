@@ -225,9 +225,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteRefreshToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		
-		String refreshToken = cookieUtil.getCookie(httpServletReq, jwtUtil.REFRESH_TOKEN_NAME).getValue();
-		
-		boolean deleted = redisUtil.deleteData(refreshToken);
+		Cookie refreshTokenCookie = cookieUtil.getCookie(httpServletReq, jwtUtil.REFRESH_TOKEN_NAME);
+		if(refreshTokenCookie != null) {
+			String refreshToken = refreshTokenCookie.getValue(); 		
+			boolean deleted = redisUtil.deleteData(refreshToken);
+		}
 		cookieUtil.deleteCookie(httpServletReq, httpServletRes, jwtUtil.REFRESH_TOKEN_NAME);
 		
 	}
