@@ -8,13 +8,13 @@ import {
   FAIL_UPDATE_REVIEW,
   FAIL_WRITE_REVIEW,
 } from 'common/string-template/string-template';
-import { Review, ReviewFormMode, Reviews, ReviewTarget } from '../model/review';
+import { Review, ReviewFormMode, ReviewTarget } from '../model/review';
 import reviewRepository from '../repository/review-repository';
 
 interface ReviewStore {
   formMode: ReviewFormMode;
   showForm: boolean;
-  reviews: Reviews;
+  reviews: Review[];
   myReview: Review | null;
   submit(target: ReviewTarget, id: string, content: string): Promise<void>;
   write(target: ReviewTarget, id: string, content: string): Promise<void>;
@@ -36,7 +36,7 @@ export default class ReviewStoreImpl implements ReviewStore {
 
   showForm = false;
 
-  reviews: Reviews = {};
+  reviews: Review[] = [];
 
   myReview: Review | null = null;
 
@@ -85,7 +85,7 @@ export default class ReviewStoreImpl implements ReviewStore {
           userAvatar,
         );
         this.formMode = 'Read';
-        this.reviews[reviewId] = this.myReview;
+        this.reviews.push(this.myReview);
       });
     } catch (error) {
       console.log(error);
@@ -111,7 +111,11 @@ export default class ReviewStoreImpl implements ReviewStore {
           this.myReview!.loveCnt,
           this.myReview!.userAvatar,
         );
-        this.reviews[reviewId] = this.myReview;
+        const idx = this.reviews.findIndex(
+          (review: Review) => review.reviewId === reviewId,
+        );
+
+        this.reviews[idx] = this.myReview;
         this.formMode = 'Read';
       });
     } catch (error) {
@@ -125,7 +129,11 @@ export default class ReviewStoreImpl implements ReviewStore {
       await reviewRepository.delete(this.type, targetId);
       runInAction(() => {
         this.formMode = 'Write';
-        delete this.reviews[this.myReview!.reviewId];
+        const idx = this.reviews.findIndex(
+          (review: Review) => review.reviewId === this.myReview?.reviewId,
+        );
+
+        this.reviews.splice(idx, 1);
         this.myReview = null;
       });
     } catch (error) {
@@ -137,17 +145,28 @@ export default class ReviewStoreImpl implements ReviewStore {
   async getAll(targetId: string) {
     try {
       const res = await reviewRepository.getAll(this.type, targetId);
-      this.reviews = {};
+      this.reviews = [];
       if (res.data.length === 0) return;
+
       runInAction(() => {
         res.data.forEach((review: Review) => {
-          this.reviews[review.reviewId] = review;
+          this.reviews.push(review);
+        });
+
+        this.reviews.sort((a, b) => {
+          if (a.loveCnt === b.loveCnt) {
+            return (
+              new Date(a.createdDate).getTime() -
+              new Date(b.createdDate).getTime()
+            );
+          }
+          return b.loveCnt - a.loveCnt;
         });
       });
     } catch (error) {
       console.log(error);
       runInAction(() => {
-        this.reviews = {};
+        this.reviews = [];
       });
       throw new Error(FAIL_GET_ALL_REVIEW);
     }

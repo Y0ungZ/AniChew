@@ -15,10 +15,6 @@ export class Review {
   ) {}
 }
 
-export type Reviews = {
-  [key: string]: Review;
-};
-
 export type ReviewFormMode = 'Write' | 'Read' | 'Update';
 
 export type ReviewTarget = 'Animation' | 'Character';
