@@ -29,6 +29,7 @@ public interface UserService {
 	boolean setCover(HttpServletRequest httpServletReq, CoverRequest req);
 	boolean deleteCover(HttpServletRequest httpServletReq);
 	boolean deleteAvatar(HttpServletRequest httpServletReq);
+	void deleteRefreshToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes);
 	
 	
 }

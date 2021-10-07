@@ -212,13 +212,23 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void logout(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
 		String userid = Long.toString(cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME));
-		String data = userid.concat("jwt");
+	
 		
 		HttpSession session = httpServletReq.getSession();
 		session.invalidate();
 		
-		boolean deleted = redisUtil.deleteData(data);
+
 		cookieUtil.deleteCookie(httpServletReq, httpServletRes, jwtUtil.ACCESS_TOKEN_NAME);
+		
+	}
+	
+	@Override
+	public void deleteRefreshToken(HttpServletRequest httpServletReq, HttpServletResponse httpServletRes) {
+		
+		String refreshToken = cookieUtil.getCookie(httpServletReq, jwtUtil.REFRESH_TOKEN_NAME).getValue();
+		
+		boolean deleted = redisUtil.deleteData(refreshToken);
+		cookieUtil.deleteCookie(httpServletReq, httpServletRes, jwtUtil.REFRESH_TOKEN_NAME);
 		
 	}
 
@@ -443,6 +453,8 @@ public class UserServiceImpl implements UserService {
 		
 		return true;
 	}
+
+
 
 
 	
