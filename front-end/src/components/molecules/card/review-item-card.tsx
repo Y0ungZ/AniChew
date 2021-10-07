@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Card, Image } from 'antd';
+import { Avatar, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { CssKeyObject } from 'types/css-basic-type';
 import { Review } from 'stores/review/model/review';
@@ -24,19 +24,11 @@ const ReviewItemCard = ({ review }: { review: Review }) => (
     title={
       <>
         <Avatar
-          shape="circle"
-          size="large"
-          src={
-            <Image
-              src={
-                review.userAvatar &&
-                `${config.img}/user_imgs/${review.userId}/${review.userAvatar}`
-              }
-            />
-          }
+          src={`${config.img}/user_imgs/${review.userId}/${review.userAvatar}`}
         >
           {review.nickname[0]}
         </Avatar>
+
         <Link to={`/user/${review.userId}`} style={styles.nickname}>
           {review.nickname}
         </Link>
