@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -492,7 +491,7 @@ public class AnimeServiceImpl implements AnimeService {
 		User user = userRepo.findById(userid);	
 						
 		
-		List<AnimeReview> reviews = animeReviewRepo.findAllByAnime(anime);
+		List<AnimeReview> reviews = animeReviewRepo.findAllByAnime(anime);		
 		
 		List<ReviewResponse> reviewsRes = new ArrayList();
 		for(AnimeReview review : reviews) {

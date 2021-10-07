@@ -30,26 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()				
 				.antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll();
-//				.anyRequest().authenticated();
-				
-		httpSecurity
-				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-				.addFilterBefore(exceptionHanlderFilter, JwtRequestFilter.class);
-
 		
-	}
-	
-//	@Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//
-//        configuration.addAllowedOrigin("*");
-//        configuration.addAllowedHeader("*");
-//        configuration.addAllowedMethod("*");
-//        configuration.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+	}	
+
 }

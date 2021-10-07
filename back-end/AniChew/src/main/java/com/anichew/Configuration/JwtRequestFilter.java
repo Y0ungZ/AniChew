@@ -48,9 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		
 		final Cookie jwtToken = cookieUtil.getCookie(httpServletRequest, JwtUtil.ACCESS_TOKEN_NAME);
-		HttpSession session = httpServletRequest.getSession();
-		String sessionId = session.getId();
-		String sessionToken = (String) session.getAttribute("refreshToken");		
+		final Cookie refreshTokenCookie = cookieUtil.getCookie(httpServletRequest, JwtUtil.REFRESH_TOKEN_NAME);
 		String userid = null;
 		String jwt = null;
 		String refreshToken = null;
@@ -68,23 +66,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			}
 		} catch (ExpiredJwtException e) {
 
-			if (sessionId != null) {
+			if (refreshTokenCookie != null) {
 
-				refreshToken = redisUtil.getData(sessionId);
+				refreshToken = refreshTokenCookie.getValue();
 				refreshUid = jwtUtil.getUserid(refreshToken);
-				if(!redisUtil.getData(refreshUid).equals(sessionId)) {
+				
+				if(!refreshToken.equals(redisUtil.getData(refreshUid))) {
 					throw new ExpiredJwtException(null, null, "refresh token expired");
 				}
 				
 				
-				if (refreshToken!=null) {	
-					
-					
+				if (refreshToken!=null && jwtUtil.validateToken(refreshToken, refreshUid)) {											
 					String newToken = jwtUtil.generateToken(refreshUid);
-					Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, newToken);
-					System.out.println(httpServletRequest.getAttribute("Cookie"));
+					Cookie accessTokenCookie = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, newToken, (int)jwtUtil.TOKEN_VALIDATION_SECOND);
 					httpServletResponse.addCookie(accessTokenCookie);
-
 					Collection<String> headers = httpServletResponse.getHeaders(HttpHeaders.SET_COOKIE);
 					for (String header : headers) {
 						httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, header + "; " + "SameSite=None; Secure");
