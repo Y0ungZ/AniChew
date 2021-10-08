@@ -135,6 +135,8 @@ public class RecommendServiceImpl implements RecommendService {
 		List<AnimeResponse> response = new ArrayList();
 		Random random = new Random();
 		
+		if(predictedRaitings.size()==0) return response;
+		
 		while(recommendSet.size()<10 || recommendSet.size() < predictedRaitings.size()) {
 			int idx = random.nextInt(predictedRaitings.size());
 			Anime anime = predictedRaitings.get(idx).getAnime();
@@ -185,6 +187,8 @@ public class RecommendServiceImpl implements RecommendService {
 		List<AnimeResponse> response = new ArrayList();
 		List<Anime> animes = new ArrayList(similarSet);
 		Random random = new Random();
+		
+		if(animes.size()==0) return response;
 		
 		while(recommendSet.size()<10 || recommendSet.size() < animes.size()) {
 			int idx = random.nextInt(animes.size());
