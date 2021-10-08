@@ -1,0 +1,64 @@
+@import '~antd/dist/antd.css';
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+body {
+  background-color: rgba(128, 128, 128, 0.08);
+}
+
+/* antd drawer style */
+.ant-drawer-close {
+  margin-right: 1em;
+}
+
+/* antd modal style */
+.ant-modal-content {
+  border-radius: 1em;
+  background-color: #fafafa;
+}
+
+/* antd button click animation disabled */
+[ant-click-animating-without-extra-node]:after {
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  -ms-animation: none !important;
+  animation: none !important;
+}
+
+/* antd carousel dots <-> slick-dots duplicated */
+ul.slick-dots.slick-dots-bottom {
+  margin-left: 0;
+}
+
+/* slick image block -> inline */
+.slick-slide img {
+  display: inline;
+}
+
+/* slick arrow custom */
+
+.slick-prev,
+.slick-next {
+  transform: translate(0, -300%);
+}
+
+.slick-prev {
+  z-index: 10;
+  left: 0;
+}
+
+.slick-next {
+  z-index: 10;
+  right: 0;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  display: none;
+}
+
+.slick-disabled {
+  opacity: 0;
+  transition: 0.5s;
+}
