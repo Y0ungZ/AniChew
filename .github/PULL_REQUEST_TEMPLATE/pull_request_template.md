@@ -8,6 +8,6 @@
 
 ## :speech_balloon: 작업 내용
 
-> Closes #S05P21B304-404 Closes #S05P21B304-405
+> Closes 12
 
-(위 예시 줄과 이 줄을 지우고 Closes와 함께 Jira 이슈 번호 기입)
+(위 예시 줄과 이 줄을 지우고 Closes와 함께 이슈 번호 기입)
