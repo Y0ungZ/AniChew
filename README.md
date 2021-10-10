@@ -24,10 +24,10 @@
 
 <br />
 <div align="center">
-  <h3 align="center">애니츄</h3>
-
+<img src="https://user-images.githubusercontent.com/61743793/136696085-678fa857-4a24-4c40-87f9-0d108aeeb2c0.png" width="250px"/>
+  
   <p align="center">
-    웹 페이지 추천 사이트
+    애니메이션 추천 사이트
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -48,7 +48,7 @@
 | :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://user-images.githubusercontent.com/41102293/130561099-a6ef11d4-68bd-4f98-89ea-b232604cb47e.png" width="250px"/> | <img src="https://user-images.githubusercontent.com/41102293/130561101-bf389c47-397e-4a82-9f11-ef842e403605.png" width="250px"/> | <img src="https://user-images.githubusercontent.com/41102293/130561100-aca30a21-2f9b-4154-969e-1afc64654a92.png" width="250px"/> | <img src="https://user-images.githubusercontent.com/41102293/130561093-3e81caa1-a718-46b3-9adf-6ad372c59de8.png" width="250px"/> |
 |                                                      shining8543@naver.com                                                       |                                                         at8in@naver.com                                                          |                                                       ansgml6491@naver.com                                                       |                                                       95jjangjun@gmail.com                                                       |
-|                          항상 고민하고 선택에 대해서 "왜" 라며 이유를 <br/>찾는 개발자가 되고 싶습니다                           |                                           항상 배우는 자세를 갖는 개발자가 되겠습니다.                                           |                                                유용한걸 만드는 사람이 되겠습니당~                                                |                                            꾸준히 성장할 수 있는 개발자가 되겠습니다.                                            |
+|                          항상 고민하고 선택에 대해서 "왜" 라며 이유를 <br/>찾는 개발자가 되고 싶습니다                           |                                          끊임없이 반성하고 배우는 개발자가 되겠습니다.                                           |                                                유용한걸 만드는 사람이 되겠습니당~                                                |                                            꾸준히 성장할 수 있는 개발자가 되겠습니다.                                            |
 |                                                             Back-End                                                             |                                                            Front-End                                                             |                                                             Big-Data                                                             |                                                            Front-End                                                             |
 
 ## 목차
@@ -124,7 +124,7 @@ $ java -jar {jar파일이름}
 
 ## 아키텍쳐
 
-![아키텍처 사진]()
+![아키텍쳐](https://user-images.githubusercontent.com/61743793/136696353-b2c96405-2143-4bd6-a7c6-22833548845b.JPG)
 
 ## 참고
 
