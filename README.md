@@ -66,10 +66,25 @@
 
 ## 프로젝트 설명
 
-1. 애니메이션 평점 및 리뷰 기능
-2. 애니메이션 추천 기능 (평점 및 좋아요 기반)
-3. 피규어 알람 기능
-4. 반응형 웹 페이지
+1. 애니메이션 평점 기반 추천
+
+<img width = 500, height = 190, src="https://user-images.githubusercontent.com/43779730/137308538-1a4b6c7a-b3dc-446a-a8c6-be07b24a1729.png">
+
+2. 애니메이션 좋아요 기반 추천
+
+<img width = 500, height = 190, src="https://user-images.githubusercontent.com/43779730/137308571-2ede936b-f860-4b92-922c-98e44ddb2392.png">
+
+3. 애니메이션 관련 신상품 알림
+
+<img width = 490, height = 100, src="https://user-images.githubusercontent.com/43779730/137308701-1f16c502-8bc3-4bb8-940d-0ee3ed4a36b8.png">
+
+4. 애니메이션/캐릭터 평점 및 리뷰 주기
+
+<img width = 900, height = 480, src="https://user-images.githubusercontent.com/43779730/137308748-b1d16d99-44d6-4fa1-82a5-18d9e503c718.png">
+
+5. 반응형 웹 페이지
+
+<img width = 180, height = 420, src="https://user-images.githubusercontent.com/43779730/137309625-26816279-cb54-4746-80ee-e28ab5c0acd2.png">
 
 ## 기술 스택
 
@@ -89,7 +104,7 @@
 - User 및 Animation 관련 데이터를 위한 DB
   - [MySQL](https://www.mysql.com)
 - Token 관리용 DB
-  - Redis [LINUX](https://redis.io)/[Windows](https://github.com/microsoftarchive/redis/releases/tag/win-3.0.504)
+  - Redis ([LINUX](https://redis.io)/[Windows](https://github.com/microsoftarchive/redis/releases/tag/win-3.0.504))
 
 <!-- GETTING STARTED -->
 
@@ -128,6 +143,10 @@ $ java -jar {jar파일이름}
 ## 아키텍쳐
 
 ![아키텍쳐](https://user-images.githubusercontent.com/61743793/136696353-b2c96405-2143-4bd6-a7c6-22833548845b.JPG)
+
+## DB 구조
+
+![AniChew](https://user-images.githubusercontent.com/43779730/137309805-f44e4502-ecc4-4cdc-bf62-d9e687f2b6af.png)
 
 ## 참고
 
