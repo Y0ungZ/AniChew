@@ -142,7 +142,7 @@ $ java -jar {jar파일이름}
 
 ## 아키텍쳐
 
-![아키텍쳐](https://user-images.githubusercontent.com/61743793/136696353-b2c96405-2143-4bd6-a7c6-22833548845b.JPG)
+![워크플로우](https://user-images.githubusercontent.com/61743793/137313015-3f4eb013-ec88-4319-a1cd-a3a393a83d6f.png)
 
 ## DB 구조
 
