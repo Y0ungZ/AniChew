@@ -4,18 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.anichew.Util.RedisUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -41,22 +38,22 @@ import com.anichew.Response.MyInfoResponse;
 import com.anichew.Response.UserPageResponse;
 import com.anichew.Util.CookieUtil;
 import com.anichew.Util.JwtUtil;
-import com.anichew.Util.RedisUtil;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepo;
 
-	@Autowired
-	private CookieUtil cookieUtil;
+	private final UserRepository userRepo;
 
-	@Autowired
-	private RedisUtil redisUtil;
 
-	@Autowired
-	private JwtUtil jwtUtil;
+	private final CookieUtil cookieUtil;
+
+
+	private final RedisUtil redisUtil;
+
+
+	private final JwtUtil jwtUtil;
 		
 	
 	public boolean isExistUser(long userid) {
@@ -132,7 +129,8 @@ public class UserServiceImpl implements UserService {
 
 	public MyInfoResponse getMyInfo(HttpServletRequest httpServletReq) {
 		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(accessor);	
+		Optional<User> userOpt = userRepo.findById(accessor);
+		User user = userOpt.get();
 		
 		
 		
@@ -152,7 +150,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserPageResponse userPage(HttpServletRequest httpServletReq, long userid) {
 
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		UserPageResponse response = new UserPageResponse();
 		
 		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
@@ -239,7 +237,7 @@ public class UserServiceImpl implements UserService {
 
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 
 		User fixedUser = User.builder()
 				.id(user.getId())
@@ -292,7 +290,7 @@ public class UserServiceImpl implements UserService {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 				
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		String path = "src" +  File.separator + "main" +  File.separator + "resources" +  File.separator + "anichew-image" + File.separator + "user_imgs" + File.separator + userid;
 		File file = new File(path);
@@ -347,7 +345,7 @@ public class UserServiceImpl implements UserService {
 	public boolean setAvatar(String avatar, HttpServletRequest httpServletReq) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		
 		User fixedUser = User.builder()
@@ -371,7 +369,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean setCover(HttpServletRequest httpServletReq, CoverRequest req) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 
 		User fixedUser = User.builder()
 				.id(user.getId())
@@ -405,7 +403,7 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteCover(HttpServletRequest httpServletReq) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		
 		if(user == null)
@@ -433,7 +431,7 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteAvatar(HttpServletRequest httpServletReq) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		if(user == null)
 			return false;

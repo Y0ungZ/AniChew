@@ -79,7 +79,7 @@ public class CharaServiceImpl implements CharaService {
 		
 		long accessor = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 		
-		User user = userRepo.findById(accessor);
+		User user = userRepo.findById(accessor).get();
 		
 		
 		Chara chara = charaRepo.findById(charaid);
@@ -171,7 +171,7 @@ public class CharaServiceImpl implements CharaService {
 		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		Chara chara = charaRepo.findById(charaid);
 		
 		if(favoriteCharaRepo.existsByCharaAndUser(chara, user))		
@@ -195,7 +195,7 @@ public class CharaServiceImpl implements CharaService {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
 		
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -213,7 +213,7 @@ public class CharaServiceImpl implements CharaService {
 	@Override
 	public boolean exsitsCharascore(HttpServletRequest httpServletReq, long charaid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -224,7 +224,7 @@ public class CharaServiceImpl implements CharaService {
 	
 	public ScoreResponse setScore(HttpServletRequest httpServletReq, long charaid, float score) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -258,7 +258,7 @@ public class CharaServiceImpl implements CharaService {
 	
 	public boolean deleteScore(HttpServletRequest httpServletReq, long charaid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -280,7 +280,7 @@ public class CharaServiceImpl implements CharaService {
 	public boolean existsReview(HttpServletRequest httpServletReq, long charaid) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		Chara chara = charaRepo.findById(charaid);
 		
 		return charaReviewRepo.existsByUserAndChara(user, chara);
@@ -296,7 +296,7 @@ public class CharaServiceImpl implements CharaService {
 	public ReviewResponse getMyReview(HttpServletRequest httpServletReq, long charaid) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		Chara chara = charaRepo.findById(charaid);
 		
 		CharaReview review = charaReviewRepo.findByUserAndChara(user, chara);
@@ -319,7 +319,7 @@ public class CharaServiceImpl implements CharaService {
 		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		
 		Chara chara = charaRepo.findById(charaid);
 		
@@ -352,7 +352,7 @@ public class CharaServiceImpl implements CharaService {
 		CharaReview review = null;
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		Chara chara = charaRepo.findById(charaid);
 		
 		if(!charaReviewRepo.existsByUserAndChara(user,chara)) 
@@ -399,7 +399,7 @@ public class CharaServiceImpl implements CharaService {
 		CharaReview review = null;
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);		
+		User user = userRepo.findById(userid).get();
 		Chara chara = charaRepo.findById(charaid);
 		
 		
@@ -417,7 +417,7 @@ public class CharaServiceImpl implements CharaService {
 	
 	public boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		CharaReview review = charaReviewRepo.findById(reviewid);
 		
 		
@@ -428,7 +428,7 @@ public class CharaServiceImpl implements CharaService {
 	
 	public void reviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		CharaReview review = charaReviewRepo.findById(reviewid);
 		
 		CharaReviewLove reviewLove = CharaReviewLove.builder().user(user).review(review).build();
@@ -441,7 +441,7 @@ public class CharaServiceImpl implements CharaService {
 
 	public boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 		CharaReview review = charaReviewRepo.findById(reviewid);		
 		
 		charaReviewLoveRepo.deleteByUserAndReview(user,review);
@@ -459,7 +459,7 @@ public class CharaServiceImpl implements CharaService {
 		Chara chara = charaRepo.findById(charaid);		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);
+		User user = userRepo.findById(userid).get();
 				
 		
 		List<CharaReview> reviews = charaReviewRepo.findAllByChara(chara);
