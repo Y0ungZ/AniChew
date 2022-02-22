@@ -118,7 +118,7 @@ public class RecommendServiceImpl implements RecommendService {
 	@Override
 	public List<AnimeResponse> getFromBaseOfUser(HttpServletRequest httpServletReq) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		float score = 8;
 		List<RaitingPredictedraiting> predictedRaitings = raitingPredictedRepo.findByUserAndAdustedPredictedScoreGreaterThanOrderByAdustedPredictedScore(user, score);
 		List<Animescore> myWatched = animescoreRepo.findAllByUser(user);
@@ -158,7 +158,7 @@ public class RecommendServiceImpl implements RecommendService {
 	public List<AnimeResponse> getFromBaseOfFavorite(HttpServletRequest httpServletReq) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		
 		List<FavoriteAnime> favoriteAnimes = user.getFavoriteAnimes();
 		List<Animescore> myWatched = animescoreRepo.findAllByUser(user);

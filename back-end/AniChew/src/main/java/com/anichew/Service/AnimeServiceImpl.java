@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,60 +49,31 @@ import com.anichew.Response.ScoreResponse;
 import com.anichew.Response.SeriesResponse;
 import com.anichew.Util.CookieUtil;
 import com.anichew.Util.JwtUtil;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly=true)
 public class AnimeServiceImpl implements AnimeService {
 
-	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
-	private AnimeRepository animeRepo;
-	
-	@Autowired
-	private AnimescoreRepository animerateRepo;
-	
-	@Autowired
-	private AnimeGenreRepository animeGenreRepo;
-	
-	@Autowired
-	private AnimeSeriesRepository animeSeriesRepo;
-	
-	@Autowired
-	private AnimeCharaRepository animeCharaRepo;
-	
-	@Autowired
-	private FavoriteAnimeRepository favoriteAnimeRepo;
-	
-	@Autowired
-	private AnimescoreRepository animescoreRepo;
-	
-	@Autowired
-	private AnimeReviewRepository animeReviewRepo;
-	
-	@Autowired
-	private AnimeReviewLoveRepository animeReviewLoveRepo;	
-	
-	@Autowired
-	private AnimePromotionRepository animePromotionRepo;
-	
-	@Autowired
-	private SeriesRepository seriesRepo;
-	
-	@Autowired
-	private SimilarAnimeRepository similarAnimeRepo;
-	
-	@Autowired
-	private AlarmSeriesRepository alarmSeriesRepo;
-	
-	@Autowired
-	private RaitingPredictedraitingRepository raitingPredictedRepo;
-	
-	@Autowired
-	private JwtUtil jwtUtil;
-	
-	@Autowired
-	private CookieUtil cookieUtil;
+
+	private final UserRepository userRepo;
+	private final AnimeRepository animeRepo;
+	private final AnimescoreRepository animerateRepo;
+	private final AnimeGenreRepository animeGenreRepo;
+	private final AnimeSeriesRepository animeSeriesRepo;
+	private final AnimeCharaRepository animeCharaRepo;
+	private final FavoriteAnimeRepository favoriteAnimeRepo;
+	private final AnimescoreRepository animescoreRepo;
+	private final AnimeReviewRepository animeReviewRepo;
+	private final AnimeReviewLoveRepository animeReviewLoveRepo;
+	private final AnimePromotionRepository animePromotionRepo;
+	private final SeriesRepository seriesRepo;
+	private final SimilarAnimeRepository similarAnimeRepo;
+	private final AlarmSeriesRepository alarmSeriesRepo;
+	private final RaitingPredictedraitingRepository raitingPredictedRepo;
+	private final JwtUtil jwtUtil;
+	private final CookieUtil cookieUtil;
 	
 	
 	
@@ -109,7 +81,7 @@ public class AnimeServiceImpl implements AnimeService {
 	public ScoreResponse rateAnime(HttpServletRequest httpServletReq, long animeid, float score) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);		
+		User user = userRepo.findById(userid).get();
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -141,7 +113,7 @@ public class AnimeServiceImpl implements AnimeService {
 	public boolean deleteRate(HttpServletRequest httpServletReq, long animeid) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);			
+		User user = userRepo.findById(userid).get();
 		Anime anime = animeRepo.findById(animeid);
 		
 		animerateRepo.deleteByUserAndAnime(user, anime);
@@ -155,7 +127,7 @@ public class AnimeServiceImpl implements AnimeService {
 	public boolean existsAnimerate(HttpServletRequest httpServletReq, long animeid) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);		
+		User user = userRepo.findById(userid).get();
 		
 		Anime anime = animeRepo.findById(animeid);
 				
@@ -190,7 +162,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		
 		
 		
@@ -308,7 +280,7 @@ public class AnimeServiceImpl implements AnimeService {
 	public boolean existsReview(HttpServletRequest httpServletReq, long animeid) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);			
+		User user = userRepo.findById(userid).get();
 		Anime anime = animeRepo.findById(animeid);
 		
 		return animeReviewRepo.existsByUserAndAnime(user, anime);
@@ -324,7 +296,7 @@ public class AnimeServiceImpl implements AnimeService {
 	public ReviewResponse getMyReview(HttpServletRequest httpServletReq, long animeid) {
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		Anime anime = animeRepo.findById(animeid);
 		
 		AnimeReview review = animeReviewRepo.findByUserAndAnime(user, anime);
@@ -346,7 +318,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -380,7 +352,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		Anime anime = animeRepo.findById(anime_id);
 		
 		if(!animeReviewRepo.existsByUserAndAnime(user, anime)) 
@@ -425,7 +397,7 @@ public class AnimeServiceImpl implements AnimeService {
 		AnimeReview review = null;
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);				
+		User user = userRepo.findById(userid).get();
 		Anime anime = animeRepo.findById(anime_id);
 		
 		if(!animeReviewRepo.existsByUserAndAnime(user, anime)) 
@@ -453,7 +425,7 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	public boolean exsitsReviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		AnimeReview review = animeReviewRepo.findById(reviewid);
 		
 		
@@ -464,7 +436,7 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	public void reviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		AnimeReview review = animeReviewRepo.findById(reviewid);
 		
 		AnimeReviewLove reviewLove = AnimeReviewLove.builder().user(user).review(review).build();
@@ -477,7 +449,7 @@ public class AnimeServiceImpl implements AnimeService {
 
 	public boolean deleteReviewLove(HttpServletRequest httpServletReq, long reviewid) {
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		AnimeReview review = animeReviewRepo.findById(reviewid);		
 		
 		animeReviewLoveRepo.deleteByUserAndReview(user,review);
@@ -488,7 +460,7 @@ public class AnimeServiceImpl implements AnimeService {
 
 	public boolean setFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		
 		Anime anime = animeRepo.findById(animeid);
 		
@@ -506,8 +478,8 @@ public class AnimeServiceImpl implements AnimeService {
 	
 	public boolean deleteFavoriteAnime(HttpServletRequest httpServletReq, long animeid) {		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
-		
+		User user = userRepo.findById(userid).get();
+
 		Anime anime = animeRepo.findById(animeid);
 		
 		if(!favoriteAnimeRepo.existsByUserAndAnime(user, anime))
@@ -537,7 +509,7 @@ public class AnimeServiceImpl implements AnimeService {
 		
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 						
 		
 		List<AnimeReview> reviews = animeReviewRepo.findAllByAnime(anime);		
@@ -617,7 +589,7 @@ public class AnimeServiceImpl implements AnimeService {
 		Series series = animeSeries.getSeries();
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		
 		if(alarmSeriesRepo.findByUserAndSeries(user, series)==null) {
 			AlarmSeries alarmSeries = AlarmSeries.builder().user(user).series(series).build();
@@ -638,7 +610,7 @@ public class AnimeServiceImpl implements AnimeService {
 		Series series = animeSeries.getSeries();
 		
 		long userid = cookieUtil.getUserid(httpServletReq, jwtUtil, jwtUtil.ACCESS_TOKEN_NAME);
-		User user = userRepo.findById(userid);	
+		User user = userRepo.findById(userid).get();
 		
 		AlarmSeries alarmSeries = alarmSeriesRepo.findByUserAndSeries(user, series);
 		
